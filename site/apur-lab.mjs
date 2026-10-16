@@ -1,7 +1,12 @@
 import {labEnabled, PERIODS, HEIGHT_BANDS, periodStyle, heightStyle,
   fetchLocalSnapshot} from "./apur-lab-contract.mjs";
+import {loadLocalManifest, loadVisibleGrid} from "./apur-grid-client.mjs";
 
 export const APUR_LAB_FIXTURE_SHA256="ba14be71c3cb58afcae935bcdc3f775f63ad043d12ecb20f42bdf2da759afaf9";
+export const APUR_GRID_MANIFEST_SHA256="bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c";
+const GRID_PATH="./data/apur-grid/";
+const isGrid=mode=>mode==="grid-period"||mode==="grid-height";
+const isHeight=mode=>mode==="height"||mode==="grid-height";
 
 export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,button,
   status,showMapMode}){
@@ -10,7 +15,8 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
   const mode=document.querySelector("#apur-mode");
   const message=document.querySelector("#apur-lab-status");
   const legend=document.querySelector("#apur-lab-legend");
-  if(!section||!mode||!message||!legend)throw new Error("Apur lab controls missing");
+  const reload=document.querySelector("#apur-grid-reload");
+  if(!section||!mode||!message||!legend||!reload)throw new Error("Apur lab controls missing");
   section.hidden=false;
   const volumeIndicator=document.querySelector("#volumes-indicator");
   if(volumeIndicator){
@@ -18,9 +24,10 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
     volumes.on("add",()=>{volumeIndicator.checked=true;});
     volumes.on("remove",()=>{volumeIndicator.checked=false;});
   }
+
   const overlay=L.geoJSON(null,{
     style:feature=>({color:"#243944",weight:0.65,fillOpacity:0.8,
-      fillColor:(mode.value==="height"?heightStyle(feature.properties.height_m):
+      fillColor:(isHeight(mode.value)?heightStyle(feature.properties.height_m):
         periodStyle(feature.properties.period_code)).color}),
     onEachFeature:(feature,layer)=>layer.bindPopup(()=>{
       const body=document.createElement("div");
@@ -31,95 +38,155 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
         "Période attribuée : "+periodStyle(feature.properties.period_code).label,
         "Hauteur médiane : "+(feature.properties.height_m==null?
           "indisponible ou incohérente":feature.properties.height_m.toLocaleString("fr-FR")+" m"),
-        "Une emprise peut couvrir plusieurs bâtiments ; millésime scientifique non confirmé.",
+        "Emprise actuelle pouvant recouvrir plusieurs bâtiments ; millésime scientifique non confirmé.",
         "Aucune information de vacance par bâtiment."
       ]){
-        const paragraph=document.createElement("p");paragraph.textContent=value;body.append(paragraph);
+        const paragraph=document.createElement("p");
+        paragraph.textContent=value;
+        body.append(paragraph);
       }
       return body;
     })
   });
-  let loaded=null,active=false,token=0,originalView=null;
-  function writeLegend(name){
+
+  let small=null,gridManifest=null,gridCache=null;
+  let active=false,source=null,token=0,originalView=null,lastMode="off",busy=false;
+  function writeLegend(selected){
     legend.replaceChildren();
-    const entries=name==="height"?HEIGHT_BANDS:PERIODS.map(([code,label,color])=>[label,color]);
+    const entries=isHeight(selected)?HEIGHT_BANDS:PERIODS.map(([code,label,color])=>[label,color]);
     for(const [label,color] of entries){
       const cell=document.createElement("span");
       const swatch=document.createElement("i");
       swatch.style.backgroundColor=color;
-      const text=document.createElement("span");text.textContent=label;
-      cell.append(swatch,text);legend.append(cell);
+      const text=document.createElement("span");
+      text.textContent=label;
+      cell.append(swatch,text);
+      legend.append(cell);
     }
+  }
+  function viewBounds(){
+    const bounds=map.getBounds();
+    if(!bounds.isValid())throw new Error("Vue cartographique invalide");
+    return [bounds.getWest(),bounds.getSouth(),bounds.getEast(),bounds.getNorth()];
+  }
+  function bboxKey(b){return b.map(v=>v.toFixed(7)).join(",");}
+  function updateTitles(selected,amount){
+    document.querySelector("#map-title").textContent=
+      (isHeight(selected)?"Hauteurs médianes":"Périodes de construction attribuées")+
+      " · Apur (laboratoire privé)";
+    document.querySelector("#map-subtitle").textContent=
+      "Emprises actuelles Apur · "+(isHeight(selected)?"h_med en mètres":"périodes attribuées")+
+      " · "+amount.toLocaleString("fr-FR")+" emprises uniques visibles · millésime non confirmé · aucune vacance";
   }
   function dismiss({forOtherLayer=false}={}){
     token++;
     if(map.hasLayer(overlay))map.removeLayer(overlay);
-    if(active && !forOtherLayer){
+    if(active&&!forOtherLayer){
       if(!map.hasLayer(volumes))volumes.addTo(map);
       if(originalView)map.setView(originalView.center,originalView.zoom);
       button.disabled=false;
       showMapMode("building");
       status.textContent="Retour aux volumes actuels ; aucune donnée Apur publiée.";
     }
-    active=false;originalView=null;
+    active=false;source=null;originalView=null;lastMode="off";
     mode.value="off";
+    reload.hidden=true;reload.disabled=false;
     legend.replaceChildren();
-    message.textContent="Laboratoire désactivé. Aucun jeu de données Apur chargé depuis Internet.";
+    message.textContent="Laboratoire désactivé. Aucun jeu de données Apur récupéré sur Internet.";
   }
-  // Existing IRIS/arrondissement change handlers run after capture phase.
+
+  // On change, the existing IRIS/arrondissement handlers take ownership of the map.
   for(const toggle of [irisToggle,arrondToggle]){
     toggle.addEventListener("change",()=>{
       if(toggle.checked && (active||mode.value!=="off"))dismiss({forOtherLayer:true});
     },true);
   }
-  mode.addEventListener("change",async()=>{
-    const selected=mode.value;
-    const current=++token;
-    if(selected==="off"){
-      dismiss();
-      return;
+  map.on("moveend",()=>{
+    if(active&&isGrid(lastMode)&&!busy){
+      message.textContent="Cadrage modifié : la sélection précédente reste affichée. "+
+        "Cliquer sur « Recharger les cellules visibles » pour cette nouvelle zone.";
     }
+  });
+
+  async function apply(selected,{refresh=false}={}){
+    if(busy)return;
+    const current=++token;
+    busy=true;
     mode.disabled=true;
-    message.textContent="Vérification SHA-256 du dérivé Apur privé, sans accès à l'API…";
+    reload.disabled=true;
+    message.textContent="Vérification de la source Apur figée, sans API externe…";
     try{
-      if(!loaded)loaded=await fetchLocalSnapshot(APUR_LAB_FIXTURE_SHA256);
-      if(current!==token||mode.value!==selected)return;
-      // All file validation is complete before any map or toggle change.
+      let next,kind,detail="";
+      if(isGrid(selected)){
+        if(!gridManifest)gridManifest=await loadLocalManifest(
+          APUR_GRID_MANIFEST_SHA256,fetch,GRID_PATH);
+        const bbox=viewBounds(),key=bboxKey(bbox);
+        if(!refresh&&gridCache?.key===key){
+          next=gridCache.result;
+        }else{
+          next=await loadVisibleGrid(gridManifest,bbox,fetch,GRID_PATH);
+          if(bboxKey(viewBounds())!==key)throw new Error("Cadrage modifié pendant le chargement : recharger");
+          gridCache={key,result:next};
+        }
+        if(next.uniqueObjects===0)throw new Error("Aucune emprise dans la zone visible");
+        kind="grid";
+        detail=next.cellsLoaded+" cellules, "+next.placements.toLocaleString("fr-FR")+
+          " occurrences vérifiées et dédoublonnées, "+next.expectedBytes.toLocaleString("fr-FR")+" octets";
+      }else{
+        if(!small)small=await fetchLocalSnapshot(APUR_LAB_FIXTURE_SHA256);
+        next={collection:small.collection,uniqueObjects:small.collection.features.length};
+        kind="small";
+        detail="extrait privé de 150 emprises SHA-256 vérifié";
+      }
+      if(token!==current||mode.value!==selected)return;
+      // Nothing changes in the map until all requested features passed integrity checks.
       if(!active)originalView={center:map.getCenter(),zoom:map.getZoom()};
       irisToggle.checked=false;
       arrondToggle.checked=false;
-      if(map.hasLayer(iris))map.removeLayer(iris);
-      if(map.hasLayer(arrond))map.removeLayer(arrond);
-      if(map.hasLayer(volumes))map.removeLayer(volumes);
-      if(!active){
-        overlay.addData(loaded.collection);
-        overlay.addTo(map);
-        map.fitBounds(overlay.getBounds().pad(0.08));
+      map.removeLayer(iris);
+      map.removeLayer(arrond);
+      map.removeLayer(volumes);
+      if(source!==kind || (kind==="grid" && refresh) ||
+          (kind==="grid" && gridCache?.key!==overlay._apurKey)){
+        overlay.clearLayers();
+        overlay.addData(next.collection);
+        overlay._apurKey=kind==="grid"?gridCache.key:null;
       }
-      active=true;
+      if(!map.hasLayer(overlay))overlay.addTo(map);
+      active=true;source=kind;lastMode=selected;
       button.disabled=true;
+      reload.hidden=kind!=="grid";
+      if(kind==="small")map.fitBounds(overlay.getBounds().pad(0.08));
       overlay.setStyle(feature=>({color:"#243944",weight:0.65,fillOpacity:0.8,
-        fillColor:(selected==="height"?heightStyle(feature.properties.height_m):
+        fillColor:(isHeight(selected)?heightStyle(feature.properties.height_m):
           periodStyle(feature.properties.period_code)).color}));
       writeLegend(selected);
-      const available=loaded.collection.features.filter(f=>f.properties.height_m!==null).length;
-      const title=selected==="height"?"Hauteurs médianes · emprises Apur":
-        "Périodes attribuées · emprises Apur";
-      document.querySelector("#map-title").textContent=title+" (laboratoire local)";
-      document.querySelector("#map-subtitle").textContent=selected==="height"?
-        "Apur · hauteur h_med en mètres, 150 emprises actuelles · millésime non confirmé":
-        "Apur · périodes attribuées aux emprises actuelles · millésime non confirmé";
-      status.textContent="150 emprises du dérivé local SHA-256 validé. "+
-        "Aucun taux de vacance associé aux polygones.";
-      message.textContent=(selected==="height"?available+" hauteurs exploitables sur 150 emprises. ":
-        "150 emprises avec période de construction attribuée. ")+
-        "Apur · ODbL. Archive extraite le 16/10/2026, millésime métier non confirmé.";
+      updateTitles(selected,next.uniqueObjects);
+      status.textContent=next.uniqueObjects.toLocaleString("fr-FR")+
+        " emprises Apur affichées, sans indicateur de vacance par bâtiment.";
+      const heights=next.collection.features.filter(f=>f.properties.height_m!=null).length;
+      message.textContent=next.uniqueObjects.toLocaleString("fr-FR")+
+        " emprises uniques · "+(isHeight(selected)?heights.toLocaleString("fr-FR")+" hauteurs disponibles · ":"")+
+        detail+". © Apur · ODbL · extraction du 16/10/2026, millésime métier non confirmé.";
     }catch(error){
-      // Preserve existing map on invalid or absent candidate; reset only the select.
-      mode.value=active?(selected==="height"?"period":"height"):"off";
-      message.textContent="Aucune nouvelle couche appliquée : "+error.message;
+      // Keep the previous overlay and controls on any missing/altered/stale cell.
+      mode.value=lastMode;
+      reload.hidden=!isGrid(lastMode);
+      message.textContent="Aucune nouvelle couche appliquée : "+error.message+
+        ". La couche précédente est conservée.";
     }finally{
+      busy=false;
       mode.disabled=false;
+      reload.disabled=false;
     }
+  }
+
+  mode.addEventListener("change",()=>{
+    const selected=mode.value;
+    if(selected==="off")dismiss();
+    else apply(selected);
+  });
+  reload.addEventListener("click",()=>{
+    if(isGrid(lastMode) && mode.value===lastMode)apply(lastMode,{refresh:true});
   });
 }
