@@ -1,3 +1,14 @@
+## Reprise Apur — export figé officiel et audit étendu (16/10/2026)
+
+- Départ : GitHub `main=72a9d06377541b7b266e0d8153e89a7ae19afb95`, PR #17 et #18 ouvertes en brouillon ; aucune session/lease VACANT concurrente au contrôle. Branche de cette passe : `dev/apur-frozen-export-qa-20261016`.
+- **Source immuable privée obtenue** : export ZIP SHP officiel Apur via `opendata.apur.org/api/download/v1/items/85fa0a4303744ad4ab6e2a89882b5fca/shapefile?layers=0`. Archivage `/srv/vacant/data/raw/apur/frozen-2026-10-16/` (ZIP, catalogue JSON, Géocatalogue XML, manifeste), SHA-256 ZIP **`f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11`**, 31 981 417 octets. ZIP validé, aucun export dans Git/site, permissions privées.
+- **Millésime NON confirmé** : fichier téléchargeable daté HTTP 13/10/2026 ; catalogue créé 09/07/2025, modifié 30/07/2026 ; Géocatalogue XML `lastUpdate=2025-02` (révision de métadonnée 01/09/2026), **mais lignes de l'archive modifiées jusqu'au 11/09/2026**. Ne pas présenter le jeu comme millésime février 2025. Email envoyé via Gmail à **data@apur.org le 16/10** demandant version certifiée, export et modalités ODbL. Ne pas envoyer de doublon ; vérifier la réponse.
+- Audit source **128 206** : 13 `n_sq_eb` nuls, 0 doublon de clé non nulle ; 47 056 années absentes, 7 786 périodes 99 + 8 NULL ; 347 `h_med<h_min`, 18 `h_med>h_max`, 3 `h_med>200m` (catégories qui se recoupent). **14 871** géométries contrôlées GEOS selon échantillon déterministe enrichi en non datés, **6** auto-intersections d'anneau et **25** MultiPolygon. Ces 6 ne sont **pas** un décompte exhaustif.
+- Fichiers de cette PR : `scripts/audit_apur_frozen_export.py`, `tests/test_audit_apur_frozen_export.py`, `docs/apur-frozen-export-20261016.md`, `docs/handoff.md`. Tests sur clone de branche : **53/53 Python et 25/25 Node** ; audit contre le ZIP réel réussi. Aucun test navigateur supplémentaire ici.
+- Prochaine priorité : vérifier individuellement les six anomalies de topologie et 13 clés absentes, demander confirmation de version/droits ODbL, puis recette locale avant toute publication. La PR #18 est un prototype isolé sous `experiments/`, non déployé. **Ne jamais attribuer vacance d'IRIS à une emprise.**
+- Production inchangée au départ : `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0`. Ne pas redéployer du seul fait de cette PR. À la fin, libérer les locks `repo:Kiwinokoto/vacant` et `state:vacant`; aucun service, Docker, BDD, DNS ou Traefik modifié.
+
+
 # VACANT — passation active (16 octobre 2026)
 
 **Point de reprise prioritaire : [checkpoint Apur du 16/10/2026](checkpoint-apur-20261016.md).** Ce document reflète le dernier état vérifié ; les rubriques ci-dessous constituent l'historique des passes précédentes et peuvent contenir des statuts anciens.
