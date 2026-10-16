@@ -12,6 +12,12 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
   const legend=document.querySelector("#apur-lab-legend");
   if(!section||!mode||!message||!legend)throw new Error("Apur lab controls missing");
   section.hidden=false;
+  const volumeIndicator=document.querySelector("#volumes-indicator");
+  if(volumeIndicator){
+    volumeIndicator.checked=map.hasLayer(volumes);
+    volumes.on("add",()=>{volumeIndicator.checked=true;});
+    volumes.on("remove",()=>{volumeIndicator.checked=false;});
+  }
   const overlay=L.geoJSON(null,{
     style:feature=>({color:"#243944",weight:0.65,fillOpacity:0.8,
       fillColor:(mode.value==="height"?heightStyle(feature.properties.height_m):
