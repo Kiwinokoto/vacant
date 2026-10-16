@@ -1,5 +1,13 @@
 # VACANT — passation active après audit SIG du 16/10/2026
 
+## Fin de passe — 16 octobre 2026, vers 15 h 39 (heure de Paris)
+
+- **PR #6 fusionnée**, code et audit du candidat IRIS 2013 intégrés à `main` via squash `75d8989c8f5082b32d4fb04965257d8727d949e0`. Aucun changement du site ni des fichiers GeoJSON publics.
+- Validation finale : 22 tests JavaScript et 27 tests Python passent. Audit SIG rejoué depuis l'archive ZIP originale vérifiée, sans raccourci vers une extraction locale ; 992 IRIS, duplication 10× contrôlée, 0 géométrie invalide, recouvrement médian 2013/2025 de 0,947. Preuves et SHA : `docs/iris-2013-candidate.md`.
+- Fichier dérivé RP2011/géographie candidate 2013 **strictement privé** (`/srv/vacant/data/processed/iris-2013-candidate/iris-2011-candidate.geojson`) ; l'archive brute est également privée. Répertoires candidats à permissions `0700`, fichiers `0600`. Vérification HTTPS : `/data/iris-2011-candidate.geojson` renvoie **404**, les anciens GeoJSON publics renvoient HTTP 200.
+- Dernière release de production observée : `/srv/vacant/releases/2424a45ad590901e3c96c781e10d8b2309c874cb/site`, conteneur actif, aucun redémarrage. Le clone local `/srv/vacant/work-iris-2013-candidate` a un commit non poussé en direct, mais le contenu du commit GitHub a été vérifié par égalité des arbres Git.
+- Suite prioritaire : vérifier indépendamment l'édition géométrique IGN 2013 et les conditions de redistribution, puis identifier des éditions 2008 et 2018 authentifiées. **Ne pas activer les polygones secondaires en production sans ce contrôle.**
+
 ## État confirmé
 - Vérité GitHub au début de la passe : \`Kiwinokoto/vacant\` \`main\` à \`ecfea2e195e8f65da340f4e3beb60419b3dcd596\`. Travail de cette passe sur \`dev/iris-2013-candidate\`. Avant de reprendre, vérifier HEAD GitHub, PR, état des clones et verrous AgentCTL ; **ne pas utiliser le vieux clone /srv/vacant/source** comme vérité.
 - Production VACANT **inchangée** : https://vacant.kiwinokoto.fr, conteneur \`vacant-vacant-web-1\` sur VPS personnel, release \`2424a45ad590901e3c96c781e10d8b2309c874cb\` à vérifier à chaque reprise.
