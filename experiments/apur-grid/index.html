@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>VACANT / LAB — Paris, grille Apur privée</title>
+  <link rel="stylesheet" href="./_local/leaflet.css">
+  <style>
+    :root{color-scheme:light;--ink:#1c333e;--paper:#f5f5f1;--accent:#136a71}
+    *{box-sizing:border-box}
+    body{margin:0;font:15px/1.45 system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+    header{background:#102e39;color:#f0f7f3;padding:10px 20px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    header strong{letter-spacing:.1em}
+    main{display:grid;grid-template-rows:auto minmax(330px,1fr) auto;height:calc(100vh - 44px);min-height:620px}
+    .bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 18px;background:#e7edeb}
+    .bar h1{font-size:1.15rem;margin:0 auto 0 0}
+    button,select{font:inherit;border-radius:6px;padding:8px;border:1px solid #667d82}
+    button{background:var(--accent);color:white;cursor:pointer;font-weight:650;padding:9px 14px}
+    button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #d38a2e;outline-offset:2px}
+    button:disabled{opacity:.5;cursor:wait}
+    #map{height:100%;background:#d9e3e0}
+    .info{padding:10px 18px;max-height:28vh;overflow-y:auto;background:#fff}
+    .info p{margin:5px 0}
+    #status{font-weight:650}
+    .legend{display:flex;flex-wrap:wrap;gap:5px 14px;margin:9px 0}
+    .legend span{display:inline-flex;gap:5px;align-items:center;font-size:.83rem}
+    .legend i{display:inline-block;width:12px;height:12px;border-radius:2px;flex:none}
+    .note{font-size:.82rem;color:#4e626a}
+    @media(max-width:700px){
+      header{padding:8px 13px}
+      main{display:flex;flex-direction:column;height:auto;min-height:0}
+      .bar{padding:9px 12px}
+      .bar h1{flex:1 1 100%}
+      .bar button{flex:1 1 100%}
+      #map{height:53vh;min-height:330px;flex:none}
+      .info{max-height:none;padding:10px 12px}
+    }
+  </style>
+</head>
+<body>
+<header><strong>VACANT / LAB — Apur 500 m</strong><span>Local uniquement · non publiable</span></header>
+<main>
+  <div class="bar">
+    <h1>Emprises bâties actuelles</h1>
+    <label for="layer-mode">Coloration</label>
+    <select id="layer-mode"><option value="period">Période attribuée</option><option value="height">Hauteur médiane (m)</option></select>
+    <button id="load" type="button">Charger la zone visible</button>
+  </div>
+  <div id="map" aria-label="Carte expérimentale des emprises Apur"></div>
+  <section class="info" aria-label="Informations et limites">
+    <p id="status" role="status" aria-live="polite">Zoomez vers quelques rues puis chargez. Chaque cellule est vérifiée avant affichage.</p>
+    <div id="legend" class="legend" aria-label="Légende Apur"></div>
+    <p class="note">© <a href="https://opendata.apur.org/datasets/emprise-batie-paris" target="_blank" rel="noopener noreferrer">Apur</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL-1.0</a> · extraction 16 octobre 2026. <strong>Millésime métier non confirmé.</strong> Une emprise peut représenter plusieurs bâtiments. Ni vacance par immeuble ni inventaire historique reconstitué.</p>
+    <p class="note">Grille expérimentale 500 m en Lambert-93, vue en WGS84. Une forme traversant plusieurs cellules n'est comptée qu'une fois. Le chargement est manuel et limité à 12 cellules, 5 000 occurrences ou 10 Mo.</p>
+  </section>
+</main>
+<script src="./_local/leaflet.js"></script>
+<script type="module">
+  import {loadLocalManifest,loadVisibleGrid} from "./grid-client.mjs";
+  const SHA = "bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c";
+  const P = [
+    [1,"Avant 1800","#65583d"],[2,"1801–1850","#a48e48"],[3,"1851–1914","#c7a44f"],
+    [5,"1915–1939","#d58753"],[6,"1940–1967","#d56d53"],[7,"1968–1975","#c55567"],
+    [8,"1976–1981","#ad6687"],[9,"1982–1989","#917aab"],[10,"1990–1999","#7193bc"],
+    [11,"2000–2007","#5eacb3"],[12,"2008 et après","#4c9d79"],[99,"Non datée","#9ba5aa"]
+  ];
+  const H=[
+    ["< 10 m","#b2dfd0"],["10 à < 20 m","#6ebaaa"],["20 à < 35 m","#e5c879"],
+    ["35 à < 60 m","#dd9875"],["≥ 60 m","#ad6487"],["Indisponible","#95a0aa"]
+  ];
+  const period = new Map(P.map(([code,label,color])=>[code,{label,color}]));
+  const status=document.getElementById("status"),btn=document.getElementById("load");
+  const mode=document.getElementById("layer-mode"),legend=document.getElementById("legend");
+  const allowedHost=["localhost","127.0.0.1","[::1]"].includes(location.hostname);
+  let dataLoaded=null,manifest=null,loading=false;
+  function fillLegend(){
+    legend.replaceChildren();
+    const values=mode.value==="period"?P.map(([,label,color])=>[label,color]):H;
+    for(const [label,color] of values){
+      const item=document.createElement("span"),swatch=document.createElement("i"),
+        title=document.createElement("span");
+      swatch.style.backgroundColor=color;title.textContent=label;
+      item.append(swatch,title);legend.append(item);
+    }
+  }
+  function color(feature){
+    if(mode.value==="period")return period.get(feature.properties.period_code)?.color??"#95a0aa";
+    const h=feature.properties.height_m;
+    return H[h===null?5:h<10?0:h<20?1:h<35?2:h<60?3:4][1];
+  }
+  fillLegend();
+  if(!allowedHost||!window.L){
+    btn.disabled=true;
+    status.textContent="Laboratoire réservé à localhost ; Leaflet local requis.";
+  }else{
+    const map=L.map("map",{preferCanvas:true}).setView([48.855,2.3747],17);
+    const overlay=L.geoJSON(null,{
+      style:f=>({color:"#243b49",weight:.5,fillOpacity:.81,fillColor:color(f)}),
+      onEachFeature:(f,layer)=>layer.bindPopup(()=>{
+        const div=document.createElement("div"),title=document.createElement("strong");
+        title.textContent="Emprise Apur n° "+f.properties.object_id;div.append(title);
+        for(const message of [
+          "Période attribuée : "+period.get(f.properties.period_code).label,
+          "Hauteur médiane : "+(f.properties.height_m===null?"indisponible":
+            f.properties.height_m.toLocaleString("fr-FR")+" m"),
+          "Emprise actuelle ; millésime métier incertain ; aucune vacance par bâtiment."]){
+          const p=document.createElement("p");p.textContent=message;div.append(p);
+        }
+        return div;
+      })
+    }).addTo(map);
+    mode.addEventListener("change",()=>{
+      fillLegend();
+      if(dataLoaded)overlay.setStyle(f=>({
+        color:"#243b49",weight:.5,fillOpacity:.81,fillColor:color(f)}));
+    });
+    map.on("moveend",()=>{
+      if(dataLoaded)status.textContent="Cadrage modifié : l'ancienne sélection reste affichée. Rechargez la zone visible.";
+    });
+    btn.addEventListener("click",async()=>{
+      if(loading)return;
+      loading=true;btn.disabled=true;
+      status.textContent="Vérification locale des cellules visibles…";
+      const start=performance.now();
+      try{
+        if(!manifest)manifest=await loadLocalManifest(SHA);
+        const b=map.getBounds();
+        const bbox=[b.getWest(),b.getSouth(),b.getEast(),b.getNorth()];
+        const result=await loadVisibleGrid(manifest,bbox);
+        // Only replace the current overlay once all cells and hashes are valid.
+        overlay.clearLayers();
+        overlay.addData(result.collection);
+        dataLoaded=result;
+        status.textContent=result.uniqueObjects.toLocaleString("fr-FR")+" emprises uniques affichées ("+
+          result.placements.toLocaleString("fr-FR")+" occurrences dans "+
+          result.cellsLoaded+" cellules, dédoublonnées), "+result.expectedBytes.toLocaleString("fr-FR")+
+          " octets vérifiés en "+Math.round(performance.now()-start)+" ms.";
+      }catch(e){
+        status.textContent="Chargement refusé : "+e.message+
+          " La couche précédente est conservée ; aucun remplacement fictif.";
+      }finally{loading=false;btn.disabled=false}
+    });
+  }
+</script>
+</body>
+</html>
