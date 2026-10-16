@@ -6,6 +6,7 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="VACANT · laboratoire Apur, datation indicative des emprises bâties. Hors production.">
   <title>VACANT · Laboratoire de datation Apur</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     :root{color-scheme:light;--paper:#f5f5f0;--ink:#192d35;--muted:#50666d;--line:#d3dddb;--accent:#186c70}
@@ -13,7 +14,7 @@
     body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:14px clamp(16px,3vw,36px);background:#16353d;color:#fff}
     .top strong{letter-spacing:.15em;font-size:1.25rem}.top span{color:#dce9e4;font-size:.9rem}
-    main{display:grid;grid-template-columns:minmax(290px,350px) minmax(0,1fr);gap:0;min-height:calc(100vh - 59px)}
+    main{display:grid;grid-template-columns:minmax(290px,350px) minmax(0,1fr);gap:0;height:calc(100vh - 59px);min-height:640px}
     aside{padding:24px 24px 32px;border-right:1px solid var(--line);overflow:auto}
     h1{font-size:clamp(1.6rem,3vw,2rem);line-height:1.13;letter-spacing:-.035em;margin:.6rem 0 1rem}
     h2{font-size:1rem;margin:1.5rem 0 .6rem}
@@ -33,13 +34,13 @@
     .map-section{display:flex;flex-direction:column;min-width:0;min-height:0;background:#e9eee9}
     .map-head{padding:12px 16px;display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}
     .map-head strong{font-size:1rem}.map-head small{display:block;color:var(--muted)}
-    #map{min-height:440px;flex:1;width:100%}
+    #map{min-height:0;flex:1;width:100%}
     .map-foot{font-size:.8rem;color:var(--muted);padding:8px 14px;background:#fff}
     .popup p{margin:.3rem 0;font-size:.9rem}
     @media(max-width:740px){
       .top{padding:10px 14px}
       .top span{font-size:.75rem}
-      main{display:flex;flex-direction:column}
+      main{display:flex;flex-direction:column;height:auto;min-height:0}
       aside{padding:18px 16px;border-right:0}
       h1{max-width:24ch}
       #map{height:56vh;min-height:330px;flex:unset}
