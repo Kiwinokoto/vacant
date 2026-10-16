@@ -38,7 +38,7 @@ Dans site/record.mjs, une réponse API doit satisfaire :
 
 - Source live : https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/volumesbatisparis/records
 - Clause ODSQL : in_bbox(geom_x_y, lat_sud, lon_ouest, lat_nord, lon_est), c'est un **filtre par point représentatif**, pas découpage géométrique exact.
-- Pagination limit=100 ; plafond 800 volumes et avertissement si total_count > nombre chargé.
+- Pagination limit=100, tri stable `n_sq_vb`, plafond 800 volumes et avertissement si total_count > nombre chargé. Cette pagination côté API doit être testée en conditions réelles (niveaux CORS, capacités, doublons inter-pages).
 - Chargement exclusivement à l'action utilisateur, cache inexistant pour éviter fausse fraîcheur ; contrôles de débit à effectuer sur terrain.
 - Atlas entier : étape ultérieure (GPKG/GeoJSON sérialisés tuilés sous licence compatible, ingestion reproductible, qualité par couche et manifeste, éventuellement PMTiles). Pas de base ni cluster prématuré.
 - Tuiles : OSM standard en usage d'exploration ponctuelle avec attribution ; **ne pas** s'en servir pour gros trafic sans fournisseur conforme à la politique de tuiles OSM.

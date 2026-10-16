@@ -42,7 +42,7 @@ if (typeof window.L === "undefined") {
       for (let offset = 0; offset < 800; offset += 100) {
         const where = "in_bbox(geom_x_y," +
           [b.getSouth(), b.getWest(), b.getNorth(), b.getEast()].map(n => n.toFixed(6)).join(",") + ")";
-        const params = new URLSearchParams({ limit: "100", offset: String(offset), where });
+        const params = new URLSearchParams({ limit: "100", offset: String(offset), where, order_by: "n_sq_vb" });
         const response = await fetch(SOURCE.api + "?" + params.toString(), {
           headers: { "Accept": "application/json" }
         });

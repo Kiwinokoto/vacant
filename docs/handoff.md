@@ -11,14 +11,14 @@ Dépôt créé vide ; main initialisé par commit b42b1a47fc7fcbee2219a248db3c30
 - ODbL Apur/Paris Data et Licence Ouverte pour les autres sources selon fiche ; pas de réutilisation mixte sans audit de compatibilité.
 
 ## Réalisé
-Audit documentaire des organismes officiels, architecture, interface statique 2D (polygones de volumes Paris Data chargés manuellement ; étages, pas mètres, aucune vacance par immeuble), README et tests. **9 vérifications contractuelles sur le module source récupéré de GitHub réussies dans un environnement JS**, mais la suite complète `node --test` n'a pas été exécutée. PR #1 brouillon ouverte ; pas de merge ni CI déclenchée volontairement.
+Audit documentaire des organismes officiels, architecture, interface statique 2D (polygones de volumes Paris Data chargés manuellement ; étages, pas mètres, aucune vacance par immeuble), README et tests. **9 vérifications contractuelles sur le module source récupéré de GitHub réussies dans un environnement JS**, mais la suite complète `node --test` n'a pas été exécutée. PR #1 de référence, à contrôler sur GitHub au moment de la reprise ; tests du code en runtime V8 exécutés sur les **9 cas présents dans les fichiers de tests du dépôt** (9/9 OK), mais ni la suite Node native ni les requêtes HTTP navigateur n'ont été validées.
 
 ## Dernière extension (chronologie)
 Démarrage statistique **2006** acté dans [chronologie.md](chronologie.md). Chronologie de chiffres **Paris entier** vérifiés dans deux tableaux officiels Insee ajoutée au panneau du site ; aucune mise en couleur des polygones ni cartographie IRIS historique. Nouveaux modules `site/timeline.mjs`, `tests/timeline.test.mjs`, plus l'interface de sélection 2006/2011/2016/2023. Commit fonctionnel `548449801ba3ab015b5415c436c479b67d7087eb`. Chiffres historiques 2006/2011/2016 transcrits du RP2022 ; 2023 du RP2023 harmonisé. Écarts d'une unité autorisés dans les sommes arrondies. Important : ne pas comparer les millésimes annuels voisins, et ne pas superposer 2023 sur le bâti actuel comme observation historique.
 
 ## Incertitudes / blocages
 - Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
-- CORS, pagination et restrictions de l'API doivent être vérifiés dans un navigateur réel.
+- CORS, pagination triée par identifiant de volume et restrictions de l'API doivent être vérifiés dans un navigateur réel. Le schéma `geom`, `geom_x_y`, `h_et_max` et `n_sq_vb` a été revérifié sur la fiche officielle Paris Data du 08/10/2026.
 - 12 contrôles supplémentaires de chronologie/provenance vérifiés dans le runtime JS sur les blobs GitHub (tous OK). `npm test` complet non exécuté : `git clone` public depuis le conteneur de test a échoué sur la résolution DNS de github.com. Aucun RDC ni VPS utilisé pour contourner ; réexécuter localement.
 - Aucun contrôle des éventuelles branches/clones non poussés ni lease AgentCTL externe disponible depuis les seules métadonnées GitHub.
 - Droits et formalités de diffusion des images historiques à traiter source par source.
@@ -29,5 +29,7 @@ Démarrage statistique **2006** acté dans [chronologie.md](chronologie.md). Chr
 3. Télécharger un extrait Apur officiel, contrôler datation/hauteur, licences et jointure exacte ; ajouter tests de comparaison spatiale.
 4. Télécharger à partir de 2006 (XLS géographie 2008) et jalons 2011/2016 puis RP2023 (schéma harmonisé + géographie 2025), contrôler variables, dénominateurs, changement de limites et petits effectifs, **puis seulement** afficher la vacance en polygones IRIS sans extrapolation spatiale.
 5. Valider architecture 3D à partir de hauteurs **en mètres**, puis revue et éventuelle promotion/déploiement sur demande explicite.
+
+Avant toute promotion vers main, récupérer le HEAD exact, vérifier PR / checks et fusionner uniquement sans déploiement. Après fusion, mettre à jour l'état ici si une nouvelle passe l'exige.
 
 Ressources : repo GitHub vacant uniquement ; **aucun VPS, aucune base ni déploiement occupé** lors de cette passe. Aucun lock créé sur une ressource distante.
