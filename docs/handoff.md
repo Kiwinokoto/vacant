@@ -1,5 +1,7 @@
 # VACANT — passation active (16 octobre 2026)
 
+**Point de reprise prioritaire : [checkpoint Apur du 16/10/2026](checkpoint-apur-20261016.md).** Ce document reflète le dernier état vérifié ; les rubriques ci-dessous constituent l'historique des passes précédentes et peuvent contenir des statuts anciens.
+
 ## Validation finale — 16/10/2026
 
 - **PR #13 fusionnée et déployée** : code `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0`, release de même SHA active sous `/srv/vacant/releases/<SHA>/site`. 25/25 Node, 40/40 Python, Chromium réel local **et public** (desktop/mobile, cartes des quatre millésimes, erreurs HTTP simulées) ; HTTP/HTTPS et deux GeoJSON historiques publics contrôlés, géométries candidates toujours HTTP 404. Ancienne release `2424a45ad590901e3c96c781e10d8b2309c874cb` conservée pour rollback. Pas d'évolution des données publiques.
