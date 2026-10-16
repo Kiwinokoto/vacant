@@ -1,3 +1,13 @@
+## Checkpoint prioritaire — dérivé privé Apur validé (16/10/2026)
+
+- Source de vérité au départ : `main 72a9d06377541b7b266e0d8153e89a7ae19afb95` ; trois PR antérieures #17/#18/#19 en brouillon. Nouvelle branche indépendante `dev/apur-private-period-candidate-20261016`, sans toucher à `site/` ni à la production `1e6d47c`.
+- Archive Apur privée, SHA-256 `f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11`, 128 206 emprises ; 104 géométries GEOS invalides dans le total, 13 clés métiers nulles. Millésime scientifique **non confirmé**, retour Apur demandé par email le 16/10 et surveillé quotidiennement.
+- Script reproductible `scripts/build_apur_period_candidate.py`, tests `tests/test_build_apur_period_candidate.py` : lecture seule source SHA/CRS/CRC, sélection bornée par polygon WGS84 densifié/reprojeté, plafond **200 avant toute écriture**, exclusion des invalides/ID nuls, aucune réparation implicite, aucun indicateur de vacance. Sortie privée atomique sans écraser de fichier existant.
+- **Dérivé réel privé créé** sous `/srv/vacant/data/processed/apur/experiment-20261016/paris-neighborhood-periods.geojson` (mode 0600), zone [2.373,48.854,2.376,48.856], **150/150 emprises valides, IDs uniques, zéro exclusion** ; **90 771 octets** ; SHA-256 `f3ea9035458c777a0424ab1e68874c20ea49e03ed3616df54157f416ef365340`. Aucun GeoJSON individuel committé ou publié.
+- Recette sur clone frais : **56/56 Python, 25/25 JavaScript**, validation indépendante des 150 objets. **Détails et protocole : [apur-private-candidate-20261016.md](apur-private-candidate-20261016.md).** Aucun test navigateur de cette nouvelle sortie.
+- Prochaines actions : obtenir réponse Apur sur millésime et droits ODbL ; tester localement le rendu du candidat privé sous conditions contrôlées ; ne proposer l'intégration publique qu'après revue/licence, contrôle des couches et tests desktop/mobile. Aucun déploiement/donnée IGN historique ni attribution de vacance par bâtiment.
+- Gestion des ressources : les leases AgentCTL `repo:Kiwinokoto/vacant` et `state:vacant` ont été acquis pour cette passe ; **vérifier leur libération effective** en fin de passe. Production inspectée à `1e6d47c`, conteneur actif, 0 restart.
+
 # VACANT — passation active (16 octobre 2026)
 
 **Point de reprise prioritaire : [checkpoint Apur du 16/10/2026](checkpoint-apur-20261016.md).** Ce document reflète le dernier état vérifié ; les rubriques ci-dessous constituent l'historique des passes précédentes et peuvent contenir des statuts anciens.
