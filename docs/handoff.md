@@ -1,3 +1,11 @@
+## Mise à jour — recette Nginx réelle et ordre des PR (16/10/2026, fin de soirée)
+
+- Chaîne de revue, **non fusionnée** : [ordre des PR #23 → #24 → #25](apur-review-merge-plan-20261016.md). Les anciennes PR #17–#22 restent intactes. Nouvelle proposition gzip dans `deploy/nginx.conf` **non déployée**.
+- Recette **native Nginx 1.18** avec `scripts/recipe_nginx_gzip_loopback.py` : port éphémère lié exclusivement à `127.0.0.1`, **données synthétiques seulement**, HTTP gzip et identity conformes, `Vary: Accept-Encoding`, MIME GeoJSON/JSON/JS vérifiés, petites réponses non compressées, dotfiles 403 et absent 404. Processus Nginx de recette arrêté. Aucune géométrie Apur privée servie.
+- Résultats du vrai jeu de données inchangés : 456 cellules 91,5 Mo brut, gzip 27,4 Mo, Brotli 23,1 Mo ; dans le navigateur à débit 1,6 Mbit/s et 150 ms simulés : **9,0 s → 3,3 s** pour 2 284 emprises uniques avec gzip. **Pas de téléphone physique**.
+- `deploy/README.md` prescrit la préparation sûre Git-only et la recette Nginx isolée. Contrats SIG/ODbL et distinction vacance territoriale / emprises Apur inchangés ; aucun déploiement, `main` figée à `72a9d063` au départ. Voir [rapport](apur-publish-readiness-20261016.md).
+- Avant toute nouvelle écriture, revalider GitHub et les leases AgentCTL ; finir la présente session en libérant le verrou `repo:Kiwinokoto/vacant`.
+
 # VACANT — passation prioritaire : revue de release et compression Apur (16/10/2026)
 
 **Consulter d'abord [la revue de prépublication](apur-publish-readiness-20261016.md), puis [le raccordement local](apur-grid-site-local-20261016.md) et [la consolidation](checkpoint-apur-consolidated-20261016.md).**
