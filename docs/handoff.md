@@ -14,11 +14,12 @@ Dépôt créé vide ; main initialisé par commit b42b1a47fc7fcbee2219a248db3c30
 Audit documentaire des organismes officiels, architecture, interface statique 2D (polygones de volumes Paris Data chargés manuellement ; étages, pas mètres, aucune vacance par immeuble), README et tests. **9 vérifications contractuelles sur le module source récupéré de GitHub réussies dans un environnement JS**, mais la suite complète `node --test` n'a pas été exécutée. PR #1 brouillon ouverte ; pas de merge ni CI déclenchée volontairement.
 
 ## Dernière extension (chronologie)
-Démarrage statistique **2006** acté dans [chronologie.md](chronologie.md). Chronologie de chiffres **Paris entier** vérifiés dans deux tableaux officiels Insee ajoutée au panneau du site ; aucune mise en couleur des polygones ni cartographie IRIS historique. Nouveaux modules `site/timeline.mjs`, `tests/timeline.test.mjs`. Chiffres historiques 2006/2011/2016 transcrits du RP2022 ; 2023 du RP2023 harmonisé. Écarts d'une unité autorisés dans les sommes arrondies. Important : ne pas comparer les millésimes annuels voisins, et ne pas superposer 2023 sur le bâti actuel comme observation historique.
+Démarrage statistique **2006** acté dans [chronologie.md](chronologie.md). Chronologie de chiffres **Paris entier** vérifiés dans deux tableaux officiels Insee ajoutée au panneau du site ; aucune mise en couleur des polygones ni cartographie IRIS historique. Nouveaux modules `site/timeline.mjs`, `tests/timeline.test.mjs`, plus l'interface de sélection 2006/2011/2016/2023. Commit fonctionnel `548449801ba3ab015b5415c436c479b67d7087eb`. Chiffres historiques 2006/2011/2016 transcrits du RP2022 ; 2023 du RP2023 harmonisé. Écarts d'une unité autorisés dans les sommes arrondies. Important : ne pas comparer les millésimes annuels voisins, et ne pas superposer 2023 sur le bâti actuel comme observation historique.
 
 ## Incertitudes / blocages
 - Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
 - CORS, pagination et restrictions de l'API doivent être vérifiés dans un navigateur réel.
+- 12 contrôles supplémentaires de chronologie/provenance vérifiés dans le runtime JS sur les blobs GitHub (tous OK). `npm test` complet non exécuté : `git clone` public depuis le conteneur de test a échoué sur la résolution DNS de github.com. Aucun RDC ni VPS utilisé pour contourner ; réexécuter localement.
 - Aucun contrôle des éventuelles branches/clones non poussés ni lease AgentCTL externe disponible depuis les seules métadonnées GitHub.
 - Droits et formalités de diffusion des images historiques à traiter source par source.
 
