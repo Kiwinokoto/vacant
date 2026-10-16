@@ -35,10 +35,15 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 def read_original(root: Path, source_id: str):
-    matches = sorted((root / "manifests").glob(source_id + "-*.json"))
+    # Prefix-based glob alone is unsafe: rp2023 also matches rp2023-passage.
+    candidates = [
+        json.loads(p.read_text(encoding="utf-8"))
+        for p in sorted((root / "manifests").glob(source_id + "-*.json"))
+    ]
+    matches = [item for item in candidates if item.get("dataset_id") == source_id]
     if len(matches) != 1:
         raise ValueError(f"Exactly one reviewed manifest expected for {source_id}, got {len(matches)}")
-    info = json.loads(matches[0].read_text(encoding="utf-8"))
+    info = matches[0]
     if info.get("dataset_id") != source_id or info.get("status") != "raw_unvalidated":
         raise ValueError(f"Unrecognized raw source: {source_id}")
     path = (root / info["filename"]).resolve(strict=True)
