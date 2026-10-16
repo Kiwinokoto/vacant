@@ -1,5 +1,13 @@
 # VACANT — passation active (16 octobre 2026)
 
+## Mise à jour — déploiement PR #13 et audit Apur (16/10/2026)
+
+- **PR #13 fusionnée** au commit `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0` ; aucune action CI configurée. Tests 25/25 Node et 40/40 Python, recette Chromium locale puis **production** (quatre années, changement de couches, erreurs HTTP 503 simulées avec retour à la couche précédente, mobile 390 px) : `BROWSER_ALL_PASSED`.
+- **Production effective** : release immuable `/srv/vacant/releases/1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0/site`, conteneur VACANT seul recréé via Compose, aucun redémarrage signalé. Certificat Let's Encrypt valide ; HTTPS 200 (accueil, fichiers JS et deux GeoJSON publics), HTTP 301→HTTPS ; fichiers historiques candidats HTTP 404. Données validées inchangées ; ancienne release `2424a45ad590901e3c96c781e10d8b2309c874cb` conservée comme retour arrière.
+- **Audit Apur préliminaire** : 128 206 emprises EPSG:2154. `h_med` positive dans 128 090 cas ; `c_perconst` connue dans 120 412 ; `an_const` manquante dans 47 056 cas. Source, chiffres, limites et suites : `docs/apur-bati-audit.md`. Requêtes agrégées seulement, aucune donnée d'objet enregistrée ni publiée. Code : `scripts/audit_apur_emprises.py`, tests synthétiques.
+- Branche pour cette étape `dev/apur-heights-dating-audit`, base `main` au commit de production. Vérifier le HEAD, PR, état local et locks avant toute écriture. **Aucune nouvelle couche Apur** en production. Ne jamais attribuer un taux de vacance territorial à une emprise.
+- La demande IGN des archives 2008/2013/2018 a bien été **envoyée le 16/10/2026** ; consulter Gmail pour sa réponse, ne pas réexpédier un doublon.
+
 ## Passe 16/10/2026 — éditions historiques et correctif ergonomique
 
 - **Contrôles réalisés** : Node 25/25, Python 40/40. Chromium réel sur clone de la branche avec dérivés agrégés publics aux SHA validés (IRIS 2023 `0b79e30a...`, arrondissements `97667772...`) : bascule de couches, quatre années, labels de géographie, retour aux volumes, deux échecs réseau simulés avec restauration de la couche précédente, mobile 390 px sans débordement ; résultat `BROWSER_ALL_PASSED` le 16/10/2026. Aucune archive géographique historique non autorisée employée dans la recette.

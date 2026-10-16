@@ -92,3 +92,7 @@ L'[audit institutionnel 2014](docs/iris-2014-atlasante.md) retrouve les contours
 ## Préparation des éditions historiques 2008 et 2018
 
 L'[inventaire des éditions IGN](docs/iris-archive-readiness.md) distingue date de livraison et géographie réelle. Aucune nouvelle archive géométrique 2008/2018 ne peut encore être cartographiée à l'IRIS. Les candidats historiques restent privés ; leur publication est bloquée par le validateur tant que les droits et millésimes ne sont pas établis.
+
+## Contrôle des hauteurs et périodes de construction Apur
+
+Le [rapport préliminaire Apur](docs/apur-bati-audit.md) audite la complétude des attributs de 128 206 emprises et les unités réelles. Le script `scripts/audit_apur_emprises.py --live` n’interroge que des comptes et statistiques agrégés. Aucune géométrie n’a été publiée et aucun logement vacant n’est localisé par bâtiment.
