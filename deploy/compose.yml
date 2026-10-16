@@ -1,0 +1,21 @@
+name: vacant
+services:
+  vacant-web:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    volumes:
+      - "${VACANT_WEBROOT:?Set VACANT_WEBROOT to an immutable reviewed release}:/usr/share/nginx/html:ro"
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_network"
+      - "traefik.http.routers.vacant.rule=Host(`vacant.kiwinokoto.fr`)"
+      - "traefik.http.routers.vacant.entrypoints=websecure"
+      - "traefik.http.routers.vacant.tls=true"
+      - "traefik.http.routers.vacant.tls.certresolver=letsencrypt"
+      - "traefik.http.services.vacant.loadbalancer.server.port=80"
+    networks:
+      - traefik_network
+networks:
+  traefik_network:
+    external: true

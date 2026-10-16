@@ -1,12 +1,12 @@
 # VACANT — atlas de l'occupation et de la vacance immobilière
 
-Projet public expérimental, **audit et démonstrateur 2D en cours**, sans déploiement public.
+Projet public expérimental et atlas 2D **de données officielles**. Les originaux restent sur le VPS ; seul un fichier agrégé validé peut être exposé par le site statique.
 
 ## Ce que nous savons et ce que nous ne savons pas
 
 - Des géométries de **volumes bâtis existants** sont publiées par la Ville de Paris sous licence ODbL. La couche Paris Data renseigne le **nombre d'étages**, **pas la hauteur en mètres**.
 - L'Apur dispose d'une couche de datation du bâti et d'informations de hauteur, à qualifier et apparier avant de les afficher à l'objet.
-- **Départ temporel choisi : 2006** pour les statistiques territoriales IRIS (jalons 2006, 2011, 2016 et 2023 ; pas d'interpolation annuelle). Un aperçu de chiffres Insee réels pour Paris entier est intégré, mais **la carte de volumes ne représente pas la vacance**. 1968–1999 ne sert qu'au contexte agrégé ; LOVAC privé 2020–2026 est une série distincte.
+- **Départ temporel choisi : 2006** pour les statistiques territoriales IRIS (jalons 2006, 2011, 2016 et 2023 ; pas d'interpolation annuelle). La chronologie agrégée Paris entier et une **couche indépendante IRIS 2023** (Insee 2023 + contours IGN 2025) sont intégrées ; les volumes bâtis ne représentent jamais des logements vacants. 1968–1999 ne sert qu'au contexte agrégé ; LOVAC privé 2020–2026 est une série distincte.
 - L'Insee publie des **statistiques de logements vacants à la maille IRIS**, pas une liste publique de logements vides.
 - Les données ouvertes LOVAC concernent des **agrégats communaux**, avec deux ruptures : changement de source GMBI en 2023 (impact millésime LOVAC 2024) et nouvelle extraction fiscale en 2025.
 - Le cadastre ancien et les cartes permettent une recherche historique ponctuelle, **pas une animation annuelle attestée depuis 1830**.
@@ -20,8 +20,10 @@ Prérequis : un navigateur récent et Python 3 (pour servir les fichiers) ; aucu
 1. Dans le dossier du dépôt, lancer : `python3 -m http.server 8000`
 2. Ouvrir `http://localhost:8000/site/`.
 3. Cliquer sur « Charger les volumes de la zone visible ». Une connexion réseau est nécessaire (Paris Data, tuiles OSM et bibliothèque Leaflet).
-4. Consulter la mini-chronologie Insee **Paris entière** en sélectionnant exclusivement les années 2006, 2011, 2016 et 2023. Elle ne recolore pas les immeubles et ne prétend pas décrire les IRIS.
-5. Cliquer sur les polygones pour consulter le nombre d'étages et la source. Le rendu ne représente **ni mètres ni logements vacants**.
+4. Pour tester la couche des **992 IRIS 2023**, créer le dossier `site/data/`, puis y copier le fichier vérifié `/srv/vacant/data/processed/iris-2023/iris-2023.geojson`. Ce fichier n'est pas versionné en Git : sans lui, l'interface affiche une erreur explicite.
+5. Activer « Vacance résidentielle · IRIS 2023 » pour voir les taux par quartier, indépendamment du bâti. Les taux sont volontairement grisés pour moins de 50 logements.
+6. La mini-chronologie Insee **Paris entière** présente les recensements 2006, 2011, 2016 et 2023 sans interpolation. Elle ne recolore pas les immeubles et ne prétend pas décrire les IRIS.
+7. Désactiver les IRIS pour revenir aux volumes bâtis et consulter leurs étages. Aucun chiffre de vacance n'est attribué aux immeubles.
 
 L'API publique peut être momentanément indisponible, limitée en débit ou soumise au CORS : un message d'erreur est montré, **aucune donnée de secours fictive** n'est substituée. Les requêtes sont manuelles, géographiquement restreintes et plafonnées.
 
@@ -31,13 +33,35 @@ Avec Node.js >= 20 : `node --test tests/*.test.mjs` (ou `npm test`). Pas de paqu
 
 Le test concerne les contrats, les géométries et les règles de provenance. **Il ne constitue pas une validation réseau** des schémas de Paris Data en production.
 
+## Construction reproductible de la couche IRIS 2023
+
+`site/iris-contract.mjs` valide des **agrégats territoriaux** IRIS *déjà préparés* (GeoJSON avec les champs `iris_code`, `housing_count`, `vacant_count`). Le préparateur `scripts/build_iris_2023.py` assemble désormais les trois sources officielles pour l'année 2023 : Parquet Insee, référence IRIS Insee 2025 et GeoParquet IGN 2025. Il contrôle SHA-256, cardinalité et codes (992/992), totaux Paris publiés et topologie GEOS. Il produit une géométrie par IRIS, sans localisation de logements vides.
+
+La couche réelle validée est stockée sur le VPS (`/srv/vacant/data/processed/iris-2023/iris-2023.geojson`, environ 823 Ko) et le site peut l'afficher sur activation. Les années 2006, 2011 et 2016 ne sont **pas encore cartographiées à l'IRIS**. Avec Node.js >=20 :
+
+```sh
+node scripts/validate-iris.mjs /chemin/iris-2023-prepares.geojson /chemin/manifest.json
+# Ajouter /chemin/sortie.geojson en troisième argument seulement après audit :
+node scripts/validate-iris.mjs /chemin/iris-2023-prepares.geojson /chemin/manifest.json /chemin/sortie.geojson
+```
+
+Le manifeste exigé comprend : `census_year`, `geography_year`, `zone="Paris"`, `geography="IRIS"`, `metric="vacant_housing_rp"`, `extracted_at` (AAAA-MM-JJ), `statistics` et `contours` (URL officielle, licence ouverte 2.0, SHA-256 du fichier d'origine) et, pour une sortie, `expected_iris_count`. **Ce dernier doit être déduit indépendamment de l'inventaire officiel des contours** et non égalisé arbitrairement au nombre de lignes préparées. Le script refuse d'écraser une sortie existante et s'arrête sur toute incohérence.
+
+Voir [le protocole temporel](docs/chronologie.md) et [le contrat géographique](docs/architecture.md). Les jeux de tests utilisent uniquement des fixtures synthétiques internes, jamais mises sur la carte.
+
+## Sources Insee : collecte privée
+
+Le script `scripts/collect_insee.py` télécharge, **uniquement avec `--execute`**, les archives officielles RP2006, RP2011, RP2016, RP2023 et le dictionnaire de correspondance RP2023. Il archive les fichiers immuables et leurs empreintes SHA-256. **Sept fichiers officiels sont maintenant archivés sur le VPS**, avec manifestes et empreintes SHA-256 ; la carte dérivée 2023 a passé les contrôles Node et GEOS. Voir [la procédure, les URLs et les limites](docs/acquisition.md).
+
 ## Documentation
 
 - [Audit des sources et droits](docs/sources.md)
 - [Modèle de données, architecture et validations](docs/architecture.md)
 - [Décision chronologique 2006–2023, preuves et limites](docs/chronologie.md)
 - [Passation / limites et suite](docs/handoff.md)
+- [Collecte Insee et stockage privé](docs/acquisition.md)
 - [Règles de collaboration](AGENTS.md)
+- [Déploiement statique Traefik, sous contrôle AgentCTL](deploy/README.md)
 
 ## Principes non négociables
 

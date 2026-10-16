@@ -1,0 +1,17 @@
+raw/
+processed/
+data/raw/
+data/processed/
+*.zip
+*.7z
+*.parquet
+*.gpkg
+*.fgb
+*.xls
+*.xlsx
+__pycache__/
+*.pyc
+.venv/
+
+# Derived public GeoJSON belongs to generated releases, not raw Git history
+site/data/

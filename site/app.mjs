@@ -1,14 +1,19 @@
 import { SOURCE, normalizeBatch } from "./record.mjs";
 import { renderParisTimeline } from "./timeline.mjs";
+import { validateIrisImport } from "./iris-contract.mjs";
+import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
 
 renderParisTimeline();
 
 const status = document.querySelector("#status");
 const button = document.querySelector("#load");
+const irisToggle = document.querySelector("#iris-toggle");
+const irisStatus = document.querySelector("#iris-status");
 
 if (typeof window.L === "undefined") {
   status.textContent = "Impossible de charger Leaflet : vérifiez le réseau et le CDN.";
   button.disabled = true;
+  irisToggle.disabled = true;
 } else {
   const map = L.map("map", { preferCanvas: true }).setView([48.855, 2.3747], 17);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -23,6 +28,52 @@ if (typeof window.L === "undefined") {
     onEachFeature: (feature, layer) => layer.bindPopup(() => buildPopup(feature))
   }).addTo(map);
 
+  const irisPolygons = L.geoJSON(null, {
+    style: feature => ({
+      color:"#33424c",weight:0.7,fillOpacity:0.76,
+      fillColor:colorForIRIS(feature.properties)
+    }),
+    onEachFeature:(feature,layer)=>layer.bindPopup(()=>buildIRISPopup(feature))
+  });
+  let irisLoaded=false;
+  irisToggle.addEventListener("change",async()=>{
+    if(!irisToggle.checked){
+      if(map.hasLayer(irisPolygons))map.removeLayer(irisPolygons);
+      if(!map.hasLayer(volumes))volumes.addTo(map);
+      button.disabled=false;
+      irisStatus.textContent="Retour aux volumes bâtis actuels. Zoomez sur une rue pour les charger.";
+      return;
+    }
+    irisToggle.disabled=true;
+    button.disabled=true;
+    irisStatus.textContent="Chargement des quartiers Insee 2023 et contours IGN 2025…";
+    try{
+      if(!irisLoaded){
+        const response=await fetch("./data/iris-2023.geojson",{cache:"no-store"});
+        if(!response.ok)throw new Error("fichier IRIS indisponible (HTTP "+response.status+")");
+        const payload=await response.json();
+        const checked=validateIrisImport(payload,payload.metadata,{forPublication:true});
+        if(checked.features.length!==992)throw new Error("cardinalité IRIS inattendue");
+        irisPolygons.addData(checked);
+        irisLoaded=true;
+      }
+      if(map.hasLayer(volumes))map.removeLayer(volumes);
+      irisPolygons.addTo(map);
+      map.fitBounds(irisPolygons.getBounds().pad(0.025));
+      let shown=0;
+      irisPolygons.eachLayer(layer=>{if(isReliableIRIS(layer.feature.properties))shown++;});
+      irisStatus.textContent="IRIS 2023 · 992 quartiers vérifiés · "+shown+
+        " taux représentés. Gris : aucun logement ou moins de 50 logements. "+
+        "Aucune information individuelle ni par bâtiment.";
+    }catch(error){
+      irisToggle.checked=false;
+      if(!map.hasLayer(volumes))volumes.addTo(map);
+      button.disabled=false;
+      irisStatus.textContent="Couche IRIS non affichée : "+error.message+". Aucune donnée de secours fictive.";
+    }finally{
+      irisToggle.disabled=false;
+    }
+  });
   let busy = false;
   button.addEventListener("click", async () => {
     if (busy) return;
@@ -106,6 +157,37 @@ function buildPopup(feature) {
   link.href = SOURCE.url;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
+  root.append(link);
+  return root;
+}
+
+
+function buildIRISPopup(feature){
+  const p=feature.properties;
+  const fmt=new Intl.NumberFormat("fr-FR",{maximumFractionDigits:0});
+  const root=document.createElement("div");
+  root.className="popup";
+  const title=document.createElement("strong");
+  title.textContent="Quartier IRIS "+p.iris_code+" · recensement 2023";
+  root.append(title);
+  const lines=[
+    "Total de logements estimé : "+fmt.format(p.housing_count),
+    "Logements vacants estimés : "+fmt.format(p.vacant_count),
+    isReliableIRIS(p)?"Taux de vacance : "+p.vacancy_percent.toLocaleString("fr-FR")+" %":
+      "Taux masqué : parc de moins de 50 logements ou dénominateur nul",
+    "Contours IGN : géographie 2025",
+    "Aucune information sur l'occupation d'un bâtiment ou d'une adresse"
+  ];
+  for(const line of lines){
+    const paragraph=document.createElement("p");
+    paragraph.textContent=line;
+    root.append(paragraph);
+  }
+  const link=document.createElement("a");
+  link.href="https://www.insee.fr/fr/statistiques/9061333";
+  link.target="_blank";
+  link.rel="noopener noreferrer";
+  link.textContent="Source Insee RP2023";
   root.append(link);
   return root;
 }

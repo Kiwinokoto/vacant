@@ -15,7 +15,7 @@
   </header>
   <main>
     <aside class="sidebar">
-      <p class="eyebrow">Démonstrateur v0.1</p>
+      <p class="eyebrow">Atlas · démonstrateur v0.2</p>
       <h1>Ce que la ville nous permet de voir.</h1>
       <p class="intro">Un volume cartographié n'est pas forcément un immeuble entier. Il ne dit rien de l'occupation des logements.</p>
       <section class="timeline" aria-labelledby="timeline-title">
@@ -38,17 +38,22 @@
         <label class="layer active"><input type="checkbox" checked disabled> <span><strong>Volumes bâtis · état actuel</strong><small>Ville de Paris · nombre d'étages</small></span></label>
         <label class="layer muted"><input type="checkbox" disabled> <span>Hauteur en mètres <small>En attente d'appariement IGN / Apur</small></span></label>
         <label class="layer muted"><input type="checkbox" disabled> <span>Période de construction <small>En attente de validation Apur</small></span></label>
-        <label class="layer muted"><input type="checkbox" disabled> <span>Vacance à la maille IRIS <small>En attente d'intégration du RP Insee</small></span></label>
+        <label class="layer" for="iris-toggle"><input id="iris-toggle" type="checkbox"> <span><strong>Vacance résidentielle · IRIS 2023</strong><small>992 quartiers Insee / IGN, géographie 2025. Masque les volumes bâtis lorsque cette couche est active.</small></span></label>
+        <p class="note" id="iris-status" role="status" aria-live="polite">Activer pour charger les taux du recensement 2023 par IRIS. Aucun taux n'est attribué à un immeuble.</p>
         <label class="layer muted"><input type="checkbox" disabled> <span>Curseur historique du bâti <small>Aucun historique des géométries validé ; le sélecteur Insee ne modifie pas la carte</small></span></label>
       </section>
       <section aria-labelledby="legend-title">
-        <h2 id="legend-title">Nombre maximal d'étages indiqué</h2>
+        <h2 id="legend-title">Volumes bâtis · nombre maximal d'étages</h2>
         <div class="legend"><span><i class="c0"></i> RDC</span><span><i class="c1"></i> 1 à 3</span><span><i class="c2"></i> 4 à 8</span><span><i class="c3"></i> 9 et plus</span><span><i class="cx"></i> Indisponible</span></div>
         <p class="note">Ce ne sont <strong>pas des hauteurs physiques</strong>. Les données inconnues restent grisées.</p>
+        <h2>Logements vacants · IRIS 2023</h2>
+        <div class="legend"><span><i class="v0"></i> Moins de 5 %</span><span><i class="v1"></i> 5 à 8 %</span><span><i class="v2"></i> 8 à 12 %</span><span><i class="v3"></i> 12 à 20 %</span><span><i class="v4"></i> 20 % et plus</span><span><i class="vx"></i> Parc absent ou moins de 50 logements</span></div>
+        <p class="note">Un IRIS représente un quartier statistique, pas une adresse. Les taux des parcs de moins de 50 logements ne sont pas colorés : ils seraient fragiles à interpréter.</p>
       </section>
       <section aria-labelledby="metadata-title">
         <h2 id="metadata-title">Source &amp; méthode</h2>
-        <p class="note">Géométries et étages : <a href="https://opendata.paris.fr/explore/dataset/volumesbatisparis/" target="_blank" rel="noopener noreferrer">Ville de Paris · Volumes bâtis</a> (ODbL, actualisation annoncée annuelle). Requête sur les centroïdes dans la zone visible, non exhaustive si tronquée. Les autres couches ne sont pas diffusées.</p>
+        <p class="note">Géométries et étages : <a href="https://opendata.paris.fr/explore/dataset/volumesbatisparis/" target="_blank" rel="noopener noreferrer">Ville de Paris · Volumes bâtis</a> (ODbL, actualisation annoncée annuelle). Requête sur les centroïdes dans la zone visible, non exhaustive si tronquée. La couche IRIS 2023 est indépendante du bâti et ne localise aucun logement vacant.</p>
+        <p class="note">Vacance IRIS 2023 : <a href="https://www.insee.fr/fr/statistiques/9061333" target="_blank" rel="noopener noreferrer">Insee RP2023</a> et <a href="https://www.data.gouv.fr/datasets/contours-iris-r-2" target="_blank" rel="noopener noreferrer">IGN édition 2025</a> (Licence Ouverte 2.0). Ce sont des estimations territoriales.</p>
         <p class="note">La chronologie Insee concerne Paris entier, et non la zone visible de la carte. Voir <a href="../docs/chronologie.md">protocole temporel</a>.</p><p class="note">L'Apur publie une <a href="https://opendata.apur.org/datasets/emprise-batie-paris" target="_blank" rel="noopener noreferrer">couche datation/hauteur</a>, à auditer avant utilisation. <a href="../docs/sources.md">Audit complet</a>.</p>
       </section>
       <p class="disclaimer">Aucune carte n'identifie des logements ou propriétaires vacants. Aucune donnée de vacance individuelle n'est collectée.</p>
