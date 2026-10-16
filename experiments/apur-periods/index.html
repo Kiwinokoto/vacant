@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="VACANT · laboratoire Apur, datation indicative des emprises bâties. Hors production.">
+  <title>VACANT · Laboratoire de datation Apur</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root{color-scheme:light;--paper:#f5f5f0;--ink:#192d35;--muted:#50666d;--line:#d3dddb;--accent:#186c70}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:14px clamp(16px,3vw,36px);background:#16353d;color:#fff}
+    .top strong{letter-spacing:.15em;font-size:1.25rem}.top span{color:#dce9e4;font-size:.9rem}
+    main{display:grid;grid-template-columns:minmax(290px,350px) minmax(0,1fr);gap:0;min-height:calc(100vh - 59px)}
+    aside{padding:24px 24px 32px;border-right:1px solid var(--line);overflow:auto}
+    h1{font-size:clamp(1.6rem,3vw,2rem);line-height:1.13;letter-spacing:-.035em;margin:.6rem 0 1rem}
+    h2{font-size:1rem;margin:1.5rem 0 .6rem}
+    p{margin:.7rem 0}
+    .overline{font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+    .note{color:var(--muted);font-size:.875rem}
+    .warning{border-left:3px solid #bd7a37;padding:9px 12px;background:#fff6e9;font-size:.875rem}
+    .action{border:0;border-radius:8px;padding:12px 16px;background:var(--accent);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;width:100%;text-align:center}
+    .action:hover{background:#104e52}.action:focus-visible{outline:3px solid #f0a442;outline-offset:3px}
+    .action:disabled{background:#849ba1;cursor:not-allowed}
+    .status{margin-top:10px;font-size:.875rem;min-height:2.8em;color:var(--muted)}
+    .stat{font-size:.9rem;margin:.5rem 0}
+    .legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
+    .legend li{display:flex;align-items:center;gap:7px;font-size:.83rem}
+    .swatch{width:15px;height:15px;border-radius:3px;display:inline-block;flex:none;border:1px solid #37525d44}
+    a{color:#12686d;text-underline-offset:2px}
+    .map-section{display:flex;flex-direction:column;min-width:0;min-height:0;background:#e9eee9}
+    .map-head{padding:12px 16px;display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}
+    .map-head strong{font-size:1rem}.map-head small{display:block;color:var(--muted)}
+    #map{min-height:440px;flex:1;width:100%}
+    .map-foot{font-size:.8rem;color:var(--muted);padding:8px 14px;background:#fff}
+    .popup p{margin:.3rem 0;font-size:.9rem}
+    @media(max-width:740px){
+      .top{padding:10px 14px}
+      .top span{font-size:.75rem}
+      main{display:flex;flex-direction:column}
+      aside{padding:18px 16px;border-right:0}
+      h1{max-width:24ch}
+      #map{height:56vh;min-height:330px;flex:unset}
+      .legend{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+    @media(max-width:390px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}.top span{max-width:150px}}
+  </style>
+</head>
+<body>
+<header class="top"><strong>VACANT / LAB</strong><span>Expérience séparée · pas de publication</span></header>
+<main>
+  <aside>
+    <div class="overline">Données Apur · Paris</div>
+    <h1>Quand ces emprises ont-elles été construites ?</h1>
+    <p>Une carte expérimentale des <strong>périodes attribuées aux emprises bâties actuelles</strong>. Elle ne montre ni bâtiments disparus, ni statut d'occupation.</p>
+    <p class="warning"><strong>Attention :</strong> une emprise peut contenir plusieurs bâtiments ou portions. La période n'est pas une date certifiée, et la version précise des géométries servies reste à documenter.</p>
+    <h2>Explorer un quartier</h2>
+    <p class="note">Zoomez vers quelques rues, puis chargez manuellement. Si plus de 200 emprises sont présentes, le chargement est refusé : aucune carte partielle n'est présentée comme complète.</p>
+    <button class="action" id="load" type="button">Charger les périodes de la zone visible</button>
+    <p class="status" id="status" role="status" aria-live="polite">Aucune emprise chargée. Sélectionnez une zone de quelques rues.</p>
+    <p class="stat" id="summary"></p>
+    <h2>Légende · période de construction</h2>
+    <ul class="legend" id="legend" aria-label="Périodes Apur"></ul>
+    <h2>Source et limites</h2>
+    <p class="note">Source : <a href="https://opendata.apur.org/datasets/emprise-batie-paris" target="_blank" rel="noopener noreferrer">Apur · Emprise bâtie Paris</a>, licence ODbL. <a href="https://www.apur.org/open_data/EMPRISE_BATIE_OD.pdf" target="_blank" rel="noopener noreferrer">Fiche technique officielle, 2019</a>. Requête directe vers ArcGIS REST, coordonnées WGS84 ; service en Lambert-93 (EPSG:2154).</p>
+    <p class="note">Les légendes suivent le dictionnaire de la fiche et du champ codé, notamment <strong>11 = 2000–2007</strong> ; le rendu ArcGIS comporte une légende divergente pour cette classe. Date de consultation affichée après chargement. Millésime effectif non confirmé.</p>
+    <p class="note"><strong>La vacance résidentielle n'est pas représentée.</strong> Aucun croisement avec Paris Data, LOVAC ou Insee ; aucune géométrie téléchargée dans le dépôt.</p>
+  </aside>
+  <section class="map-section" aria-label="Carte expérimentale Apur">
+    <div class="map-head"><div><strong>Emprises bâties · période attribuée</strong><small>État du bâti tel que servi aujourd'hui · pas de voyage dans le temps</small></div><span class="overline">Lecture seule</span></div>
+    <div id="map" aria-label="Carte interactive Apur"></div>
+    <div class="map-foot">Données © Apur · ODbL · Fond © contributeurs OpenStreetMap · Laboratoire non déployé</div>
+  </section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module">
+  import { PERIODS, periodFor, fetchBoundedPeriodLayer } from "./periods.mjs";
+  const loadButton=document.querySelector("#load");
+  const status=document.querySelector("#status");
+  const summary=document.querySelector("#summary");
+  const legend=document.querySelector("#legend");
+  for(const p of PERIODS){
+    const item=document.createElement("li");
+    const swatch=document.createElement("i");
+    swatch.className="swatch";
+    swatch.style.background=p.color;
+    const label=document.createElement("span");
+    label.textContent=p.label;
+    item.append(swatch,label);
+    legend.append(item);
+  }
+  if(!window.L){
+    status.textContent="Leaflet indisponible : impossible de charger la carte. Vérifiez le réseau/CDN.";
+    loadButton.disabled=true;
+  }else{
+    const map=L.map("map",{preferCanvas:true}).setView([48.855,2.3747],18);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+      maxZoom:19,attribution:"© contributeurs OpenStreetMap"
+    }).addTo(map);
+    const layer=L.geoJSON(null,{
+      style:f=>({color:"#25404c",weight:.65,fillOpacity:.77,fillColor:periodFor(f.properties.period_code).color}),
+      onEachFeature:(feature,l)=>{
+        const node=document.createElement("div");
+        node.className="popup";
+        const title=document.createElement("strong");
+        title.textContent="Emprise Apur n° "+feature.properties.object_id;
+        const period=document.createElement("p");
+        period.textContent="Période attribuée : "+periodFor(feature.properties.period_code).label;
+        const warning=document.createElement("p");
+        warning.textContent="Pas de date certaine, ni d'information sur la vacance ou l'occupation.";
+        node.append(title,period,warning);
+        l.bindPopup(node);
+      }
+    }).addTo(map);
+    let busy=false;
+    loadButton.addEventListener("click",async()=>{
+      if(busy)return;
+      busy=true;
+      loadButton.disabled=true;
+      status.textContent="Interrogation Apur limitée à la zone visible…";
+      const started=performance.now();
+      try{
+        const b=map.getBounds();
+        const bounds={west:b.getWest(),south:b.getSouth(),east:b.getEast(),north:b.getNorth()};
+        const result=await fetchBoundedPeriodLayer(bounds);
+        layer.clearLayers();
+        layer.addData(result.collection);
+        const count=result.collection.features.length;
+        const dated=count-(result.counts["99"]||0);
+        const elapsed=Math.round(performance.now()-started);
+        status.textContent=count+" emprises chargées sur la zone demandée en "+elapsed+" ms. Consultation "+
+          new Date().toLocaleString("fr-FR")+". Sans historique géométrique.";
+        summary.textContent=dated+" emprises avec période attribuée ; "+(count-dated)+" non datées. "+
+          "Comptage des emprises, pas des logements.";
+      }catch(err){
+        status.textContent="Chargement non effectué : "+err.message+
+          " L'éventuelle couche précédente reste affichée ; aucun substitut inventé.";
+      }finally{
+        busy=false;loadButton.disabled=false;
+      }
+    });
+  }
+</script>
+</body>
+</html>
