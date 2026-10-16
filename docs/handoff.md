@@ -1,3 +1,10 @@
+## Reprise Apur — inspection géométrique bornée (16/10/2026)
+
+- Base GitHub vérifiée `main=72a9d06377541b7b266e0d8153e89a7ae19afb95`, aucune PR ouverte au départ ; AgentCTL VACANT sans lease concurrent avant création de la branche. Production inspectée directement sur VPS personnel : conteneur actif, zéro restart, release montée `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0` ; HTTPS 200. **Pas de déploiement**.
+- Échantillonnage Apur : 59 géométries reçues, 56 IDs distincts, 59/59 valides ; trois hauteurs médianes > 200 m vraisemblablement Tour Eiffel (2 emprises) et Tour Montparnasse (1 emprise). Contradictions entre `h_med` et `h_min` observées ; détail dans [apur-geometry-sample-20261016.md](apur-geometry-sample-20261016.md).
+- Branche `dev/apur-geometry-qa-20261016` : script de lecture seule plafonné + tests synthétiques et rapport. Aucune couche cartographique Apur activée. Ne pas confondre périodes Apur et historique attesté ; ni mètres Apur et étages Paris Data ; ni emprises et logements vacants.
+- Suite prioritaire : obtenir métadonnée/export daté (millésime, ODbL et SHA-256), dictionnaire officiel `c_perconst`, QA plus représentatif puis prototype **hors production** sur une zone limitée. Tests mobile/desktop de la nouvelle couche non effectués. Aucun import massif ni géométrie IGN historique publiés.
+
 # VACANT — passation active (16 octobre 2026)
 
 **Point de reprise prioritaire : [checkpoint Apur du 16/10/2026](checkpoint-apur-20261016.md).** Ce document reflète le dernier état vérifié ; les rubriques ci-dessous constituent l'historique des passes précédentes et peuvent contenir des statuts anciens.
