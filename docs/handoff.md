@@ -1,5 +1,15 @@
 # VACANT — passation active (16 octobre 2026)
 
+## Fin de passe — Atlasanté 2014 (16/10/2026)
+
+- PR #10 **fusionnée** en squash sur `main` : `67648885c9996604fd539506c975a14050783c7e`. Source locale `dev/iris2014-atlasante-geometry` sans changement non commité ; arbre GitHub de la PR vérifié identique à Git local. La branche documentaire présente ajoute uniquement cet état final.
+- Archive institutionnelle Atlasanté `IGN – Métropole – IRIS 2014` privée : SHA `5cefdde58d228b3f8643d01ef61c80c10bf4ce30a30e78b61e2dc48fdf9acf27`. Ancien candidat dit 2013 : `c6afee56f81b3a9d08316034f0f48259162276a3d7a0d11388c2472f2fd5d3a7`. Les **992 contours Paris** coïncident à mieux que `0,000009 m²` près après reprojection.
+- Auditeur `scripts/audit_iris2014_atlasante.py` : lecture uniquement du SQL institutionnel, jamais exécuté ; revalide toutes les archives précédentes et les 992 appariements. Tests **22/22 JavaScript et 40/40 Python**.
+- Contrôle final production : conteneur actif, 0 redémarrage, release inchangée `2424a45ad590901e3c96c781e10d8b2309c874cb` ; accueil, IRIS 2023 et arrondissements historiques HTTP 200 ; candidats RP2011/Atlasanté HTTP 404.
+- **Blocage externe restant :** attestation de correspondance officielle édition 2013 et conditions IGN/Insee de rediffusion (notice Atlasanté date la *publication de notice* en 2013 mais intitule le jeu **2014**). La [demande IGN](demande-archives-ign.md) est prête, **non envoyée**. Ne pas déployer de polygones 2011 avant confirmation des droits et du millésime.
+- Toujours aucune édition originale authentifiée 2008 ou 2018 ; conserver comparaison historique par 20 arrondissements.
+- Vérifier à la reprise GitHub HEAD et tous locks AgentCTL avant toute écriture ; ne pas prendre les clones VPS pour source de vérité.
+
 ## Mise à jour — Atlasanté 2014 / candidat 2013
 
 - GitHub main vérifié au début : 38a8db3cb25ec677ea1c029aeb8c8addd2dc1387 ; branche dev/iris2014-atlasante-geometry. Revérifier les commits et verrous AgentCTL avant nouvelle écriture.
