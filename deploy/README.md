@@ -10,3 +10,6 @@ Le domaine `vacant.kiwinokoto.fr` résout vers le VPS personnel. Traefik v3 est 
 6. Contrôler la réponse HTTP→HTTPS, le certificat (pas le certificat par défaut de Traefik), l'HTTP 200 de la page et du GeoJSON, et le chargement de l'API Paris Data.
 
 Le service est statique, sans base ni accès au répertoire des données brutes. **Ne jamais faire de déploiement non verrouillé ou forcé.** Les observations Insee ne permettent aucune conclusion sur un logement ou un immeuble individuel.
+
+
+Pour la couche historique des arrondissements, ajouter seulement le dérivé validé /srv/vacant/data/processed/arrond-history/arrond-history.geojson sous site/data/arrond-history.geojson, avec contrôle SHA-256. Ne pas monter les Excel/Parquet bruts ni leurs répertoires.

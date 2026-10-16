@@ -1,5 +1,6 @@
 import { SOURCE, normalizeBatch } from "./record.mjs";
 import { renderParisTimeline } from "./timeline.mjs";
+import { statForYear, validateArrondissementSeries, buildArrondissementPopup } from "./arrondissement-history.mjs";
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
 
@@ -9,11 +10,15 @@ const status = document.querySelector("#status");
 const button = document.querySelector("#load");
 const irisToggle = document.querySelector("#iris-toggle");
 const irisStatus = document.querySelector("#iris-status");
+const arrondToggle = document.querySelector("#arrond-toggle");
+const arrondStatus = document.querySelector("#arrond-status");
+let selectedYear = 2023;
 
 if (typeof window.L === "undefined") {
   status.textContent = "Impossible de charger Leaflet : vérifiez le réseau et le CDN.";
   button.disabled = true;
   irisToggle.disabled = true;
+  arrondToggle.disabled = true;
 } else {
   const map = L.map("map", { preferCanvas: true }).setView([48.855, 2.3747], 17);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -35,13 +40,92 @@ if (typeof window.L === "undefined") {
     }),
     onEachFeature:(feature,layer)=>layer.bindPopup(()=>buildIRISPopup(feature))
   });
+  const arrondissementPolygons = L.geoJSON(null, {
+    style: feature => ({
+      color:"#33424c", weight:1.2, fillOpacity:0.73,
+      fillColor:colorForIRIS(statForYear(feature.properties, selectedYear))
+    }),
+    onEachFeature:(feature,layer)=>layer.bindPopup(()=>buildArrondissementPopup(feature,selectedYear))
+  });
+  let historyLoaded=false;
   let irisLoaded=false;
+  let savedStreetView=null;
+  function saveStreetView(){
+    if(!savedStreetView) savedStreetView={center:map.getCenter(),zoom:map.getZoom()};
+  }
+  function restoreStreetView(){
+    if(savedStreetView) {
+      map.setView(savedStreetView.center,savedStreetView.zoom);
+      savedStreetView=null;
+    }
+  }
+  function updateHistoryView(){
+    arrondissementPolygons.setStyle(feature=>({
+      color:"#33424c",weight:1.2,fillOpacity:0.73,
+      fillColor:colorForIRIS(statForYear(feature.properties,selectedYear))
+    }));
+    arrondStatus.textContent="Recensement "+selectedYear+" · 20 arrondissements. "+
+      "Statistiques calculées sur les IRIS de l'époque ; limites d'arrondissement affichées sur le fond IGN 2025. "+
+      "Aucun taux de vacance attribué à un immeuble ou à un IRIS d'une autre année.";
+  }
+  async function loadHistory(){
+    if(historyLoaded)return;
+    const response=await fetch("./data/arrond-history.geojson",{cache:"no-store"});
+    if(!response.ok)throw new Error("fichier historique indisponible (HTTP "+response.status+")");
+    const dataset=await response.json();
+    validateArrondissementSeries(dataset);
+    arrondissementPolygons.addData(dataset);
+    historyLoaded=true;
+  }
+  document.addEventListener("vacant:census-year",event=>{
+    selectedYear=event.detail.year;
+    if(arrondToggle.checked && historyLoaded) updateHistoryView();
+    // An old-year selection cannot be applied to contemporary IRIS polygons.
+    if(irisToggle.checked && selectedYear!==2023){
+      arrondToggle.checked=true;
+      arrondToggle.dispatchEvent(new Event("change"));
+    }
+  });
+  arrondToggle.addEventListener("change",async()=>{
+    if(!arrondToggle.checked){
+      map.removeLayer(arrondissementPolygons);
+      if(!irisToggle.checked){
+        volumes.addTo(map);
+        restoreStreetView();
+        button.disabled=false;
+      }
+      arrondStatus.textContent="Carte d'arrondissements désactivée. Les volumes bâtis décrivent uniquement l'état actuel.";
+      return;
+    }
+    arrondToggle.disabled=true;
+    button.disabled=true;
+    arrondStatus.textContent="Vérification des recensements Insee 2006, 2011, 2016 et 2023…";
+    try{
+      await loadHistory();
+      saveStreetView();
+      irisToggle.checked=false;
+      map.removeLayer(irisPolygons);
+      map.removeLayer(volumes);
+      arrondissementPolygons.addTo(map);
+      map.fitBounds(arrondissementPolygons.getBounds().pad(0.025));
+      updateHistoryView();
+    }catch(error){
+      arrondToggle.checked=false;
+      if(!map.hasLayer(volumes))volumes.addTo(map);
+      restoreStreetView();
+      button.disabled=false;
+      arrondStatus.textContent="Carte historique indisponible : "+error.message+". Aucune géométrie de substitution inventée.";
+    }finally{
+      arrondToggle.disabled=false;
+    }
+  });
   irisToggle.addEventListener("change",async()=>{
     if(!irisToggle.checked){
       if(map.hasLayer(irisPolygons))map.removeLayer(irisPolygons);
-      if(!map.hasLayer(volumes))volumes.addTo(map);
+      if(!map.hasLayer(volumes) && !arrondToggle.checked)volumes.addTo(map);
+      if(!arrondToggle.checked)restoreStreetView();
       button.disabled=false;
-      irisStatus.textContent="Retour aux volumes bâtis actuels. Zoomez sur une rue pour les charger.";
+      irisStatus.textContent="Retour aux volumes bâtis actuels, au cadrage précédent.";
       return;
     }
     irisToggle.disabled=true;
@@ -57,6 +141,11 @@ if (typeof window.L === "undefined") {
         irisPolygons.addData(checked);
         irisLoaded=true;
       }
+      saveStreetView();
+      if(arrondToggle.checked){
+        arrondToggle.checked=false;
+        map.removeLayer(arrondissementPolygons);
+      }
       if(map.hasLayer(volumes))map.removeLayer(volumes);
       irisPolygons.addTo(map);
       map.fitBounds(irisPolygons.getBounds().pad(0.025));
@@ -68,6 +157,7 @@ if (typeof window.L === "undefined") {
     }catch(error){
       irisToggle.checked=false;
       if(!map.hasLayer(volumes))volumes.addTo(map);
+      restoreStreetView();
       button.disabled=false;
       irisStatus.textContent="Couche IRIS non affichée : "+error.message+". Aucune donnée de secours fictive.";
     }finally{
