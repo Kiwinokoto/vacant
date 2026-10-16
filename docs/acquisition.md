@@ -44,7 +44,7 @@ Le fichier `RP2023` est harmonisé : ne pas confondre résidences principales (`
 
 5. Inspecter les cinq manifestes, signatures, empreintes, contenu et schémas. La collecte seule ne suffit pas à dire qu'une maille IRIS est couverte, comparable ou publiable.
 
-## Contours IGN : sélection non finalisée
+## Contours IGN : source exacte 2025 identifiée
 
 [Contours...IRIS IGN (Licence Ouverte 2.0)](https://www.data.gouv.fr/datasets/contours-iris-r-2), [catalogue de téléchargement Géoplateforme](https://data.geopf.fr/telechargement/capabilities), [documentation officielle de l'API](https://cartes.gouv.fr/aide/fr/guides-utilisateur/utiliser-les-services-de-la-geoplateforme/telechargement/). Le recensement RP2023 requiert la géographie **01/01/2025**, donc ne pas prendre par commodité une édition 2024 ou 2026. Identifier la ressource **2025** et contrôler son contenu et sa licence avant téléchargement. Aucun identifiant de fichier IGN n'est inventé ici.
 
@@ -55,3 +55,30 @@ Le collecteur Python n'a aucune dépendance externe, affiche l'inventaire sans �
 Tester par `python3 -m unittest discover -s tests -p 'test_collect_insee.py' -v` (fixtures de données synthétiques uniquement dans les tests ; jamais dans la carte).
 
 Aucune donnée LOVAC individuelle, aucune estimation à l'adresse, aucune exposition publique ou déploiement dans cette passe.
+
+## Premiers résultats constatés sur le VPS — 16 octobre 2026
+
+Téléchargements **effectués et tests réellement exécutés** sur le VPS personnel, sous lease AgentCTL `state:vacant`, avec code GitHub à `47aa9bac2f50121f43163c9103e0abaffb22b427`. Originaux dans `/srv/vacant/data/raw/insee/`, avec manifestes horodatés sous `/srv/vacant/data/manifests/` :
+
+| Dataset | Taille en octets | SHA-256 |
+| --- | ---: | --- |
+| `rp2006` | 74348544 | `20d81952ac0e8032bbd9ab38e5d8d1b86c708fb6090ce3809cd7a44566f2ee88` |
+| `rp2011` | 29531432 | `c05249a8512e0f237347b889fdc6462e471ab189ebb1a09549a8be67bfa35e50` |
+| `rp2016` | 32677503 | `ca1f44bac285f7cebbb1a223d821877381e123db80e0bc1269848348f6dda40c` |
+| `rp2023` | 47461890 | `aa44509bec7d3aa5a3bef399c082c79433b1617fdb13f81370e39bfa6d5db661` |
+| `rp2023-passage` | 14423 | `a3a0ce33bcd4080734403ca6107667e0b6dcdd2467e085e46fe00bd363b5f34f` |
+
+Validation native : `node --test tests/*.test.mjs` = **14/14 OK** ; `python3 -m unittest discover -s tests -p 'test_collect_insee.py'` = **6/6 OK**. Dépendances de traitement installées dans **`/srv/vacant/venv` isolé** (Python 3.12, DuckDB 1.4.1, openpyxl 3.1.5, xlrd 2.0.2, pyshp 2.3.1, pyproj 3.7.2), pas au niveau global.
+
+Le Parquet RP2023 réellement ouvert contient 5 066 022 observations nationales ; le dictionnaire XLSX révèle `RP_MEASURE=DWELLINGS`, `OCS=DW_VAC` pour vacants, `OCS=_T` pour logements totaux, `TDW=_T` pour l'ensemble des logements. Cette vérification est préliminaire : filtrage précis et contrôle des effectifs à produire et tester.
+
+### Deux nouvelles sources découvertes
+
+- [Table d'appartenance IRIS au 1er janvier 2025](https://www.insee.fr/fr/statistiques/fichier/7708995/reference_IRIS_geo2025.zip) : identifiants indépendants, **pas** géométrie. Id de collecte `iris-ref2025`, via `scripts/collect_insee.py`.
+- [IGN Contours...IRIS édition 2025 GeoParquet WGS84G](https://data.geopf.fr/telechargement/resource/CONTOURS-IRIS/CONTOURS-IRIS_3-0__GEOPARQUET_WGS84G_FRA_2025-01-01), [fichier concret](https://data.geopf.fr/telechargement/download/CONTOURS-IRIS/CONTOURS-IRIS_3-0__GEOPARQUET_WGS84G_FRA_2025-01-01/contours_iris.parquet) : géométrie correspondant au millésime RP2023. Collecteur distinct `scripts/collect_ign.py` avec HTTPS strict, SHA-256, original immuable et manifeste. Déterminer couverture et code IRIS après téléchargement réel.
+
+Commandes sous garde AgentCTL une fois le nouveau code GitHub récupéré sur VPS :
+```sh
+python3 scripts/collect_insee.py --root /srv/vacant/data --fetch iris-ref2025 --execute
+python3 scripts/collect_ign.py --root /srv/vacant/data --execute
+```

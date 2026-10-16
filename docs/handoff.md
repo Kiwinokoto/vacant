@@ -24,6 +24,10 @@ Contrat `site/iris-contract.mjs` ; commande `scripts/validate-iris.mjs` ; 5 nouv
 ## Préparation de la collecte — 16/10/2026
 Dossier cible approuvé en architecture : **`/srv/vacant/data` sur le VPS personnel**, hors racine web. `scripts/collect_insee.py` prépare cinq téléchargements Insee officiels avec manifestes SHA-256 et verrou `flock` local. [Guide et URLs](acquisition.md). **Aucun téléchargement réel n'a été effectué : appareils RDC personnels hors ligne (deux vérifications), accès direct Insee indisponible dans le conteneur. Aucun dossier VPS créé.** Six tests Python du collecteur réussis sur une copie locale de développement ; à rejouer depuis GitHub avant exploitation. Les contours IGN édition 2025 restent à sélectionner (ne pas substituer l'édition 2024).
 
+## Données officielles récupérées sur le VPS (mise à jour 16/10/2026)
+Projet `vacant` enregistré dans AgentCTL ; VPS personnel `vmi2505789.contaboserver.net` accessible via **RDC LGC**. Tests natifs : **14/14 Node**, **6/6 collecteur Python Insee**. Cinq originaux Insee et manifestes avec hashes déposés dans `/srv/vacant/data/` (détails : [acquisition.md](acquisition.md)). Python 3.12 virtuel et DuckDB disponibles. RP2023 Parquet (5 066 022 observations) lu : `OCS=DW_VAC` identifié dans table de passage réelle ; géographie `GEO_OBJECT=IRIS` avec 992 IRIS parisiens en statistiques 2023. Source IGN GeoParquet géographie 2025 exactement identifiée dans catalogue, collecte/test restants.
+DNS `vacant.kiwinokoto.fr` pointe vers ce VPS mais **Traefik répond encore 404 et certificat par défaut** : pas de service déployé.
+
 ## Incertitudes / blocages
 - Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
 - CORS, pagination triée par identifiant de volume et restrictions de l'API doivent être vérifiés dans un navigateur réel. Le schéma `geom`, `geom_x_y`, `h_et_max` et `n_sq_vb` a été revérifié sur la fiche officielle Paris Data du 08/10/2026.
