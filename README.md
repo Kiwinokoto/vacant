@@ -72,3 +72,7 @@ Pas de fichiers LOVAC individuels, pas d'adresse « vacante » inférée, pas d'
 VACANT compare les millésimes 2006, 2011, 2016 et 2023 à la maille des **20 arrondissements**. Le script scripts/build_arrondissement_history.py lit les tables Insee IRIS de géographie 2008/2013/2018 et le dérivé 2023 de géographie 2025 ; il vérifie SHA-256, cardinalité de 992 IRIS, valeurs et totaux Paris. Les données de chaque millésime sont **agrégées par arrondissement AVANT** toute géométrie. Seuls les contours des 20 arrondissements (dissolution IGN 2025) sont affichés, non les contours historiques des IRIS. Pas de données d'immeuble ou d'adresse.
 
 Reconstruction sur le VPS : fournir au script --raw-root /srv/vacant/data/raw/insee, --iris-geojson /srv/vacant/data/processed/iris-2023/iris-2023.geojson, et --output /srv/vacant/data/processed/arrond-history/arrond-history.geojson. Copier uniquement ce dernier dérivé vérifié sous site/data/arrond-history.geojson dans une release ; aucun fichier brut.
+
+## Audit des références géographiques historiques
+
+L’audit des identifiants Insee 2008/2013/2018/2025 est décrit dans [docs/iris-historique.md](docs/iris-historique.md). Les 992 codes parisiens coïncident, mais **les géométries anciennes ne sont pas validées** : la comparaison historique reste par arrondissement, et les contours IRIS précis restent limités à 2023.

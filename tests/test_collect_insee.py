@@ -69,6 +69,16 @@ class CollectorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             module.record_source("rp2011", self.root, Opener(Response(b"PK\x03\x04bad", url="https://example.org/data")))
 
+    def test_historical_reference_sources_are_official_and_distinct(self):
+        reference_ids=("iris-ref2008","iris-ref2013","iris-ref2018","iris-passage2013-2008")
+        self.assertEqual([module.SOURCES[k]["geography_year"] for k in reference_ids],
+                         [2008,2013,2018,2013])
+        for key in reference_ids:
+            source=module.SOURCES[key]
+            self.assertTrue(module.allowed_url(source["url"]))
+            self.assertEqual(source["fmt"],"zip")
+            self.assertEqual(source["page"],"https://www.insee.fr/fr/information/7708995")
+
     def test_exclusive_lock(self):
         with module.exclusive_root_lock(self.root):
             with self.assertRaises(RuntimeError):
