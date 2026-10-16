@@ -12,6 +12,10 @@ Pour éviter d'associer les statistiques historiques aux mauvais polygones IRIS,
 
 Ces millésimes doivent accompagner respectivement les recensements RP2006, RP2011 et RP2016 ; nous disposons déjà des références d'identifiants Insee correspondantes.
 
+Élément nouveau : j'ai retrouvé sur le portail institutionnel Atlasanté le jeu « IGN – Métropole – IRIS 2014 », identifiant GeoNetwork 1ad2743a-da7b-4f10-bab0-0bc016b5c7bb, archive ZIP SHA-256 5cefdde58d228b3f8643d01ef61c80c10bf4ce30a30e78b61e2dc48fdf9acf27. Ses 992 contours de Paris sont équivalents à la précision numérique à une republication tierce revendiquant la géographie 2013 (SHA-256 c6afee56f81b3a9d08316034f0f48259162276a3d7a0d11388c2472f2fd5d3a7 ; différence surfacique maximale 0,000009 m²).
+
+Pouvez-vous confirmer que cette géométrie correspond bien à l'édition Contours…IRIS de référence pour le RP2011/géographie 2013 ? Pouvez-vous également préciser les conditions de republication des polygones ou de GeoJSON simplifiés sur un site web public, sachant que la métadonnée Atlasanté mentionne des conditions d'utilisation IGN/Insee spécifiques ?
+
 Pourriez-vous m'indiquer :
 - si les livraisons d'origine de ces trois éditions sont encore accessibles (téléchargement ou mise à disposition sur demande), idéalement au format Shapefile ou GeoPackage en Lambert-93 ;
 - les identifiants précis d'édition/version, dates de mise à jour géométrique et éventuels recalages des contours à Paris ;

@@ -84,3 +84,7 @@ La source secondaire 2013 reprojetée a fait l’objet d’un [audit SIG détail
 ## Double contrôle des contours IRIS historiques
 
 Les différences entre géométries secondaires 2013, 2016 et IGN 2025 sont auditées dans [l'étude comparative](docs/iris-crosscheck.md). **Aucune ancienne géométrie fine n'a été certifiée ni diffusée** ; une [demande d'archives IGN](docs/demande-archives-ign.md) est préparée mais non envoyée.
+
+## Corroboration Atlasanté des géométries historiques
+
+L'[audit institutionnel 2014](docs/iris-2014-atlasante.md) retrouve les contours du candidat tiers dit 2013 pour les 992 IRIS de Paris avec un écart maximal de 0,000009 m². L'édition exacte de référence et la licence de rediffusion demeurent non confirmées ; aucun GeoJSON 2011 n'est accessible publiquement.

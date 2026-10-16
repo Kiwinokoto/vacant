@@ -1,5 +1,15 @@
 # VACANT — passation active (16 octobre 2026)
 
+## Mise à jour — Atlasanté 2014 / candidat 2013
+
+- GitHub main vérifié au début : 38a8db3cb25ec677ea1c029aeb8c8addd2dc1387 ; branche dev/iris2014-atlasante-geometry. Revérifier les commits et verrous AgentCTL avant nouvelle écriture.
+- Archive institutionnelle Atlasanté « IGN – Métropole – IRIS 2014 » ZIP (16 411 555 octets), PostGIS EPSG:2154 et ISO XML ; SHA-256 5cefdde58d228b3f8643d01ef61c80c10bf4ce30a30e78b61e2dc48fdf9acf27 ; sauvegardée privée et manifestée sous /srv/vacant/data/raw/secondary/iris-2014-atlasante/ et /srv/vacant/data/manifests/.
+- 992 géométries Paris, zéro invalide. Recoupement avec le candidat tiers 2013 : IoU minimale/médiane 100 % à dix décimales, différence surfacique maximale 0,000008961 m². Auditeur scripts/audit_iris2014_atlasante.py, tests unitaires ; preuves docs/iris-2014-atlasante.md.
+- Métadonnées : jeu intitulé 2014 ; publication de notice 2013-09-16 et révision 2015-04-29. Ces dates ne prouvent pas l'édition géographique 2013. Conditions IGN/Insee spécifiques mentionnées : pas de republication sans confirmation.
+- Demande IGN précisée dans docs/demande-archives-ign.md et non envoyée. Les éditions 2008 et 2018 restent à rechercher.
+- Production non modifiée : https://vacant.kiwinokoto.fr, historique par 20 arrondissements et IRIS fins uniquement en 2023. Aucune couche 2011 ni donnée individuelle publiée.
+- Suite : validation officielle du millésime et des droits ; si obtenue, PR ciblée couche RP2011 avec contrôles SIG/navigateur. Sinon conserver le dérivé privé.
+
 ## Fin de passe — contrôle indépendant des contours IRIS
 - PR #8 fusionnée dans `main` : `2e4e53372bdfb31501149c00adfaff0b0ce86be8`. La nouvelle branche historique de travail `dev/iris-independent-crosscheck` n'a pas été déployée ; code, tests et documentation uniquement.
 - 22/22 tests JavaScript et 33/33 tests Python réussis. Relecture de trois séries de 992 contours, IoU médian candidat2013/OSM2013 = 1,00000, candidat2013/secondaire2016 = 0,93688 et secondaire2016/IGN2025 = 0,98472.
