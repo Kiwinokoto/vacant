@@ -27,6 +27,12 @@ Dans certains millésimes, la somme des composantes diffère du total **d'une un
 
 Le taux = vacants / total × 100. L'interface affiche ce **niveau Paris uniquement**, indépendamment des polygones contemporains de Paris Data. Le taux ne mesure ni la vacance de plus de deux ans, ni les locaux professionnels, ni les résidences secondaires.
 
+## Format 2023 et vigilance sur la géométrie
+
+Le [document officiel Insee](https://www.insee.fr/fr/statistiques/fichier/9061333/aide_lecture_logement.pdf) décrit la nouvelle structure (`GEO_OBJECT`, `GEO`, `RP_MEASURE`, `OCS`, `OBS_VALUE`) avec modalités de sélection, et un autre document xlsx contient la **table de passage** entre dimensions : https://www.insee.fr/fr/statistiques/fichier/9061333/table_passage_logement.xlsx. **Ne pas confondre l'exemple OCS=DW_MAIN (résidence principale) avec la vacance.** Les codes catégoriels de vacance/total restent à vérifier par lecture du dictionnaire, donc aucun convertisseur 2023 de données brutes n'est encore publié.
+
+Les contours [IGN Contours...IRIS](https://www.data.gouv.fr/datasets/contours-iris-r-2) sont ouverts sous Licence Ouverte 2.0, mais un jeu annoncé « édition 2024 » n'est pas automatiquement compatible avec le zonage **2025** de RP2023. Le couple exact source/édition doit être prouvé avant intégration. Un validateur indépendant `site/iris-contract.mjs` rejette les métadonnées de géographie incompatibles et laisse la cartographie inactive jusqu'à validation.
+
 ## Conditions pour une vraie couche IRIS temporelle
 
 1. Extraire pour **chaque** millésime le fichier Insee d'origine, sa licence, URL, date, géographie et son empreinte SHA-256.

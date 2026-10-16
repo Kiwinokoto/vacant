@@ -24,6 +24,12 @@ Le point de départ de **la série cartographique de vacance IRIS est 2006** (re
 
 Sources supplémentaires : https://www.insee.fr/fr/statistiques/2028562 (IRIS 2006), https://www.insee.fr/fr/statistiques/2028269 (IRIS 2011), https://www.insee.fr/fr/statistiques/4228432 (IRIS 2016), https://www.insee.fr/fr/metadonnees/source/operation/s2242/coherence-comparabilite (comparabilité), https://www.insee.fr/fr/statistiques/8581193?geo=DEP-75 (historique Paris jusqu'en 2022), https://www.insee.fr/fr/statistiques/2011101?geo=DEP-75 (Paris RP2023).
 
+## Contours IRIS et nouveau schéma Insee 2023
+
+- [Insee IRIS RP2023](https://www.insee.fr/fr/statistiques/9061333) : format harmonisé, dimensions `GEO_OBJECT`, `GEO`, `RP_MEASURE`, `OCS` et valeur `OBS_VALUE`. La [note de lecture officielle](https://www.insee.fr/fr/statistiques/fichier/9061333/aide_lecture_logement.pdf) montre un filtrage de résidences principales selon `RP_MEASURE=DWELLINGS`, `OCS=DW_MAIN` et `TSH=200`. **Le code exact de la modalité « vacants » reste à vérifier dans la table de passage** ; aucun parseur 2023 n'est activé à partir d'une supposition.
+- [Contours... IRIS IGN](https://www.data.gouv.fr/datasets/contours-iris-r-2) : référence territoriale **Licence Ouverte 2.0** selon la fiche, mais l'édition exacte 2025 destinée au RP2023 doit être obtenue et vérifiée. L'[édition 2024](https://www.data.gouv.fr/datasets/contours-iris-r) disponible en GeoJSON ne justifie pas de jointure silencieuse avec RP2023 géographie 2025.
+- Tests d'appariement : comparer **codes et zonages**, détecter les codes manquants, évaluer la couverture et la topologie, documenter l'empreinte du fichier réellement lu. Le validateur de contrat ne se substitue pas à ces vérifications.
+
 ## Définitions et garde-fous
 
 - **Logement vacant (Insee)** : logement inoccupé (à vendre/louer, attribué en attente, succession, sans affectation, etc.). Peut être de courte durée ; n'implique pas qu'il soit habitable immédiatement.

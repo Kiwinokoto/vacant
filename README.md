@@ -31,6 +31,22 @@ Avec Node.js >= 20 : `node --test tests/*.test.mjs` (ou `npm test`). Pas de paqu
 
 Le test concerne les contrats, les géométries et les règles de provenance. **Il ne constitue pas une validation réseau** des schémas de Paris Data en production.
 
+## Préparation rigoureuse des futures couches IRIS (non affichées)
+
+`site/iris-contract.mjs` valide des **agrégats territoriaux** IRIS *déjà préparés* (GeoJSON avec les champs `iris_code`, `housing_count`, `vacant_count`). Le préparateur du format Insee 2023 n'est **pas** encore implémenté : il faut d'abord confirmer les modalités officielles exactes, les fichiers et les géographies des contours.
+
+Le validateur et la commande sont disponibles, mais **aucun fichier de statistiques ou contours IRIS réel n'a été intégré à l'atlas**. Avec Node.js >=20 :
+
+```sh
+node scripts/validate-iris.mjs /chemin/iris-2023-prepares.geojson /chemin/manifest.json
+# Ajouter /chemin/sortie.geojson en troisième argument seulement après audit :
+node scripts/validate-iris.mjs /chemin/iris-2023-prepares.geojson /chemin/manifest.json /chemin/sortie.geojson
+```
+
+Le manifeste exigé comprend : `census_year`, `geography_year`, `zone="Paris"`, `geography="IRIS"`, `metric="vacant_housing_rp"`, `extracted_at` (AAAA-MM-JJ), `statistics` et `contours` (URL officielle, licence ouverte 2.0, SHA-256 du fichier d'origine) et, pour une sortie, `expected_iris_count`. **Ce dernier doit être déduit indépendamment de l'inventaire officiel des contours** et non égalisé arbitrairement au nombre de lignes préparées. Le script refuse d'écraser une sortie existante et s'arrête sur toute incohérence.
+
+Voir [le protocole temporel](docs/chronologie.md) et [le contrat géographique](docs/architecture.md). Les jeux de tests utilisent uniquement des fixtures synthétiques internes, jamais mises sur la carte.
+
 ## Documentation
 
 - [Audit des sources et droits](docs/sources.md)

@@ -43,6 +43,17 @@ Dans site/record.mjs, une réponse API doit satisfaire :
 - Atlas entier : étape ultérieure (GPKG/GeoJSON sérialisés tuilés sous licence compatible, ingestion reproductible, qualité par couche et manifeste, éventuellement PMTiles). Pas de base ni cluster prématuré.
 - Tuiles : OSM standard en usage d'exploration ponctuelle avec attribution ; **ne pas** s'en servir pour gros trafic sans fournisseur conforme à la politique de tuiles OSM.
 
+## Contrat IRIS préparatoire (sans couche diffusée)
+
+La prochaine chaîne d'import dispose de `site/iris-contract.mjs` et `scripts/validate-iris.mjs`. Elle accepte uniquement un fichier GeoJSON **déjà rapproché, par IRIS de l'année correspondante**, et un manifeste séparé d'origine. Cette étape n'essaie pas de deviner les colonnes de 2023 ni de transformer un CSV national sans avoir ouvert son dictionnaire de dimensions.
+
+- Années / contours compatibles exigés : **2006→2008, 2011→2013, 2016→2018, 2023→2025**. Les IRIS 2024 **ne sont pas** un substitut automatique aux IRIS géographie 2025.
+- Codes Paris au format INSEE IRIS, 9 chiffres avec préfixe `751` ; polygones GeoJSON WGS84 ; identifiants uniques et région Paris uniquement (contrôle d'enveloppe grossier).
+- Numérateur `vacant_count` et dénominateur `housing_count` numériques >= 0, vacants <= total, et séparés des résidences secondaires. **Les estimations fractionnaires Insee sont admises** ; une valeur absente reste `null` et son taux est indisponible, jamais 0 par défaut.
+- Rejet des champs personnels/adresses/immeubles pour éviter toute confusion ; seul un jeu de propriétés explicitement autorisé ressort du traitement.
+- Deux URLs de sources officielles, licences, SHA-256 des fichiers, date d'extraction ; `expected_iris_count` indispensable pour demander la production de fichier. Son égalité est une **vérification de cardinalité déclarée**, non une preuve de conformité des contours : contrôle des codes et de la géométrie source indépendant à poursuivre avant publication.
+- Une géométrie valide au sens des tests n'est pas nécessairement topologiquement valide en SIG. Contrôle GEOS/QGIS ultérieur requis, y compris intersections et trous. Aucun import n'est publié ou activé dans la carte pour l'instant.
+
 ## Plan de validation du démonstrateur enrichi
 
 1. Confirmer par extraction Apur les périodes/hauteurs, unités et jointures, produire rapport de couverture et licences des dérivés ODbL.
