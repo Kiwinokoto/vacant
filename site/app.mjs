@@ -3,6 +3,7 @@ import { renderParisTimeline } from "./timeline.mjs";
 import { statForYear, validateArrondissementSeries, buildArrondissementPopup } from "./arrondissement-history.mjs";
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
+import { viewDescriptor } from "./view-state.mjs";
 
 renderParisTimeline();
 
@@ -13,6 +14,11 @@ const irisStatus = document.querySelector("#iris-status");
 const arrondToggle = document.querySelector("#arrond-toggle");
 const arrondStatus = document.querySelector("#arrond-status");
 let selectedYear = 2023;
+function showMapMode(layer){
+  const copy=viewDescriptor(layer,selectedYear);
+  document.querySelector("#map-title").textContent=copy.title;
+  document.querySelector("#map-subtitle").textContent=copy.subtitle;
+}
 
 if (typeof window.L === "undefined") {
   status.textContent = "Impossible de charger Leaflet : vérifiez le réseau et le CDN.";
@@ -67,6 +73,7 @@ if (typeof window.L === "undefined") {
     arrondStatus.textContent="Recensement "+selectedYear+" · 20 arrondissements. "+
       "Statistiques calculées sur les IRIS de l'époque ; limites d'arrondissement affichées sur le fond IGN 2025. "+
       "Aucun taux de vacance attribué à un immeuble ou à un IRIS d'une autre année.";
+    showMapMode("arrondissement");
   }
   async function loadHistory(){
     if(historyLoaded)return;
@@ -95,6 +102,7 @@ if (typeof window.L === "undefined") {
         button.disabled=false;
       }
       arrondStatus.textContent="Carte d'arrondissements désactivée. Les volumes bâtis décrivent uniquement l'état actuel.";
+      if(!irisToggle.checked)showMapMode("building");
       return;
     }
     arrondToggle.disabled=true;
@@ -111,9 +119,15 @@ if (typeof window.L === "undefined") {
       updateHistoryView();
     }catch(error){
       arrondToggle.checked=false;
-      if(!map.hasLayer(volumes))volumes.addTo(map);
-      restoreStreetView();
-      button.disabled=false;
+      if(irisToggle.checked && map.hasLayer(irisPolygons)){
+        map.removeLayer(volumes);
+        showMapMode("iris");
+      }else{
+        if(!map.hasLayer(volumes))volumes.addTo(map);
+        restoreStreetView();
+        button.disabled=false;
+        showMapMode("building");
+      }
       arrondStatus.textContent="Carte historique indisponible : "+error.message+". Aucune géométrie de substitution inventée.";
     }finally{
       arrondToggle.disabled=false;
@@ -126,6 +140,7 @@ if (typeof window.L === "undefined") {
       if(!arrondToggle.checked)restoreStreetView();
       button.disabled=false;
       irisStatus.textContent="Retour aux volumes bâtis actuels, au cadrage précédent.";
+      if(!arrondToggle.checked)showMapMode("building");
       return;
     }
     irisToggle.disabled=true;
@@ -154,11 +169,18 @@ if (typeof window.L === "undefined") {
       irisStatus.textContent="IRIS 2023 · 992 quartiers vérifiés · "+shown+
         " taux représentés. Gris : aucun logement ou moins de 50 logements. "+
         "Aucune information individuelle ni par bâtiment.";
+      showMapMode("iris");
     }catch(error){
       irisToggle.checked=false;
-      if(!map.hasLayer(volumes))volumes.addTo(map);
-      restoreStreetView();
-      button.disabled=false;
+      if(arrondToggle.checked && map.hasLayer(arrondissementPolygons)){
+        map.removeLayer(volumes);
+        showMapMode("arrondissement");
+      }else{
+        if(!map.hasLayer(volumes))volumes.addTo(map);
+        restoreStreetView();
+        button.disabled=false;
+        showMapMode("building");
+      }
       irisStatus.textContent="Couche IRIS non affichée : "+error.message+". Aucune donnée de secours fictive.";
     }finally{
       irisToggle.disabled=false;

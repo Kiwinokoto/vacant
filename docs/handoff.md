@@ -1,5 +1,14 @@
 # VACANT — passation active (16 octobre 2026)
 
+## Passe 16/10/2026 — éditions historiques et correctif ergonomique
+
+- GitHub main de départ : b492ede6567d68cc6df1b18db852d68eb4cf09c5 ; aucune PR ouverte ; branche dev/iris-archive-readiness dans clone /srv/vacant/work-geography-readiness. À la reprise vérifier HEAD, travaux locaux/agents, PR, CI et leases AgentCTL.
+- Recherche : IGN Contours…IRIS édition 2008 v1.0 ; édition 2018 = IRIS 2017 consolidés + 2018 provisoires ; édition 2019 = IRIS 2018 consolidés + 2019 provisoires. Livraison 2018-06-08 avec dossier FXX-2017 non assimilable automatiquement au fond RP2016 géographie 2018. AUCUNE nouvelle archive 2008/2018 acquise ; détails : docs/iris-archive-readiness.md.
+- L'IGN a déjà reçu le courriel le 16/10/2026. Ne pas réexpédier. La provenance juridique/date 2013 du candidat RP2011 reste à confirmer.
+- Code modifié : site/index.html, site/app.mjs, site/view-state.mjs, site/iris-contract.mjs, tests/view-state.test.mjs et tests/iris-contract.test.mjs. Titre et sous-titre de carte changent selon la couche réelle. Légende des taux à intervalles disjoints ; retrait du texte erroné sur le sélecteur. Publication d'une géographie IRIS autre que 2023 refusée explicitement jusqu'à levée formelle du blocage ; validation privée permise.
+- Aucune nouvelle couche 2011 publiée. Production connue : release 2424a45ad590901e3c96c781e10d8b2309c874cb, HTTP à revalider. Aucun Docker/BDD/service modifié pendant cette passe ; tests à exécuter, PR à soumettre, pas de déploiement sans recette navigateur et validation de la portée.
+- Suite : récupérer vrai 2008 et 2018 consolidé, vérifier les droits 2013 auprès IGN, tester UX dans Chromium réel sur candidate avant déploiement.
+
 ## IGN — demande envoyée le 16/10/2026
 
 - La demande de géométries historiques **Contours…IRIS® 2008, 2013 et 2018 (Paris, 75)** a été **envoyée depuis le compte Gmail connecté** à `contact.geoservices@ign.fr` le 16 octobre 2026 ; Gmail a confirmé le statut `SENT`. **Ne pas envoyer de doublon.**

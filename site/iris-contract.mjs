@@ -1,4 +1,4 @@
-// STRICT INTERNAL IMPORT CONTRACT. No real IRIS data are bundled yet.
+// STRICT INTERNAL IMPORT CONTRACT. Historical candidates stay private until independently licensed.
 // IRIS polygons represent geographic aggregates, never vacant addresses/buildings.
 import { isParisPolygon } from "./record.mjs";
 
@@ -10,6 +10,11 @@ export function validateIrisImport(collection, manifest, {forPublication=false}=
   const geographyYear = IRIS_GEOGRAPHY[year];
   if (!Number.isInteger(year) || !geographyYear || manifest.geography_year !== geographyYear) {
     throw new Error("census year and IRIS geography year mismatch");
+  }
+  // Fail closed: public authorization is currently limited to the audited RP2023/IGN2025 layer.
+  // Historical geometry provenance AND redistribution rights have not been certified yet.
+  if(forPublication && year!==2023){
+    throw new Error("historical IRIS publication blocked pending validated edition and licence");
   }
   if (manifest.zone !== "Paris" || manifest.geography !== "IRIS" ||
       manifest.metric !== "vacant_housing_rp") {

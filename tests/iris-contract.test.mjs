@@ -66,3 +66,11 @@ test("strict coverage and audited sources required for output",()=>{
   const q=manifest();q.statistics.sha256="";
   assert.throws(()=>validateIrisImport(collection(),q),/statistics source/);
 });
+
+test("historical candidate can be inspected privately but never published prematurely",()=>{
+  const m={...manifest(),census_year:2011,geography_year:2013};
+  const inspected=validateIrisImport(collection(),m);
+  assert.equal(inspected.features[0].properties.census_year,2011);
+  assert.throws(()=>validateIrisImport(collection(),m,{forPublication:true}),
+    /historical IRIS publication blocked/);
+});
