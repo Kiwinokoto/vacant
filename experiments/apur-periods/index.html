@@ -96,7 +96,7 @@
     status.textContent="Leaflet indisponible : impossible de charger la carte. Vérifiez le réseau/CDN.";
     loadButton.disabled=true;
   }else{
-    const map=L.map("map",{preferCanvas:true}).setView([48.855,2.3747],18);
+    const map=L.map("map",{preferCanvas:true}).setView([48.855,2.3747],19);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
       maxZoom:19,attribution:"© contributeurs OpenStreetMap"
     }).addTo(map);
