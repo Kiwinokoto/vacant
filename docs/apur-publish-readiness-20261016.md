@@ -49,7 +49,28 @@ Linux desktop + Chromium en mobile **390×844** ; serveur HTTP strictement boucl
 
 Les emprises affichées, le manifeste et les SHA-256 de cellules ont passé les validations dans les deux scénarios ; aucun débordement ni erreur JS. La réduction de temps observée sur ce seul scénario est ~**63 %**. Les requêtes multiples sont encore **séquentielles**, ce qui accumule la latence. Un chargement contrôlé en parallèle pourrait l'améliorer, mais réclame une nouvelle recette de concurrence et une limite stricte de mémoire.
 
-**Attention :** il s'agit d'une **émulation Chromium de débit et latence**, pas d'un test sur vrai smartphone, réseau 4G réel, Nginx chargé ou plusieurs visiteurs. Mesures indicatives, non garanties. Le serveur Nginx public actuel **n'a pas été modifié** ; pour bénéficier de gzip lors d'une future publication de la grille, configurer/tester séparément `gzip` pour `application/geo+json` et `application/json` ou un mécanisme de précompression, puis vérifier `Content-Encoding` côté client. Envisager PMTiles/TopoJSON uniquement après mesure vérifiable de couverture et d'altération géométrique.
+**Attention :** il s'agit d'une **émulation Chromium de débit et latence**, pas d'un test sur vrai smartphone, réseau 4G réel, Nginx chargé ou plusieurs visiteurs. Mesures indicatives, non garanties. La configuration Nginx du dépôt est désormais préparée avec `gzip on`, `gzip_comp_level 4`, `gzip_vary on` et les types `application/geo+json` / `application/json`, mais **la configuration réellement déployée en production n'a pas été modifiée**. Envisager PMTiles/TopoJSON uniquement après mesure vérifiable de couverture et d'altération géométrique.
+
+
+### Vérification sur un véritable serveur Nginx isolé
+
+Script de recette versionné : `scripts/recipe_nginx_gzip_loopback.py`, à exécuter depuis un clone contrôlé par :
+
+```sh
+python3 scripts/recipe_nginx_gzip_loopback.py --config deploy/nginx.conf
+```
+
+Le script ne lance **aucun conteneur**, ne modifie aucune configuration système et ne contacte pas un domaine public. Il fait démarrer un Nginx autonome sur un port **127.0.0.1** éphémère, sert uniquement des **géométries et métadonnées synthétiques**, exerce les en-têtes puis arrête le processus en `finally`. Aucun extrait réel Apur n'entre dans sa racine de test.
+
+Recette réussie sur le VPS avec Nginx **1.18.0** :
+
+- `cell_test.geojson` : **51 831 octets** bruts, **1 061 octets** avec gzip-4 (jeu artificiellement répétitif, donc ratio *non comparable* aux vraies cellules), MIME `application/geo+json` ;
+- `manifest.json` synthétique : **1 503 → 618 octets**, MIME `application/json` ;
+- `Content-Encoding: gzip` et `Vary: Accept-Encoding` présents uniquement quand négociés ; `Accept-Encoding: identity` rend les octets strictement identiques au fichier ;
+- fichier trop petit non compressé, module `.mjs` avec MIME JavaScript valide, dotfiles refusés HTTP 403, fichiers absents HTTP 404 ;
+- les octets décompressés correspondent **strictement** à la source synthétique, condition nécessaire à une validation SHA-256 côté client.
+
+Un premier lancement du laboratoire a rencontré une attente de démarrage, mais le script non modifié a été rejoué avec succès après le diagnostic. Le serveur reste arrêté à la fin. Cela valide la **négociation HTTP** sur Nginx réel ; cela n'est ni un déploiement Nginx production, ni une mesure de concurrence, ni une preuve de performance réelle.
 
 ## Checklist ODbL 1.0 avant une couche publique
 
