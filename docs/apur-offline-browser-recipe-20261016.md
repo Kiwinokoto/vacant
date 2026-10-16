@@ -43,6 +43,8 @@ Chromium **154.0.8037.97**, poste Linux Mint connecté via RDC, copie SHA-256 v�
 
 La page présente les **12 entrées de légende**, dont le code 11 `2000–2007` en `rgb(94, 172, 179)`. Les cartes utilisent un canvas Leaflet, sans appel extérieur détecté. Les couleurs, la visibilité des informations de provenance et la disposition mobile ont été inspectées sur captures. Sur mobile, la carte se situe naturellement **sous** le texte et la légende : c'est approprié pour le laboratoire, mais un placement plus direct sera souhaitable avant une intégration produit.
 
+**Interaction cartographique** : clic sur une emprise colorée dans Chromium desktop → popup ouverte avec identifiant, période attribuée et avertissement « Ni date certaine, ni indication de vacance ». Aucun champ supplémentaire exposé.
+
 **Échecs contrôlés** : rechargement avec HTTP **503** (la couche précédente reste affichée), fichier absent **404** et fichier altéré (échec SHA-256), sans crash JavaScript. Chromium a loggé l'erreur ressource HTTP 503 *attendue* lors de l'injection de panne : ne pas confondre ce log intentionnel avec un échec inattendu de la recette. Aucun accès externe pendant les tests, pas de tentative de secours vers l'API Apur.
 
 Tests Node sur clone branché PR #18 : **45/45 réussis** (10 nouveaux). Les latences locales de quelques dizaines de millisecondes ne préjugent **ni des téléphones physiques, ni des données Paris entières, ni de l'hébergement public**.
