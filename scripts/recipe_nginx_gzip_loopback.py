@@ -20,8 +20,11 @@ import urllib.error
 import urllib.request
 
 
-def request(url, encoding="identity"):
-    rq = urllib.request.Request(url, headers={"Accept-Encoding": encoding})
+def request(url, encoding="identity", *, via=False):
+    headers = {"Accept-Encoding": encoding}
+    if via:
+        headers["Via"] = "1.1 isolated-local-reverse-proxy"
+    rq = urllib.request.Request(url, headers=headers)
     try:
         with urllib.request.urlopen(rq, timeout=4) as resp:
             return resp.status, resp.headers, resp.read()
@@ -110,6 +113,12 @@ def run(config: Path):
                 results[filename] = {"raw_bytes": len(raw), "gzip_bytes": len(compressed),
                                      "ratio": round(len(compressed)/len(raw), 4),
                                      "mime": mime, "vary": h.get("Vary")}
+            # Reverse proxies can send Via; Nginx defaults gzip_proxied=off.
+            proxied_s, proxied_h, proxied_bytes = request(
+                root + "/cell_test.geojson", "gzip", via=True)
+            if (proxied_s != 200 or proxied_h.get("Content-Encoding") != "gzip"
+                    or gzip.decompress(proxied_bytes) != fixtures["cell_test.geojson"]):
+                raise AssertionError("Gzip disabled/invalid behind simulated reverse proxy Via")
             small_s, small_h, _ = request(root + "/tiny.geojson", "gzip")
             js_s, js_h, _ = request(root + "/module.mjs", "identity")
             denied_s, _, _ = request(root + "/.test-hidden")
@@ -121,7 +130,7 @@ def run(config: Path):
             print(json.dumps({"isolated_loopback": True, "real_apur_data": False,
                               "tests": results, "tiny_not_gzipped": True,
                               "mjs_mime_ok": True, "dotfiles_denied": True,
-                              "unknown_404": True}, indent=2))
+                              "unknown_404": True, "via_header_gzip_ok": True}, indent=2))
         finally:
             proc.terminate()
             try:
