@@ -28,6 +28,13 @@ Dossier cible approuvé en architecture : **`/srv/vacant/data` sur le VPS person
 Projet `vacant` enregistré dans AgentCTL ; VPS personnel `vmi2505789.contaboserver.net` accessible via **RDC LGC**. Tests natifs : **14/14 Node**, **6/6 collecteur Python Insee**. Cinq originaux Insee et manifestes avec hashes déposés dans `/srv/vacant/data/` (détails : [acquisition.md](acquisition.md)). Python 3.12 virtuel et DuckDB disponibles. RP2023 Parquet (5 066 022 observations) lu : `OCS=DW_VAC` identifié dans table de passage réelle ; géographie `GEO_OBJECT=IRIS` avec 992 IRIS parisiens en statistiques 2023. Source IGN GeoParquet géographie 2025 exactement identifiée dans catalogue, collecte/test restants.
 DNS `vacant.kiwinokoto.fr` pointe vers ce VPS mais **Traefik répond encore 404 et certificat par défaut** : pas de service déployé.
 
+## 2023 : première couche géographique vérifiée
+Sources archivées sur le VPS personnel : quatre fichiers de recensement Insee (2006, 2011, 2016, 2023), table de passage RP2023, table Insee d'appartenance IRIS géographie 2025 et contours IGN GeoParquet édition 2025. **Sept** fichiers au total. Les SHA sont dans les manifestes privés et [docs/acquisition.md](acquisition.md).
+
+Construction `scripts/build_iris_2023.py` puis `node scripts/validate-iris.mjs` : **992 IRIS exactement**, comparés entre les trois sources (aucun code manquant), **0 géométrie invalide GEOS**, totaux Paris compatibles (1 402 023,984 logements et 139 075,450 vacants). GeoJSON public agrégé : `/srv/vacant/data/processed/iris-2023/iris-2023.geojson`, **822 545 octets**, SHA256 `0b79e30afb5055448d4561960f55db3cc92a84feb2a498adb2588c00b6499a6f`. 52 IRIS ont un dénominateur nul ; l'UI masque volontairement les taux des IRIS comptant moins de 50 logements (63 IRIS en tout). **Ne pas confondre 0 logement avec 0 % de vacance.**
+
+Le connecteur API Paris Data a été testé HTTP 200, CORS `*`, `total_count` cohérent ; correction effectuée sur la géométrie `geom` de type GeoJSON `Feature`. La première carte IRIS 2023 est intégrée au code de l'interface, mais n'est pas encore déployée sur le domaine public. Le domaine retourne à ce stade 404 avec le certificat Traefik par défaut.
+
 ## Incertitudes / blocages
 - Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
 - CORS, pagination triée par identifiant de volume et restrictions de l'API doivent être vérifiés dans un navigateur réel. Le schéma `geom`, `geom_x_y`, `h_et_max` et `n_sq_vb` a été revérifié sur la fiche officielle Paris Data du 08/10/2026.

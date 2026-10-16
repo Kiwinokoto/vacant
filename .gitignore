@@ -12,3 +12,6 @@ data/processed/
 __pycache__/
 *.pyc
 .venv/
+
+# Derived public GeoJSON belongs to generated releases, not raw Git history
+site/data/
