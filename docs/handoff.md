@@ -1,6 +1,6 @@
 # ETAT COURANT — 16 octobre 2026 (prioritaire aux notes anciennes)
 
-- PR #2 fusionnée dans main, commit 32ddd63fd45844113b74ba0a85ef4c5bdb7dc200. La release publique précédente demeure 2e1a198e69f29e8ee36f8e462e839f68bb8b8565 tant que la branche historique n'est pas redéployée.
+- PR #2 fusionnée dans main, commit 32ddd63fd45844113b74ba0a85ef4c5bdb7dc200. La release publique actuelle est /srv/vacant/releases/2424a45ad590901e3c96c781e10d8b2309c874cb/site (ancien déploiement 2e1a198e69f29e8ee36f8e462e839f68bb8b8565 conservé pour rollback).
 - Branche de développement issue de ce main : dev/history-arrond-ux. Vérifier HEAD, PR, scripts/test et présence de verrous AgentCTL à chaque reprise.
 - Les originaux sous /srv/vacant/data/raw/insee sont privés et conservés avec manifestes SHA dans /srv/vacant/data/manifests. Ne jamais les servir en HTTP.
 - Insee RP2006, RP2011, RP2016 : 992 IRIS parisiens uniques par fichier, pas de logement/vacance manquant, géographies 2008, 2013, 2018 ; totaux Paris vérifiés (≈1 334 814/122 667, ≈1 356 074/98 698, ≈1 374 377/114 306).
@@ -8,7 +8,7 @@
 - Cartographie des millésimes anciens UNIQUEMENT par 20 arrondissements : agréger les IRIS en codes 75101..75120 avec les valeurs de leur propre millésime, puis dissoudre les contours IGN 2025 pour afficher les limites d'arrondissements, qui servent de maille géographique stable. Jamais affecter une valeur ancienne aux IRIS de 2025.
 - Générateur : scripts/build_arrondissement_history.py, avec vérification des SHA, données, catégories, cardinalité, arrondissements et topologie. Dérivé attendu /srv/vacant/data/processed/arrond-history/arrond-history.geojson ; sortir 20 polygones et quatre séries 2006/2011/2016/2023 sans données individuelles.
 - UI : nouvelle couche historique par arrondissement, année liée à la chronologie, retour au centre/zoom de rue depuis les couches statistiques. Si une ancienne année est choisie quand IRIS 2023 est actif, transition automatique vers arrondissements.
-- Tests : lancer node --test tests/*.test.mjs et /srv/vacant/venv/bin/python -m unittest discover -s tests -p test_*.py. Tester ensuite Chromium avec les deux couches, quatre années, popups, zoom, CORS et erreur réseau.
+- Tests réalisés : 22/22 Node et 17/17 Python, plus Chromium réel sur le site public : IRIS 2023 (992 IRIS, 929 taux), bascule vers les 20 arrondissements en 2006/2011/2016/2023, zoom 17 restauré après désactivation, 800 volumes chargés sans doublon/rejet avec avertissement de troncature. Aucune erreur applicative. Les popups cartographiques et le mobile restent à approfondir.
 - Déploiement : release immuable contenant uniquement les dérivés validés sous site/data, sous locks AgentCTL deploy:vps-personal/vacant, service:vacant, host:vps-personal/docker ; rollback possible vers ancienne release. Vérifier service, TLS, types MIME et hashes.
 - Aucun LOVAC individuel, aucune vacance au bâtiment. Les volumes Paris Data restent contemporains (étages, pas hauteur métrique). Favicon 404 et limite 800 volumes restent des dettes mineures.
 
