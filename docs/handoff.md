@@ -1,5 +1,13 @@
 # VACANT — passation active (16 octobre 2026)
 
+## Validation finale — 16/10/2026
+
+- **PR #13 fusionnée et déployée** : code `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0`, release de même SHA active sous `/srv/vacant/releases/<SHA>/site`. 25/25 Node, 40/40 Python, Chromium réel local **et public** (desktop/mobile, cartes des quatre millésimes, erreurs HTTP simulées) ; HTTP/HTTPS et deux GeoJSON historiques publics contrôlés, géométries candidates toujours HTTP 404. Ancienne release `2424a45ad590901e3c96c781e10d8b2309c874cb` conservée pour rollback. Pas d'évolution des données publiques.
+- **PR #14 recherche Apur fusionnée** : dernier `main` `642538708c802eb551fcfecd48f1492d5fc0602e` avant cette mise à jour de passation. Audit agrégé Apur 128 206 emprises, 128 090 hauteurs médianes positives, 120 412 périodes renseignées, 47 056 années exactes manquantes. 25/25 Node et **48/48 Python**. Voir [audit Apur](apur-bati-audit.md), `scripts/audit_apur_emprises.py` et tests. **Aucune géométrie Apur extraite ni publiée**.
+- Déploiement VACANT **volontairement au commit PR #13**, pas au `main` plus récent : la PR #14 ne touche qu'aux scripts d'audit et à la documentation. Ne pas redéployer inutilement.
+- **Suite ordonnée** : exporter/sourcer précisément la couche Apur datée et vérifier les conditions ODbL, contrôler un échantillon de géométries/emprises et les trois hauteurs médianes au-delà de 200 m, puis prototype distinct « période de construction » et « hauteur médiane (m) » avec tests et mentions de limites ; ensuite retourner aux originaux IGN 2008/2018 et à la réponse IGN déjà sollicitée. Pas de taux de vacance par emprise/bâtiment.
+- Branches locales sur VPS dédiées, non poussées directement ; contenus des commits publiés par connecteur GitHub avec identité de tree vérifiée. Agents/locks et services à revérifier à la prochaine reprise. Après cette passation, libérer toutes les leases `vacant`.
+
 ## Mise à jour — déploiement PR #13 et audit Apur (16/10/2026)
 
 - **PR #13 fusionnée** au commit `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0` ; aucune action CI configurée. Tests 25/25 Node et 40/40 Python, recette Chromium locale puis **production** (quatre années, changement de couches, erreurs HTTP 503 simulées avec retour à la couche précédente, mobile 390 px) : `BROWSER_ALL_PASSED`.
