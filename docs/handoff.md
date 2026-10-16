@@ -1,5 +1,12 @@
 # VACANT — passation active (16 octobre 2026)
 
+## Fin de passe — contrôle indépendant des contours IRIS
+- PR #8 fusionnée dans `main` : `2e4e53372bdfb31501149c00adfaff0b0ce86be8`. La nouvelle branche historique de travail `dev/iris-independent-crosscheck` n'a pas été déployée ; code, tests et documentation uniquement.
+- 22/22 tests JavaScript et 33/33 tests Python réussis. Relecture de trois séries de 992 contours, IoU médian candidat2013/OSM2013 = 1,00000, candidat2013/secondaire2016 = 0,93688 et secondaire2016/IGN2025 = 0,98472.
+- Archives secondaires à accès privé `/srv/vacant/data/raw/secondary/` et manifestes SHA `/srv/vacant/data/manifests/` : aucun transfert dans `site/data`, aucune publication des couches 2013/2016.
+- Demande des archives originales IGN 2008/2013/2018 préparée dans `docs/demande-archives-ign.md`, **non envoyée** : accès Gmail indisponible. Les jeux secondaires demeurent non certifiés.
+- Suite : obtenir et auditer les livraisons authentiques IGN ou leur provenance officiellement attestée, vérifier droits et concordances SIG, puis envisager seulement une carte IRIS historique par année.
+
 ## Source de vérité / état réel
 - Dépôt public : `Kiwinokoto/vacant` ; dernière base `main` confirmée avant cette passe : `53837c7fb0fa35ac6eb3797eb3c190e921c6b604`, PR ouvertes : aucune. Travail courant sur `dev/iris-independent-crosscheck`. Revalider GitHub, HEAD, remotes, état local, CI/protections et leases AgentCTL avant écriture.
 - Production inchangée : https://vacant.kiwinokoto.fr, VPS personnel `vmi2505789.contaboserver.net` via RDC LGC, release active au début `2424a45ad590901e3c96c781e10d8b2309c874cb`. HTTPS et conteneur à revérifier en fin/reprise. Aucun déploiement voulu pendant les audits privés.
