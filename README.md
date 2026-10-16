@@ -76,3 +76,7 @@ Reconstruction sur le VPS : fournir au script --raw-root /srv/vacant/data/raw/in
 ## Audit des références géographiques historiques
 
 L’audit des identifiants Insee 2008/2013/2018/2025 est décrit dans [docs/iris-historique.md](docs/iris-historique.md). Les 992 codes parisiens coïncident, mais **les géométries anciennes ne sont pas validées** : la comparaison historique reste par arrondissement, et les contours IRIS précis restent limités à 2023.
+
+## Géographie IRIS candidate pour RP2011
+
+La source secondaire 2013 reprojetée a fait l’objet d’un [audit SIG détaillé](docs/iris-2013-candidate.md). Un dérivé privé de 992 IRIS a été généré, mais n’est **pas publié**, car l’original IGN correspondant reste à obtenir et confirmer. Ne pas confondre cette piste avec les données validées par arrondissement sur le site.
