@@ -50,7 +50,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
   });
 
   let small=null,gridManifest=null,gridCache=null;
-  let active=false,source=null,token=0,originalView=null,lastMode="off",busy=false;
+  let active=false,source=null,token=0,originalView=null,lastMode="off",busy=false,gridDirty=false;
   function writeLegend(selected){
     legend.replaceChildren();
     const entries=isHeight(selected)?HEIGHT_BANDS:PERIODS.map(([code,label,color])=>[label,color]);
@@ -88,7 +88,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
       showMapMode("building");
       status.textContent="Retour aux volumes actuels ; aucune donnée Apur publiée.";
     }
-    active=false;source=null;originalView=null;lastMode="off";
+    active=false;source=null;originalView=null;lastMode="off";gridDirty=false;
     mode.value="off";
     reload.hidden=true;reload.disabled=false;
     legend.replaceChildren();
@@ -103,6 +103,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
   }
   map.on("moveend",()=>{
     if(active&&isGrid(lastMode)&&!busy){
+      gridDirty=true;
       message.textContent="Cadrage modifié : la sélection précédente reste affichée. "+
         "Cliquer sur « Recharger les cellules visibles » pour cette nouvelle zone.";
     }
@@ -121,7 +122,8 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
         if(!gridManifest)gridManifest=await loadLocalManifest(
           APUR_GRID_MANIFEST_SHA256,fetch,GRID_PATH);
         const bbox=viewBounds(),key=bboxKey(bbox);
-        if(!refresh&&gridCache?.key===key){
+        // The two color modes share a verified selection; only an explicit reload refetches.
+        if(!refresh&&gridCache&&(source==="grid"||gridCache.key===key)){
           next=gridCache.result;
         }else{
           next=await loadVisibleGrid(gridManifest,bbox,fetch,GRID_PATH);
@@ -153,6 +155,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
         overlay._apurKey=kind==="grid"?gridCache.key:null;
       }
       if(!map.hasLayer(overlay))overlay.addTo(map);
+      if(kind==="grid" && (refresh || source!=="grid"))gridDirty=false;
       active=true;source=kind;lastMode=selected;
       button.disabled=true;
       reload.hidden=kind!=="grid";
@@ -167,7 +170,8 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
       const heights=next.collection.features.filter(f=>f.properties.height_m!=null).length;
       message.textContent=next.uniqueObjects.toLocaleString("fr-FR")+
         " emprises uniques · "+(isHeight(selected)?heights.toLocaleString("fr-FR")+" hauteurs disponibles · ":"")+
-        detail+". © Apur · ODbL · extraction du 16/10/2026, millésime métier non confirmé.";
+        detail+". © Apur · ODbL · extraction du 16/10/2026, millésime métier non confirmé."+
+        (kind==="grid"&&gridDirty?" Cadrage modifié : recharger les cellules visibles.":"");
     }catch(error){
       // Keep the previous overlay and controls on any missing/altered/stale cell.
       mode.value=lastMode;
