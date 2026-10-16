@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VACANT — atlas documenté des volumes bâtis parisiens et des limites de connaissance sur la vacance.">
+  <title>VACANT · Paris, données vérifiables</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><span class="mark">V</span><div><strong>VACANT</strong><small>Atlas critique du bâti parisien</small></div></div>
+    <div class="headnote">Paris intra-muros · prototype de recherche · données réelles uniquement</div>
+  </header>
+  <main>
+    <aside class="sidebar">
+      <p class="eyebrow">Démonstrateur v0.1</p>
+      <h1>Ce que la ville nous permet de voir.</h1>
+      <p class="intro">Un volume cartographié n'est pas forcément un immeuble entier. Il ne dit rien de l'occupation des logements.</p>
+      <section aria-labelledby="layers-title">
+        <h2 id="layers-title">Couches documentées</h2>
+        <label class="layer active"><input type="checkbox" checked disabled> <span><strong>Volumes bâtis · état actuel</strong><small>Ville de Paris · nombre d'étages</small></span></label>
+        <label class="layer muted"><input type="checkbox" disabled> <span>Hauteur en mètres <small>En attente d'appariement IGN / Apur</small></span></label>
+        <label class="layer muted"><input type="checkbox" disabled> <span>Période de construction <small>En attente de validation Apur</small></span></label>
+        <label class="layer muted"><input type="checkbox" disabled> <span>Vacance à la maille IRIS <small>En attente d'intégration du RP Insee</small></span></label>
+        <label class="layer muted"><input type="checkbox" disabled> <span>Curseur historique <small>Aucun historique annualisé établi</small></span></label>
+      </section>
+      <section aria-labelledby="legend-title">
+        <h2 id="legend-title">Nombre maximal d'étages indiqué</h2>
+        <div class="legend"><span><i class="c0"></i> RDC</span><span><i class="c1"></i> 1 à 3</span><span><i class="c2"></i> 4 à 8</span><span><i class="c3"></i> 9 et plus</span><span><i class="cx"></i> Indisponible</span></div>
+        <p class="note">Ce ne sont <strong>pas des hauteurs physiques</strong>. Les données inconnues restent grisées.</p>
+      </section>
+      <section aria-labelledby="metadata-title">
+        <h2 id="metadata-title">Source &amp; méthode</h2>
+        <p class="note">Géométries et étages : <a href="https://opendata.paris.fr/explore/dataset/volumesbatisparis/" target="_blank" rel="noopener noreferrer">Ville de Paris · Volumes bâtis</a> (ODbL, actualisation annoncée annuelle). Requête sur les centroïdes dans la zone visible, non exhaustive si tronquée. Les autres couches ne sont pas diffusées.</p>
+        <p class="note">L'Apur publie une <a href="https://opendata.apur.org/datasets/emprise-batie-paris" target="_blank" rel="noopener noreferrer">couche datation/hauteur</a>, à auditer avant utilisation. <a href="../docs/sources.md">Audit complet</a>.</p>
+      </section>
+      <p class="disclaimer">Aucune carte n'identifie des logements ou propriétaires vacants. Aucune donnée de vacance individuelle n'est collectée.</p>
+    </aside>
+    <div class="viewport">
+      <div class="toolbar">
+        <div><strong>Extrait autour du 11e arrondissement</strong><small>Déplacer/zoomer, puis charger la zone affichée</small></div>
+        <button type="button" id="load">Charger les volumes de la zone visible</button>
+      </div>
+      <div id="map" aria-label="Carte interactive des volumes bâtis à Paris"></div>
+      <div class="map-foot"><span id="status" role="status" aria-live="polite">Aucune donnée chargée. Cliquez sur « Charger » pour interroger Paris Data.</span><span>Fond © OpenStreetMap</span></div>
+    </div>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
