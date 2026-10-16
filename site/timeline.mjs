@@ -59,6 +59,7 @@ export function renderParisTimeline() {
     source.href = point.source;
     fill.style.width = vacancyRate(point) + "%";
     for (const {button, year} of buttons) button.setAttribute("aria-pressed", String(point.year===year));
+    document.dispatchEvent(new CustomEvent("vacant:census-year", {detail:{year:point.year}}));
   }
   for (const point of TIMELINE) {
     const button = document.createElement("button");

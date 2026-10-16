@@ -49,3 +49,10 @@ Les contours [IGN Contours...IRIS](https://www.data.gouv.fr/datasets/contours-ir
 - **IRIS 2006–2023** : données officielles disponibles, mais **non encore extraites, testées ni visualisées**. Confiance cartographique *non établie* à ce stade.
 - **Adresse ou immeuble** : aucune preuve publique de vacance individuelle. Confiance **nulle / interdit d'inférer**.
 - **Vacance commerciale / bureaux** : métrique différente ; aucun historique intégré.
+
+
+## Mise à jour historique — 16/10/2026
+
+Les archives originales Insee 2006, 2011 et 2016 ont été lues : 992 IRIS parisiens uniques et sans valeurs manquantes sur total/vacants pour chacun ; les totaux Paris correspondent aux chiffres officiels. Le format 2023 a été validé dans le dictionnaire avec OCS=DW_VAC pour la vacance et OCS=_T pour le total.
+
+Les géographies IRIS 2008, 2013, 2018, 2025 ne sont pas interchangeables : la comparaison géographique antérieure à 2023 se limite aux **20 arrondissements**, en agrégeant les chiffres Insee d'époque par arrondissement puis en dessinant leurs limites d'affichage IGN 2025. Aucune géométrie ancienne d'IRIS n'est fabriquée. Pour les cartes fines IRIS historiques, obtenir les contours anciens ou une table de passage rigoureuse.
