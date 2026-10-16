@@ -43,3 +43,15 @@ test ! -d "/srv/vacant/releases/$sha/site/data/apur-grid"
 ```
 
 Si l'une de ces vérifications échoue, **bloquer la publication et inspecter la release** ; ne jamais la corriger à la main sur place. Les suites `tests/test_stage_reviewed_release.py` assurent la non-régression du garde-fou, y compris la présence de fichiers Apur privés ignorés dans un clone.
+
+## Recette de compression Nginx avant toute mise en ligne Apur
+
+Sur un VPS autorisé disposant du binaire Nginx, mais **sans modifier le service VACANT existant** :
+
+```sh
+python3 scripts/recipe_nginx_gzip_loopback.py --config deploy/nginx.conf
+```
+
+Ce contrôle démarre temporairement une seconde configuration Nginx **liée uniquement à `127.0.0.1`**, sur un port libre, et ne sert que des **fichiers synthétiques**. Il vérifie les réponses gzip/identity, les MIME `application/geo+json` et `application/json`, `Vary: Accept-Encoding`, le type JavaScript `.mjs`, les refus 403 des fichiers cachés et 404 des absents, puis arrête automatiquement le processus. Le test a réussi avec Nginx 1.18.0 le 16/10/2026 ; la configuration réellement en production n'a pas changé.
+
+Les nouvelles directives `gzip` présentes dans `deploy/nginx.conf` restent **une proposition versionnée**, pas une activation sur le service public. Après revue, les entêtes devront être contrôlés à nouveau sur **la release réellement préparée**, sans exposer `site/data/apur-grid/` ni `apur-lab.geojson`. Les tests de débit mobile et de charge concurrente sont une validation distincte.
