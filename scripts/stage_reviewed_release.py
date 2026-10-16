@@ -84,6 +84,8 @@ def stage_public_release(repo: Path, commit: str, dest: Path,
     if set(datasets) != set(ALLOWED_DATASETS):
         raise ValueError("Both audited public datasets must be explicitly provided")
     dest = Path(dest)
+    if not dest.is_absolute() or not Path(repo).is_absolute():
+        raise ValueError("Repository and release path must be absolute")
     if dest.exists() or dest.is_symlink() or dest.name != commit:
         raise ValueError("Release destination must be new and named after the commit")
     parent = dest.parent.resolve(strict=True)
@@ -122,6 +124,7 @@ def stage_public_release(repo: Path, commit: str, dest: Path,
             shutil.copyfile(src, output, follow_symlinks=False)
             if digest(output) != expected_sha:
                 raise ValueError("Copied dataset SHA-256 mismatch")
+            os.chmod(output, 0o644)
         if not (site / "index.html").is_file():
             raise ValueError("Missing main VACANT page")
         # Fail closed even if someone tracks a file with another extension below
@@ -129,6 +132,15 @@ def stage_public_release(repo: Path, commit: str, dest: Path,
         if any("apur-grid" in p.parts or "_local" in p.parts
                for p in site.rglob("*")):
             raise ValueError("Apur private data directory accidentally staged")
+        # Nginx needs to traverse the immutable read-only release.
+        # Keep staging private until every check above has succeeded.
+        for p in site.rglob("*"):
+            if p.is_dir():
+                os.chmod(p, 0o755)
+            elif p.is_file():
+                os.chmod(p, 0o644)
+        os.chmod(site, 0o755)
+        os.chmod(stage, 0o755)
         if dest.exists():
             raise ValueError("Destination appeared during release preparation")
         stage.rename(dest)
