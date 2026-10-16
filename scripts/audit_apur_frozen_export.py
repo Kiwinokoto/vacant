@@ -36,7 +36,7 @@ def height_flags(row):
             ["above_max"] if median is not None and high is not None and median > high else []) + (
             ["above_200"] if median is not None and median > 200 else [])
 
-def audit(path, manifest):
+def audit(path, manifest, *, full_geometries=False):
     import shapefile
     from shapely.geometry import shape
     from shapely.validation import explain_validity
@@ -79,7 +79,7 @@ def audit(path, manifest):
                     heights[flag] += 1
                 edited = str(a.get("last_edi_1") or "")[:10]
                 max_edit = max(max_edit, edited)
-                if not should_check_geometry(oid, code, h):
+                if not full_geometries and not should_check_geometry(oid, code, h):
                     continue
                 geom = shape(feature.shape.__geo_interface__)
                 kinds[geom.geom_type] += 1
@@ -98,12 +98,13 @@ def audit(path, manifest):
             "counts": dict(counts), "period_counts": dict(periods),
             "height_flags_nonexclusive": dict(heights), "last_object_edit": max_edit,
             "sample_policy": "OBJECTID mod 17 == 0 or undated or h_med > 200",
-            "sampled_geometries": sum(kinds.values()), "geometry_types": dict(kinds),
+            "sampled_geometries": sum(kinds.values()), "full_geometries": full_geometries, "geometry_types": dict(kinds),
             "topological_anomalies": dict(invalid), "occupied_grid_cells_5x5": len(grid)}
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("archive", type=Path)
     p.add_argument("manifest", type=Path)
+    p.add_argument("--full-geometries", action="store_true", help="Run GEOS on every source shape")
     args = p.parse_args()
-    print(json.dumps(audit(args.archive, args.manifest), indent=2, ensure_ascii=False))
+    print(json.dumps(audit(args.archive, args.manifest, full_geometries=args.full_geometries), indent=2, ensure_ascii=False))
