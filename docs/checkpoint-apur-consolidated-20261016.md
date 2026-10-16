@@ -35,7 +35,7 @@ Les PR #21 et #22 sont **complémentaires, pas encore raccordées** : l'interfac
 
 ## Validation et réserves
 
-- Assemblage testé en lecture sur clone isolé **66/66 JavaScript et 81/81 Python**. Le test local est à rejouer depuis la nouvelle branche de consolidation après publication du checkpoint ; le rapport final doit noter son résultat.
+- Assemblage testé en lecture sur clone isolé **66/66 JavaScript et 81/81 Python**. Nouveau clone GitHub de la branche consolidée : **66/66 tests JavaScript et 81/81 tests Python** réussis, `git diff --check` OK, **six branches sources présentes dans l'ascendance**, aucun GeoJSON privé suivi. **Chromium** : sur le code consolidé, desktop 1280×800 et mobile 390×844, carte principale opérationnelle, laboratoire invisible sans paramètre, aucune erreur JS ni débordement ; laboratoire localhost activé explicitement, fixture absente HTTP 404 refusée et volumes initiaux conservés.
 - Recettes Chromium précédentes individuelles : laboratoire de 150 objets sur desktop/mobile, et grille 456 cellules avec chargement **uniquement des cellules visibles**, SHA, refus 503, dédoublonnage. Latences mesurées en **local**, non représentatives d'une connexion 4G ni d'un téléphone physique.
 - Obligations ODbL de redistribution de la base adaptée utilisée publiquement à documenter avant publication ; transparence sur les transformations, les exclusions, le millésime et l'accès à la base dérivée. Pas de publication automatique.
 
