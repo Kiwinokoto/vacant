@@ -1,3 +1,13 @@
+## Laboratoire Apur datation par périodes — 16/10/2026, 19 h 20 (Paris)
+
+- Source de vérité au départ : `main=72a9d06377541b7b266e0d8153e89a7ae19afb95`, PR #17 (audit géométrique) ouverte en brouillon. Aucun concurrent ni lease AgentCTL VACANT au contrôle ; session dédiée `chatgpt-apur-period-prototype-20261016` / `repo:Kiwinokoto/vacant` pendant les écritures, à libérer en fin de passe.
+- Nouvelle branche isolée `dev/apur-period-experiment-20261016` : prototype **uniquement** sous `experiments/apur-periods/`, contrat JS et tests. **Aucun changement dans `site/`**, aucune géométrie Apur archivée ou déployée, aucun changement de production.
+- Fiche Apur 2019 : ODbL, classement officiel en 11 périodes + 99 ; `c_perconst=11` = **2000–2007**, malgré une légende du renderer ArcGIS qui dit « 2000 et plus ». Les valeurs codées du schéma ArcGIS confirment 2000–2007. La version géographique exacte du service reste indéterminée ; ni la date du document (2019), ni la page de présentation (2024), ni le traitement miroir (2026) ne suffisent à la dater.
+- Carte expérimentale par petite enveloppe, requête live **volontaire** : précompte, plafond 200 emprises, aucun retour partiel affiché, champs autorisés uniquement, données non datées grisées. **Aucun** indicateur de vacance rapporté au bâti.
+- Validation : Node **35/35**, Python **48/48**, Chromium desktop **84** emprises / mobile **37**, 12 classes dans la légende, CORS et affichage OK, aucun débordement ni erreur JS. Défauts initialement repérés (hauteur desktop excessive, cadrage initial >200 objets) corrigés.
+- Rapport détaillé : [apur-period-prototype-20261016.md](apur-period-prototype-20261016.md). Priorités : export Apur daté + SHA-256, obligations de rediffusion ODbL, QA complète des polygones et performances, puis PR distincte pour la véritable intégration UI. **Ne pas déployer ce prototype ni réinterpréter une période comme une observation de bâti ancien.**
+- Production vérifiée inchangée au contrôle pré-écriture : release `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0`, conteneur VACANT actif, 0 redémarrage. Pas de nouvelle recette de production nécessaire dans cette passe.
+
 # VACANT — passation active (16 octobre 2026)
 
 **Point de reprise prioritaire : [checkpoint Apur du 16/10/2026](checkpoint-apur-20261016.md).** Ce document reflète le dernier état vérifié ; les rubriques ci-dessous constituent l'historique des passes précédentes et peuvent contenir des statuts anciens.
