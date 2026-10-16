@@ -3,7 +3,7 @@
 ## État Git de référence
 **PR #1 fusionnée** en `main` par squash le 16/10/2026 : **`df947684403fc34cfe6ab8ce450644b0a3e6ab6b`**. Pas de déploiement ni de workflow CI. La branche `dev/source-audit-and-map` demeure pour l'historique, sans écriture prévue dessus.
 
-**Travail actuel :** `dev/iris-provenance-validation`, créée depuis le commit main ci-dessus. Validation stricte d'imports IRIS préparés et tests ; vérifier le SHA de sa tête et l'état de la PR à chaque reprise. Pas de modifications du VPS.
+**Travail actuel :** `dev/iris-provenance-validation`, créée depuis le commit main ci-dessus ; premier commit `814a237229a3789f10aeb5116dafefb7f3ff207b`, [PR brouillon #2](https://github.com/Kiwinokoto/vacant/pull/2) ouverte, non fusionnée. Validation stricte d'imports IRIS préparés. 15/15 contrôles JS réussis sur les blobs GitHub (9 existants, 5 contrats IRIS, 1 test CLI simulé) ; suite Node native non exécutée, données sources absentes. Vérifier la nouvelle tête GitHub et la PR à chaque reprise. Pas de modifications du VPS.
 
 ## Décisions
 - Paris intra-muros, public, statique, pas de données à risque individuelles.
