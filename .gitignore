@@ -1,0 +1,14 @@
+raw/
+processed/
+data/raw/
+data/processed/
+*.zip
+*.7z
+*.parquet
+*.gpkg
+*.fgb
+*.xls
+*.xlsx
+__pycache__/
+*.pyc
+.venv/

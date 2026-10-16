@@ -47,12 +47,17 @@ Le manifeste exigé comprend : `census_year`, `geography_year`, `zone="Paris"`, 
 
 Voir [le protocole temporel](docs/chronologie.md) et [le contrat géographique](docs/architecture.md). Les jeux de tests utilisent uniquement des fixtures synthétiques internes, jamais mises sur la carte.
 
+## Sources Insee : collecte privée
+
+Le script `scripts/collect_insee.py` télécharge, **uniquement avec `--execute`**, les archives officielles RP2006, RP2011, RP2016, RP2023 et le dictionnaire de correspondance RP2023. Il archive les fichiers immuables et leurs empreintes SHA-256. **Le VPS n'a pas été accessible et aucun fichier réel n'y a encore été stocké.** Voir [la procédure, les URLs et les limites](docs/acquisition.md).
+
 ## Documentation
 
 - [Audit des sources et droits](docs/sources.md)
 - [Modèle de données, architecture et validations](docs/architecture.md)
 - [Décision chronologique 2006–2023, preuves et limites](docs/chronologie.md)
 - [Passation / limites et suite](docs/handoff.md)
+- [Collecte Insee et stockage privé](docs/acquisition.md)
 - [Règles de collaboration](AGENTS.md)
 
 ## Principes non négociables

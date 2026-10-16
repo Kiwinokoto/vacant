@@ -21,6 +21,9 @@ Démarrage statistique **2006** acté dans [chronologie.md](chronologie.md). Chr
 ## Travaux préparatoires IRIS sur branche dédiée
 Contrat `site/iris-contract.mjs` ; commande `scripts/validate-iris.mjs` ; 5 nouveaux tests `tests/iris-contract.test.mjs` réussis dans le runtime V8 sur les blobs créés via GitHub. GeoJSON et manifeste explicites obligatoires ; sortie refusée sans contrôles de cardinalité. Le CSV 2023 harmonisé et les contours géographie 2025 n'ont **pas** été téléchargés ; aucun jeu IRIS n'est construit ni visible sur la carte.
 
+## Préparation de la collecte — 16/10/2026
+Dossier cible approuvé en architecture : **`/srv/vacant/data` sur le VPS personnel**, hors racine web. `scripts/collect_insee.py` prépare cinq téléchargements Insee officiels avec manifestes SHA-256 et verrou `flock` local. [Guide et URLs](acquisition.md). **Aucun téléchargement réel n'a été effectué : appareils RDC personnels hors ligne (deux vérifications), accès direct Insee indisponible dans le conteneur. Aucun dossier VPS créé.** Six tests Python du collecteur réussis sur une copie locale de développement ; à rejouer depuis GitHub avant exploitation. Les contours IGN édition 2025 restent à sélectionner (ne pas substituer l'édition 2024).
+
 ## Incertitudes / blocages
 - Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
 - CORS, pagination triée par identifiant de volume et restrictions de l'API doivent être vérifiés dans un navigateur réel. Le schéma `geom`, `geom_x_y`, `h_et_max` et `n_sq_vb` a été revérifié sur la fiche officielle Paris Data du 08/10/2026.
