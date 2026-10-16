@@ -90,6 +90,7 @@ class ReleaseGateTests(unittest.TestCase):
 
     def test_tracked_apur_geometry_blocks_stage_entirely(self):
         bad = self.repo/"site/data/apur-grid/private.geojson"
+        bad.write_text("PRIVATE TEST FIXTURE")
         # Git's ignore is intentionally overridden here to simulate a mistake.
         git(self.repo, "add", "-f", str(bad))
         git(self.repo, "commit", "-qm", "accidentally tracked private data")
