@@ -1,5 +1,13 @@
 # VACANT — passation active (16 octobre 2026)
 
+## IGN — demande envoyée le 16/10/2026
+
+- La demande de géométries historiques **Contours…IRIS® 2008, 2013 et 2018 (Paris, 75)** a été **envoyée depuis le compte Gmail connecté** à `contact.geoservices@ign.fr` le 16 octobre 2026 ; Gmail a confirmé le statut `SENT`. **Ne pas envoyer de doublon.**
+- Objet : « Demande d’archives Contours…IRIS® 2008, 2013 et 2018 — Paris (75) ». Le message demande également l'attestation que le jeu Atlasanté nommé **2014** correspond bien à la géographie Insee **2013**, et la licence historique de rediffusion de dérivés GeoJSON. Texte technique de référence : [demande-archives-ign.md](demande-archives-ign.md) (version proche du courrier envoyé).
+- **Réponse IGN non encore obtenue** à la date d'envoi. Avant de relancer, rechercher ce fil dans Gmail ; ne pas considérer le silence comme un accord de licence. Le contenu de `site/`, les fichiers géographiques privés, le conteneur et la production n'ont pas changé pendant cette opération.
+- Nouvelle piste de recherche indépendante : une documentation tierce cite `CONTOURS-IRIS_2-1__SHP__FRA_2018-06-08` avec un sous-répertoire `...FXX-2017`. La date de livraison **2018** ne prouve pas une géographie de référence **2018** : vérifier la notice, les codes et les géométries avant tout appariement à RP2016. Archive non acquise.
+- Pendant l'attente : chercher les **fonds IGN officiels 2008 et 2018**, contrôler édition/CRS/SHA/conditions juridiques ; privilégier les améliorations UI et le contrôle mobile indépendants des anciennes licences. Les couches fines historiques secondaires restent **hors production**.
+
 ## Fin de passe — Atlasanté 2014 (16/10/2026)
 
 - PR #10 **fusionnée** en squash sur `main` : `67648885c9996604fd539506c975a14050783c7e`. Source locale `dev/iris2014-atlasante-geometry` sans changement non commité ; arbre GitHub de la PR vérifié identique à Git local. La branche documentaire présente ajoute uniquement cet état final.
