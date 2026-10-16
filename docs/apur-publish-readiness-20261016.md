@@ -70,7 +70,7 @@ Recette réussie sur le VPS avec Nginx **1.18.0** :
 - fichier trop petit non compressé, module `.mjs` avec MIME JavaScript valide, dotfiles refusés HTTP 403, fichiers absents HTTP 404 ;
 - les octets décompressés correspondent **strictement** à la source synthétique, condition nécessaire à une validation SHA-256 côté client.
 
-Un premier lancement du laboratoire a rencontré une attente de démarrage, mais le script non modifié a été rejoué avec succès après le diagnostic. Le serveur reste arrêté à la fin. Cela valide la **négociation HTTP** sur Nginx réel ; cela n'est ni un déploiement Nginx production, ni une mesure de concurrence, ni une preuve de performance réelle.
+Un premier lancement du laboratoire a rencontré une attente de démarrage, mais le script non modifié a été rejoué avec succès après le diagnostic. Un second contrôle injecte l'en-tête HTTP `Via` d'un intermédiaire : `gzip_proxied any` permet bien la compression de la réponse GeoJSON derrière un reverse proxy. La réponse décompressée reste exactement identique à la source synthétique ; test **réussi**. Le serveur reste arrêté à la fin. Cela valide la **négociation HTTP** sur Nginx réel ; cela n'est ni un déploiement Nginx production, ni une mesure de concurrence, ni une preuve de performance réelle.
 
 ## Checklist ODbL 1.0 avant une couche publique
 
