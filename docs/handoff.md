@@ -1,5 +1,15 @@
 # ETAT COURANT — 16 octobre 2026 (prioritaire aux notes anciennes)
 
+## Livraison finale vérifiée le 16 octobre 2026
+
+- PR #3 fusionnée dans main : commit `b658cefb5ef8e02b25701af06342756cd5a8ca9e`. Le commit source de la release testée en production est `2424a45ad590901e3c96c781e10d8b2309c874cb` ; la différence ultérieure porte sur la documentation de passation.
+- Release VACANT active sur VPS personnel : `/srv/vacant/releases/2424a45ad590901e3c96c781e10d8b2309c874cb/site`, seul conteneur VACANT redéployé. Ancienne release 2e1a198 conservée pour rollback.
+- Recette Chromium réelle : HTML 200, Leaflet, chronologie, 992 IRIS 2023 (929 taux), quatre années sur 20 arrondissements, bascule automatique depuis IRIS vers les arrondissements pour une année ancienne, restauration du zoom 17, 800 volumes Paris Data chargés avec avertissement de troncature, zéro erreur réseau applicative/JavaScript.
+- Tests : 22/22 Node, 17/17 Python ; GeoJSON historique agrégé SHA-256 `9766777233d2bd3173df7ca7c867be56d5295d808d9530bf80ffdbf60055ba69`. Les statistiques anciennes sont **arrondissements uniquement**, pas contours IRIS d'époque.
+- Vérification de production : les cinq ressources principales répondent 200 avec leurs MIME attendus ; certificat HTTPS valide, conteneur actif (0 redémarrage). Le premier essai a subi un 502 transitoire durant la redécouverte Traefik : rollback exécuté ; second essai validé après attente du service.
+- Fichiers sources bruts toujours privés sous /srv/vacant/data/raw. Aucune publication d'adresse ou de statut individuel. Favicon 404, tests mobile et fonds IRIS historiques précis restent à traiter.
+- Travaux terminés. Vérifier à chaque reprise les éventuels locks AgentCTL, les branches et les SHA ; ne pas supposer que main déclenche un redéploiement automatique.
+
 - PR #2 fusionnée dans main, commit 32ddd63fd45844113b74ba0a85ef4c5bdb7dc200. La release publique actuelle est /srv/vacant/releases/2424a45ad590901e3c96c781e10d8b2309c874cb/site (ancien déploiement 2e1a198e69f29e8ee36f8e462e839f68bb8b8565 conservé pour rollback).
 - Branche de développement issue de ce main : dev/history-arrond-ux. Vérifier HEAD, PR, scripts/test et présence de verrous AgentCTL à chaque reprise.
 - Les originaux sous /srv/vacant/data/raw/insee sont privés et conservés avec manifestes SHA dans /srv/vacant/data/manifests. Ne jamais les servir en HTTP.
