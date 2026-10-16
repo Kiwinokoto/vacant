@@ -1,4 +1,6 @@
-# Architecture et contrat de données (v0.1)
+# Architecture et contrat de données (v0.2)
+
+**État validé au 16/10/2026 :** une couche de vacance territoriale **IRIS 2023** est désormais servie et utilisable, indépendamment des volumes bâtis actuels. Le présent document conserve les contrats de sécurité pour les millésimes futurs. Voir [passation](handoff.md) pour les tests et la release exacte.
 
 ## Portée de la première passe
 
@@ -21,7 +23,7 @@
 
 - `site/timeline.mjs` intègre **quatre lignes agrégées pour Paris entier**, transcrites depuis les tableaux officiels INSEE RP2022 (2006/2011/2016) et RP2023 (2023). Le code n'effectue **aucune** attribution statistique à un immeuble ou IRIS.
 - La sélection 2006 / 2011 / 2016 / 2023 est *discrète* et indique deux périmètres distincts (résidences secondaires et logements occasionnels != logements vacants). Aucune année intermédiaire ni « interpolation ».
-- RP2023 est un autre schéma harmonisé et sera validé au format brut avant un vrai affichage IRIS. L'annotation « niveau Paris » empêche une confusion avec la carte.
+- RP2023 suit un schéma harmonisé différent des millésimes historiques : lecture du Parquet, dictionnaire `OCS=DW_VAC`, inventaires 992/992 et topologie GEOS vérifiés avant affichage IRIS 2023. L'annotation « niveau Paris » distingue la chronologie de la carte.
 - Vérifications arithmétiques (sommes à une unité près en raison de l'arrondi statistique) et min. cinq ans d'intervalle entre jalons. Voir [chronologie](chronologie.md).
 
 ## Actuellement implémenté
@@ -43,21 +45,21 @@ Dans site/record.mjs, une réponse API doit satisfaire :
 - Atlas entier : étape ultérieure (GPKG/GeoJSON sérialisés tuilés sous licence compatible, ingestion reproductible, qualité par couche et manifeste, éventuellement PMTiles). Pas de base ni cluster prématuré.
 - Tuiles : OSM standard en usage d'exploration ponctuelle avec attribution ; **ne pas** s'en servir pour gros trafic sans fournisseur conforme à la politique de tuiles OSM.
 
-## Contrat IRIS préparatoire (sans couche diffusée)
+## Contrat IRIS et couche publiée pour 2023
 
-La prochaine chaîne d'import dispose de `site/iris-contract.mjs` et `scripts/validate-iris.mjs`. Elle accepte uniquement un fichier GeoJSON **déjà rapproché, par IRIS de l'année correspondante**, et un manifeste séparé d'origine. Cette étape n'essaie pas de deviner les colonnes de 2023 ni de transformer un CSV national sans avoir ouvert son dictionnaire de dimensions.
+La chaîne d'import dispose de `site/iris-contract.mjs` et `scripts/validate-iris.mjs`. Elle accepte uniquement un fichier GeoJSON **déjà rapproché, par IRIS de l'année correspondante**, et un manifeste séparé d'origine. Cette étape n'essaie pas de deviner les colonnes de 2023 ni de transformer un CSV national sans avoir ouvert son dictionnaire de dimensions.
 
 - Années / contours compatibles exigés : **2006→2008, 2011→2013, 2016→2018, 2023→2025**. Les IRIS 2024 **ne sont pas** un substitut automatique aux IRIS géographie 2025.
 - Codes Paris au format INSEE IRIS, 9 chiffres avec préfixe `751` ; polygones GeoJSON WGS84 ; identifiants uniques et région Paris uniquement (contrôle d'enveloppe grossier).
 - Numérateur `vacant_count` et dénominateur `housing_count` numériques >= 0, vacants <= total, et séparés des résidences secondaires. **Les estimations fractionnaires Insee sont admises** ; une valeur absente reste `null` et son taux est indisponible, jamais 0 par défaut.
 - Rejet des champs personnels/adresses/immeubles pour éviter toute confusion ; seul un jeu de propriétés explicitement autorisé ressort du traitement.
 - Deux URLs de sources officielles, licences, SHA-256 des fichiers, date d'extraction ; `expected_iris_count` indispensable pour demander la production de fichier. Son égalité est une **vérification de cardinalité déclarée**, non une preuve de conformité des contours : contrôle des codes et de la géométrie source indépendant à poursuivre avant publication.
-- Une géométrie valide au sens des tests n'est pas nécessairement topologiquement valide en SIG. Contrôle GEOS/QGIS ultérieur requis, y compris intersections et trous. Aucun import n'est publié ou activé dans la carte pour l'instant.
+- Les validations de contrat ne suffisent pas à prouver la topologie SIG. Pour la **couche 2023 publiée**, les 992 contours parisiens ont également passé le contrôle GEOS (aucun invalide). Ces preuves ne se transmettent pas automatiquement aux futurs millésimes : à contrôler indépendamment avant chaque publication.
 
 ## Plan de validation du démonstrateur enrichi
 
 1. Confirmer par extraction Apur les périodes/hauteurs, unités et jointures, produire rapport de couverture et licences des dérivés ODbL.
-2. Extraire Insee RP2023 en géographie 2025 + contour compatible ; vérifier comparabilité et publier les seuls agrégats IRIS (avec éventuels secrets/valeurs manquantes).
-3. Afficher les IRIS comme **polygones** indépendants des bâtiments avec légende « estimation recensement, 2023 » et popover de métadonnées. Jamais appliquer un taux d'IRIS à une emprise de bâtiment.
+2. **Réalisé pour 2023 :** Insee RP2023 + contour IGN 2025, 992 IRIS concordants, agrégats seuls publiés et valeurs faibles masquées. Refaire l'audit pour chaque nouveau millésime.
+3. **Réalisé pour 2023 :** IRIS affichés comme polygones indépendants des volumes bâtis, avec légende et popover ; ne jamais attribuer un taux d'IRIS à une emprise de bâtiment.
 4. Pour LOVAC agrégé, afficher **Paris commune** séparément, et les deux ruptures de série avec avertissement.
 5. Un curseur temporel n'est activé qu'avec millésimes comparables et une couche réellement historique. Construire un protocole d'incertitude des géoréférencements avant 1900.
