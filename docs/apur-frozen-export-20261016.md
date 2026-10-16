@@ -54,6 +54,23 @@ Sélection **`OBJECTID % 17 == 0` ou période non datée ou `h_med > 200`**, sur
 
 Les MultiPolygon et anomalies de topologie appellent une investigation ciblée avant simplification, tuilage ou activation UI. La validation JavaScript de la PR #18 contrôle l'intégrité de la structure, **pas la topologie GEOS**. On ne peut pas extrapoler le nombre total d'invalides à partir de cet échantillon biaisé.
 
+## Contrôle topologique GEOS **exhaustif** de la même archive
+
+Après l'échantillon déterministe ci-dessus, l'auditeur a été relancé en mode `--full-geometries`, pour **toutes les 128 206 emprises** de l'archive figée :
+
+| Mesure | Résultat |
+|---|---:|
+| Géométries lues/contrôlées par Shapely/GEOS | **128 206 / 128 206** |
+| Polygon | **127 993** |
+| MultiPolygon | **213** |
+| Auto-intersections d'anneau, donc géométries invalides | **104** |
+| Géométries ne présentant aucune anomalie GEOS de validité | **128 102** |
+| Temps de lecture et contrôle observé sur VPS | **42,75 s** |
+
+La couche brute contient donc une proportion limitée mais **non nulle d'objets topologiquement invalides** (~0,0811 %), ainsi que 213 objets multiparties. Ne pas conclure que toutes les formes multiparties sont invalides. Les objets invalides seront **signalés et filtrés** lors d'une transformation future, sans réparation automatique silencieuse. Ne pas construire un GeoJSON prétendument complet à partir d'une géométrie validée uniquement sur son format d'anneaux en JS.
+
+Le fichier `.prj` du ZIP a été lu séparément et confirmé comme **EPSG:2154** par Pyproj. L'auditeur versionné impose désormais cette vérification de CRS, avant tout calcul de surface ou de centroïde. Les 42,75 s ci-dessus concernent la version précédente de ce même programme (le seul contrôle de CRS supplémentaire a été ajouté ensuite).
+
 ## Reproductibilité et blocages
 
 Audit reproductible, sans réseau ni fichier géométrique généré :
@@ -66,4 +83,4 @@ Audit reproductible, sans réseau ni fichier géométrique généré :
 
 Le programme vérifie SHA-256, taille, CRC, membres ZIP, compte, valeurs attributaires et qualité GEOS d'un échantillon borné. Bibliothèques déjà présentes sur le VPS : pyshp, Shapely, pyproj. Résultats sur clone GitHub de la branche : **53/53 Python et 25/25 Node**, puis audit du ZIP réel réussi. Aucun navigateur n'a été relancé lors de cette passe ; le prototype local de la PR #18 avait été recetté auparavant.
 
-**Décisions :** maintenir les PR #17/#18 en brouillon et hors production. Avant publication, qualifier les six géométries invalides et les 13 emprises sans clé métier, vérifier les obligations ODbL pour une base adaptée, obtenir une réponse Apur sur le millésime et tester la performance/attribution de la future couche publique. La vacance Insee demeure **territoriale**, jamais affectée aux emprises bâties.
+**Décisions :** maintenir les PR #17/#18 en brouillon et hors production. Avant publication, qualifier les 104 géométries invalides et les 13 emprises sans clé métier, vérifier les obligations ODbL pour une base adaptée, obtenir une réponse Apur sur le millésime et tester la performance/attribution de la future couche publique. La vacance Insee demeure **territoriale**, jamais affectée aux emprises bâties.
