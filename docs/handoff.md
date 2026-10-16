@@ -1,7 +1,7 @@
 # Passation VACANT — 2026-10-16
 
 ## État Git de référence
-Dépôt créé vide ; main initialisé par commit b42b1a47fc7fcbee2219a248db3c302877bae43b (README de garde-fous). Travail actuel sur **dev/source-audit-and-map**, à vérifier sur GitHub à la reprise. Aucun déploiement public autorisé.
+Dépôt créé vide ; main initialisé par commit b42b1a47fc7fcbee2219a248db3c302877bae43b (README de garde-fous). Travail sur **dev/source-audit-and-map** au commit initial de livraison `012ba9160a73fe243bc81413ef25cf35e193f259`, proposé dans la [PR brouillon #1](https://github.com/Kiwinokoto/vacant/pull/1). La présente mise à jour constitue un second commit : contrôler le SHA courant à la reprise. Aucun déploiement public autorisé.
 
 ## Décisions
 - Paris intra-muros, public, statique, pas de données à risque individuelles.
@@ -11,7 +11,7 @@ Dépôt créé vide ; main initialisé par commit b42b1a47fc7fcbee2219a248db3c30
 - ODbL Apur/Paris Data et Licence Ouverte pour les autres sources selon fiche ; pas de réutilisation mixte sans audit de compatibilité.
 
 ## Réalisé
-Audit officiel documentaire et premier contrat de données. Base statique et tests contractuels préparés sur la branche de développement ; vérifier l'état/CI/PR exact après commit.
+Audit documentaire des organismes officiels, architecture, interface statique 2D (polygones de volumes Paris Data chargés manuellement ; étages, pas mètres, aucune vacance par immeuble), README et tests. **9 vérifications contractuelles sur le module source récupéré de GitHub réussies dans un environnement JS**, mais la suite complète `node --test` n'a pas été exécutée. PR #1 brouillon ouverte ; pas de merge ni CI déclenchée volontairement.
 
 ## Incertitudes / blocages
 - Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
