@@ -4,6 +4,7 @@ import { statForYear, validateArrondissementSeries, buildArrondissementPopup } f
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
 import { viewDescriptor } from "./view-state.mjs";
+import { labEnabled } from "./apur-lab-contract.mjs";
 
 renderParisTimeline();
 
