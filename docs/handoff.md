@@ -1,54 +1,44 @@
-# Passation VACANT — 2026-10-16
+# Passation VACANT — état opérationnel au 16 octobre 2026
 
-## État Git de référence
-**PR #1 fusionnée** en `main` par squash le 16/10/2026 : **`df947684403fc34cfe6ab8ce450644b0a3e6ab6b`**. Pas de déploiement ni de workflow CI. La branche `dev/source-audit-and-map` demeure pour l'historique, sans écriture prévue dessus.
+## Source de vérité GitHub
+- Dépôt public : `Kiwinokoto/vacant`, branche `main` au squash `df947684403fc34cfe6ab8ce450644b0a3e6ab6b` (PR #1).
+- Travail courant : `dev/iris-provenance-validation`, [PR #2](https://github.com/Kiwinokoto/vacant/pull/2) **ouverte en brouillon**. Vérifier son HEAD et les éventuelles modifications concurrentes avant toute écriture ; la présente documentation ajoute des commits au-delà du code déployé.
+- **Code en production :** commit `2e1a198e69f29e8ee36f8e462e839f68bb8b8565`. Ne pas confondre ce SHA de release et le HEAD Git de la branche après les commits documentaires. Pas de fusion dans `main` à ce stade.
+- Consignes : [AGENTS.md](../AGENTS.md), [sources](sources.md), [architecture](architecture.md), [acquisition](acquisition.md), [déploiement](../deploy/README.md).
 
-**Travail actuel :** `dev/iris-provenance-validation`, créée depuis le commit main ci-dessus ; premier commit `814a237229a3789f10aeb5116dafefb7f3ff207b`, [PR brouillon #2](https://github.com/Kiwinokoto/vacant/pull/2) ouverte, non fusionnée. Validation stricte d'imports IRIS préparés. 15/15 contrôles JS réussis sur les blobs GitHub (9 existants, 5 contrats IRIS, 1 test CLI simulé) ; suite Node native non exécutée, données sources absentes. Vérifier la nouvelle tête GitHub et la PR à chaque reprise. Pas de modifications du VPS.
+## Déploiement confirmé et reprise après interruption
+- URL : https://vacant.kiwinokoto.fr — HTTPS et certificat validés depuis le VPS, page et GeoJSON HTTP 200.
+- VPS personnel `vmi2505789.contaboserver.net` accessible avec **RDC LGC** ; conteneur dédié `vacant-vacant-web-1` (Docker Compose + Traefik partagé, sans modification des autres services).
+- Release active immuable : `/srv/vacant/releases/2e1a198e69f29e8ee36f8e462e839f68bb8b8565/site`.
+- Compose et Nginx : `/srv/vacant/working-2e1a198e69f29e8ee36f8e462e839f68bb8b8565/deploy/`. Montage en lecture seule du répertoire du site **et** de `nginx.conf` ; modules `.mjs` servis en `application/javascript`, `.geojson` en `application/geo+json`.
+- Ancienne release `9167c822...` toujours conservée pour rollback (ancienne config Compose sans montage Nginx). Ne pas modifier les répertoires de release en place.
+- Reprise le 16/10 : 18/18 tests Node, 13/13 tests Python, syntaxe JS et Nginx valides, contenu public conforme aux fichiers de la release ; aucune modification des originaux.
 
-## Décisions
-- Paris intra-muros, public, statique, pas de données à risque individuelles.
-- Paris Data Volumes bâtis v0.1 : **étages seulement**, âge/hauteur métrique/vacance **inconnus**.
-- Apur Emprise bâtie Paris prioritaire pour recherche âge+hauteur ; Insee 2006–2023 IRIS prioritaire pour vacance (jalons 2006/2011/2016/2023, comparaison ≥5 ans et 2016–2023=7 ans) ; LOVAC agrégé 2020–2026 uniquement Paris commune.
-- Historique avant 1900 : cartes originales sourcées et reconstruction explicitement qualifiée, jamais fiction annualisée.
-- ODbL Apur/Paris Data et Licence Ouverte pour les autres sources selon fiche ; pas de réutilisation mixte sans audit de compatibilité.
+## Données effectivement disponibles
+- **Sept fichiers officiels** Insee et IGN archivés avec manifestes SHA-256 sous `/srv/vacant/data/raw/` et `/srv/vacant/data/manifests/` (hors webroot) : recensements 2006, 2011, 2016, 2023 ; dictionnaire 2023 ; référence Insee IRIS géographie 2025 ; contours IGN 2025. Détails et provenances : [acquisition.md](acquisition.md).
+- RP2023 Parquet : modalité validée `OCS=DW_VAC` ; couplage indépendant Insee RP2023 / référence Insee 2025 / contours IGN 2025 : **992 IRIS parisiens concordants** et 0 géométrie invalide selon GEOS.
+- GeoJSON agrégé : `/srv/vacant/data/processed/iris-2023/iris-2023.geojson`, 822 545 octets, SHA-256 `0b79e30afb5055448d4561960f55db3cc92a84feb2a498adb2588c00b6499a6f` ; copie de ce seul dérivé servie publiquement dans `/data/iris-2023.geojson`.
+- Totaux Paris issus de l'assemblage : environ 1 402 024 logements, dont 139 075 vacants selon le recensement 2023. 52 IRIS ont un parc nul ; 63 IRIS sont masqués si le parc est nul ou inférieur à 50 logements, d'où **929 taux représentés**.
+- Aucune donnée individuelle LOVAC, aucun statut de vacance affecté à un bâtiment ou à une adresse.
 
-## Réalisé
-Audit documentaire des organismes officiels, architecture, interface statique 2D (polygones de volumes Paris Data chargés manuellement ; étages, pas mètres, aucune vacance par immeuble), README et tests. **9 vérifications contractuelles sur le module source récupéré de GitHub réussies dans un environnement JS**, mais la suite complète `node --test` n'a pas été exécutée. PR #1 de référence, à contrôler sur GitHub au moment de la reprise ; tests du code en runtime V8 exécutés sur les **9 cas présents dans les fichiers de tests du dépôt** (9/9 OK), mais ni la suite Node native ni les requêtes HTTP navigateur n'ont été validées.
+## Vérifications fonctionnelles en navigateur — 16/10/2026
+- Chromium headless sur machine LGC : chargement HTTP 200, Leaflet présent, chronologie 2006 / 2011 / 2016 / 2023 fonctionnelle (2023 : 9,9 %).
+- Activation IRIS : 992 quartiers validés côté navigateur, 929 taux affichés, pas d'erreur JavaScript.
+- Nouveau chargement des volumes sur une vue initiale zoomée : API Paris Data accessible, 800 volumes représentés, 0 rejeté, 0 doublon ; avertissement honnête de **troncature 800/3054**, puisque le plafond de récupération est volontairement 800.
+- En quittant la couche IRIS, la carte reste cadrée sur tout Paris : un clic immédiat « Charger les volumes » signale « Zone trop large » jusqu'à un nouveau zoom. C'est une dette UX, pas une panne de collecte.
+- `/favicon.ico` renvoie 404 : cosmétique, à traiter ensuite. Cartes OSM et API Paris Data dépendent de services tiers.
 
-## Dernière extension (chronologie)
-Démarrage statistique **2006** acté dans [chronologie.md](chronologie.md). Chronologie de chiffres **Paris entier** vérifiés dans deux tableaux officiels Insee ajoutée au panneau du site ; aucune mise en couleur des polygones ni cartographie IRIS historique. Nouveaux modules `site/timeline.mjs`, `tests/timeline.test.mjs`, plus l'interface de sélection 2006/2011/2016/2023. Commit fonctionnel `548449801ba3ab015b5415c436c479b67d7087eb`. Chiffres historiques 2006/2011/2016 transcrits du RP2022 ; 2023 du RP2023 harmonisé. Écarts d'une unité autorisés dans les sommes arrondies. Important : ne pas comparer les millésimes annuels voisins, et ne pas superposer 2023 sur le bâti actuel comme observation historique.
-
-## Travaux préparatoires IRIS sur branche dédiée
-Contrat `site/iris-contract.mjs` ; commande `scripts/validate-iris.mjs` ; 5 nouveaux tests `tests/iris-contract.test.mjs` réussis dans le runtime V8 sur les blobs créés via GitHub. GeoJSON et manifeste explicites obligatoires ; sortie refusée sans contrôles de cardinalité. Le CSV 2023 harmonisé et les contours géographie 2025 n'ont **pas** été téléchargés ; aucun jeu IRIS n'est construit ni visible sur la carte.
-
-## Préparation de la collecte — 16/10/2026
-Dossier cible approuvé en architecture : **`/srv/vacant/data` sur le VPS personnel**, hors racine web. `scripts/collect_insee.py` prépare cinq téléchargements Insee officiels avec manifestes SHA-256 et verrou `flock` local. [Guide et URLs](acquisition.md). **Aucun téléchargement réel n'a été effectué : appareils RDC personnels hors ligne (deux vérifications), accès direct Insee indisponible dans le conteneur. Aucun dossier VPS créé.** Six tests Python du collecteur réussis sur une copie locale de développement ; à rejouer depuis GitHub avant exploitation. Les contours IGN édition 2025 restent à sélectionner (ne pas substituer l'édition 2024).
-
-## Données officielles récupérées sur le VPS (mise à jour 16/10/2026)
-Projet `vacant` enregistré dans AgentCTL ; VPS personnel `vmi2505789.contaboserver.net` accessible via **RDC LGC**. Tests natifs : **14/14 Node**, **6/6 collecteur Python Insee**. Cinq originaux Insee et manifestes avec hashes déposés dans `/srv/vacant/data/` (détails : [acquisition.md](acquisition.md)). Python 3.12 virtuel et DuckDB disponibles. RP2023 Parquet (5 066 022 observations) lu : `OCS=DW_VAC` identifié dans table de passage réelle ; géographie `GEO_OBJECT=IRIS` avec 992 IRIS parisiens en statistiques 2023. Source IGN GeoParquet géographie 2025 exactement identifiée dans catalogue, collecte/test restants.
-DNS `vacant.kiwinokoto.fr` pointe vers ce VPS mais **Traefik répond encore 404 et certificat par défaut** : pas de service déployé.
-
-## 2023 : première couche géographique vérifiée
-Sources archivées sur le VPS personnel : quatre fichiers de recensement Insee (2006, 2011, 2016, 2023), table de passage RP2023, table Insee d'appartenance IRIS géographie 2025 et contours IGN GeoParquet édition 2025. **Sept** fichiers au total. Les SHA sont dans les manifestes privés et [docs/acquisition.md](acquisition.md).
-
-Construction `scripts/build_iris_2023.py` puis `node scripts/validate-iris.mjs` : **992 IRIS exactement**, comparés entre les trois sources (aucun code manquant), **0 géométrie invalide GEOS**, totaux Paris compatibles (1 402 023,984 logements et 139 075,450 vacants). GeoJSON public agrégé : `/srv/vacant/data/processed/iris-2023/iris-2023.geojson`, **822 545 octets**, SHA256 `0b79e30afb5055448d4561960f55db3cc92a84feb2a498adb2588c00b6499a6f`. 52 IRIS ont un dénominateur nul ; l'UI masque volontairement les taux des IRIS comptant moins de 50 logements (63 IRIS en tout). **Ne pas confondre 0 logement avec 0 % de vacance.**
-
-Le connecteur API Paris Data a été testé HTTP 200, CORS `*`, `total_count` cohérent ; correction effectuée sur la géométrie `geom` de type GeoJSON `Feature`. La première carte IRIS 2023 est intégrée au code de l'interface, mais n'est pas encore déployée sur le domaine public. Le domaine retourne à ce stade 404 avec le certificat Traefik par défaut.
-
-## Incertitudes / blocages
-- Aucun téléchargement réel des fichiers Apur, Insee/IRIS, IGN ni test réseau direct de l'API dans cet environnement. Couverture/CRS/attributs et qualité locale non certifiés.
-- CORS, pagination triée par identifiant de volume et restrictions de l'API doivent être vérifiés dans un navigateur réel. Le schéma `geom`, `geom_x_y`, `h_et_max` et `n_sq_vb` a été revérifié sur la fiche officielle Paris Data du 08/10/2026.
-- 12 contrôles supplémentaires de chronologie/provenance vérifiés dans le runtime JS sur les blobs GitHub (tous OK). `npm test` complet non exécuté : `git clone` public depuis le conteneur de test a échoué sur la résolution DNS de github.com. Aucun RDC ni VPS utilisé pour contourner ; réexécuter localement.
-- Aucun contrôle des éventuelles branches/clones non poussés ni lease AgentCTL externe disponible depuis les seules métadonnées GitHub. Les PR GitHub et branches ont été vérifiées avant création de la branche, sans conflit constaté.
-- Droits et formalités de diffusion des images historiques à traiter source par source.
+## Décisions et limites scientifiques
+- Départ statistique **2006**, jalons 2006/2011/2016/2023 ; pas d'interpolation annuelle. Seule **la couche IRIS 2023** est cartographiée à ce stade ; la chronologie des quatre millésimes concerne **Paris entier** et ne recalcule pas le bâti.
+- La vacance Insee est une **estimation par zone IRIS**, et non la vacance structurelle LOVAC. Aucune localisation de logement vide n'est établie.
+- La couche Paris Data décrit des **volumes bâtis actuels** et leurs nombres d'étages, pas leur hauteur en mètres ni une date de construction. Aucun curseur historique de bâtiments ni 3D métrique fiable.
+- Apur / IGN BD TOPO / LOVAC agrégé restent à auditer et réconcilier par licence, granularité, dates et géométrie avant activation.
 
 ## Prochaines étapes
-1. Vérifier branche/HEAD/PR, travaux concurrents et leases avant écriture.
-2. Ouvrir l'application avec accès réseau, vérifier sur vraie zone et enregistrer un test API + capture d'une réponse schéma ; relever volumes chargés/erreurs.
-3. Télécharger un extrait Apur officiel, contrôler datation/hauteur, licences et jointure exacte ; ajouter tests de comparaison spatiale.
-4. Télécharger à partir de 2006 (XLS géographie 2008) et jalons 2011/2016 puis RP2023 (schéma harmonisé + géographie 2025), contrôler variables, dénominateurs, changement de limites et petits effectifs, **puis seulement** afficher la vacance en polygones IRIS sans extrapolation spatiale.
-5. Valider architecture 3D à partir de hauteurs **en mètres**, puis revue et éventuelle promotion/déploiement sur demande explicite.
+1. Recontrôler PR #2 / HEAD, statut des branches, CI/protections, état local et locks AgentCTL avant écritures. Après revue, décider explicitement de la fusion vers `main` ; **ne pas supposer que production suit main**.
+2. UX : résoudre la remise à niveau de zoom après IRIS, favicon 404 et tester mobile. Conserver le plafond de récupération et l'avertissement de troncature tant qu'aucun tuilage/stratégie de chargement revue n'existe.
+3. Construire les couches IRIS 2006/2011/2016 uniquement avec leurs géographies compatibles, recontrôler les ruptures et les dénominateurs ; pas de séries annuelles fictives.
+4. Auditer l'extrait Apur (hauteur, période de construction, couverture, licence, jointures potentiellement n:m) avant une représentation métrique ou historique.
 
-Avant toute promotion supplémentaire vers main, récupérer le HEAD exact, vérifier PR / checks et assurer l'absence de déploiement implicite. Le validateur IRIS n'a pas d'interface utilisateur ni de données réelles ; le présenter comme préparation, non comme une carte IRIS fonctionnelle. Après fusion, mettre à jour l'état ici si une nouvelle passe l'exige.
-
-Ressources : repo GitHub vacant uniquement ; **aucun VPS, aucune base ni déploiement occupé** lors de cette passe. Aucun lock créé sur une ressource distante.
+## Coordination et état final
+Le déploiement de cette reprise a utilisé des leases AgentCTL `deploy:vps-personal/vacant`, `service:vacant` et `host:vps-personal/docker` et s'est terminé sans incident ni rollback. Aucun verrou durable de déploiement n'est requis hors opération ; contrôler à chaque reprise. L'ancien répertoire `/srv/vacant/source` était en retard par rapport à GitHub ; ne pas le prendre pour source de vérité.
