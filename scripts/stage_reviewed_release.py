@@ -48,23 +48,25 @@ def tracked_site(archive: bytes, site_dir: Path):
             p = PurePosixPath(m.name)
             if (not p.parts or p.parts[0] != "site" or
                     any(x in ("", ".", "..") for x in p.parts) or
-                    not (m.isfile() or m.isdir()) or
-                    any(x in FORBIDDEN_PARTS for x in p.parts)):
+                    not (m.isfile() or m.isdir())):
                 raise ValueError("Unexpected path or special file in Git archive")
-            if m.isfile():
+            private_marker = "apur-grid" in p.parts and (m.isdir() or p.name == ".gitignore")
+            if any(x in FORBIDDEN_PARTS for x in p.parts) and not private_marker:
+                raise ValueError("Unexpected private data tracked in Git archive")
+            if m.isfile() and not private_marker:
                 if len(p.parts) < 2:
                     raise ValueError("Unexpected top-level tracked file")
                 name = p.name
                 if (name.endswith((".geojson", ".json")) and
                         name not in ALLOWED_DATASETS):
                     raise ValueError("Unreviewed tracked dataset in site/")
-                if p.parts[1] == "data" and len(p.parts) > 2 and
-                        name not in ALLOWED_DATASETS and name != ".gitignore":
+                if (p.parts[1] == "data" and len(p.parts) > 2 and
+                        name not in ALLOWED_DATASETS and name != ".gitignore"):
                     raise ValueError("Unexpected tracked data in site/data/")
         for m in members:
             p = PurePosixPath(m.name)
             relative = p.parts[1:]
-            if not relative:
+            if not relative or "apur-grid" in p.parts:
                 continue
             target = site_dir.joinpath(*relative)
             if m.isdir():
@@ -96,7 +98,7 @@ def stage_public_release(repo: Path, commit: str, dest: Path,
         if name not in ALLOWED_DATASETS:
             raise ValueError("Unexpected public dataset name")
         assert_sha(sha)
-        if not path.is_file() or path.stat().st_size > MAX_PUBLIC_DATASET:
+        if not path.is_file() or path.is_symlink() or path.stat().st_size > MAX_PUBLIC_DATASET:
             raise ValueError("Missing or oversized public dataset")
         if digest(path) != sha:
             raise ValueError("Public dataset SHA-256 mismatch")
