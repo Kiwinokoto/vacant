@@ -80,3 +80,7 @@ L’audit des identifiants Insee 2008/2013/2018/2025 est décrit dans [docs/iris
 ## Géographie IRIS candidate pour RP2011
 
 La source secondaire 2013 reprojetée a fait l’objet d’un [audit SIG détaillé](docs/iris-2013-candidate.md). Un dérivé privé de 992 IRIS a été généré, mais n’est **pas publié**, car l’original IGN correspondant reste à obtenir et confirmer. Ne pas confondre cette piste avec les données validées par arrondissement sur le site.
+
+## Double contrôle des contours IRIS historiques
+
+Les différences entre géométries secondaires 2013, 2016 et IGN 2025 sont auditées dans [l'étude comparative](docs/iris-crosscheck.md). **Aucune ancienne géométrie fine n'a été certifiée ni diffusée** ; une [demande d'archives IGN](docs/demande-archives-ign.md) est préparée mais non envoyée.
