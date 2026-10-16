@@ -57,6 +57,9 @@ class ReleaseGateTests(unittest.TestCase):
     def test_stage_from_git_only_leaves_ignored_apur_private(self):
         result = self.build()
         self.assertTrue((result/"site/index.html").is_file())
+        self.assertEqual(result.stat().st_mode & 0o777, 0o755)
+        self.assertEqual((result/"site").stat().st_mode & 0o777, 0o755)
+        self.assertEqual((result/"site/index.html").stat().st_mode & 0o777, 0o644)
         self.assertFalse((result/"site/data/apur-grid").exists())
         self.assertFalse((result/"site/data/apur-lab.geojson").exists())
         for filename in gate.ALLOWED_DATASETS:
