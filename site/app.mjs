@@ -4,6 +4,7 @@ import { statForYear, validateArrondissementSeries, buildArrondissementPopup } f
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
 import { viewDescriptor } from "./view-state.mjs";
+import { labEnabled } from "./apur-lab-contract.mjs";
 
 renderParisTimeline();
 
@@ -186,6 +187,13 @@ if (typeof window.L === "undefined") {
       irisToggle.disabled=false;
     }
   });
+  // The local-only Apur laboratory is an explicit opt-in and has no public fixture.
+  if(labEnabled(window.location)){
+    import("./apur-lab.mjs").then(({mountApurLab})=>mountApurLab({
+      map,volumes,iris:irisPolygons,arrond:arrondissementPolygons,
+      irisToggle,arrondToggle,button,status,showMapMode
+    })).catch(error=>{ status.textContent="Laboratoire Apur indisponible : "+error.message; });
+  }
   let busy = false;
   button.addEventListener("click", async () => {
     if (busy) return;

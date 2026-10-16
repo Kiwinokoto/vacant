@@ -35,13 +35,27 @@
       </section>
       <section aria-labelledby="layers-title">
         <h2 id="layers-title">Couches documentées</h2>
-        <label class="layer active"><input type="checkbox" checked disabled> <span><strong>Volumes bâtis · état actuel</strong><small>Ville de Paris · nombre d'étages</small></span></label>
+        <label class="layer active"><input id="volumes-indicator" type="checkbox" checked disabled> <span><strong>Volumes bâtis · état actuel</strong><small>Ville de Paris · nombre d'étages</small></span></label>
         <label class="layer muted"><input type="checkbox" disabled> <span>Hauteur en mètres <small>En attente d'appariement IGN / Apur</small></span></label>
         <label class="layer muted"><input type="checkbox" disabled> <span>Période de construction <small>En attente de validation Apur</small></span></label>
         <label class="layer" for="iris-toggle"><input id="iris-toggle" type="checkbox"> <span><strong>Vacance résidentielle · IRIS 2023</strong><small>992 quartiers Insee / IGN, géographie 2025. Masque les volumes bâtis lorsque cette couche est active.</small></span></label>
         <p class="note" id="iris-status" role="status" aria-live="polite">Activer pour charger les taux du recensement 2023 par IRIS. Aucun taux n'est attribué à un immeuble.</p>
         <label class="layer" for="arrond-toggle"><input id="arrond-toggle" type="checkbox"> <span><strong>Évolution de la vacance · arrondissements</strong><small>20 arrondissements, recensements 2006, 2011, 2016 et 2023. Choisir l'année dans la chronologie.</small></span></label>
         <p class="note" id="arrond-status" role="status" aria-live="polite">Comparaison sur les limites des arrondissements (géométrie IGN 2025). Les données historiques ont été agrégées depuis leurs IRIS d'époque : aucun taux ancien n'est attribué aux contours des quartiers actuels.</p>
+        <section id="apur-local" hidden aria-labelledby="apur-local-title">
+          <h2 id="apur-local-title">Laboratoire Apur · données privées</h2>
+          <label for="apur-mode">Afficher les emprises actuelles par :</label>
+          <select id="apur-mode">
+            <option value="off">Désactivé (volumes Paris Data)</option>
+            <option value="period">Période de construction attribuée</option>
+            <option value="height">Hauteur médiane en mètres</option>
+          </select>
+          <a class="note" href="#map">Voir la carte après sélection ↓</a>
+          <p id="apur-lab-status" class="note" role="status" aria-live="polite">Source figée privée : aucune publication.</p>
+          <div id="apur-lab-legend" class="legend" aria-label="Légende des emprises Apur"></div>
+          <p class="note">© Apur, licence ODbL · extraction 16/10/2026, millésime métier non confirmé.
+            Une emprise peut couvrir plusieurs bâtiments. Aucun taux de vacance par bâtiment.</p>
+        </section>
         <label class="layer muted"><input type="checkbox" disabled> <span>Évolution géométrique des bâtiments <small>Non disponible : le sélecteur Insee pilote uniquement les statistiques territoriales par arrondissement, jamais les volumes bâtis.</small></span></label>
       </section>
       <section aria-labelledby="legend-title">
