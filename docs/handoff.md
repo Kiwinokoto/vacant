@@ -3,8 +3,8 @@
 **Consulter d'abord [le checkpoint consolidé](checkpoint-apur-consolidated-20261016.md).** Les notes ci-dessous conservent le contexte historique, parfois devenu obsolète.
 
 - Base GitHub `main=72a9d06377541b7b266e0d8153e89a7ae19afb95` ; branche de revue `dev/apur-consolidated-20261016`, PR à lire avant toute modification. Les PR #17–#22 ont été réunies **sans perdre leur ascendance Git**, et doivent rester ouvertes jusqu'à validation du remplacement.
-- Tests d'assemblage initiaux : **66/66 Node**, **81/81 Python**. Les recettes Chromebook/Chromium précédentes utilisaient un navigateur Chromium sur Linux, uniquement en local. Rejouer les suites depuis le commit final avant toute fusion.
-- Archive Apur privée SHA `f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11`. Grille 500m : **456 cellules**, **128 089 emprises uniques** ; **104 GEOS invalides et 13 clés métier nulles exclues**, compte rendu et manfeste dans le checkpoint. Les fichiers géographiques restent hors Git et hors site public.
+- Tests d'assemblage initiaux : **66/66 Node**, **81/81 Python**. Les recettes Chromium précédentes ont été effectuées sur Linux, uniquement en local, avec émulation des formats mobiles. Rejouer les suites depuis le commit final avant toute fusion.
+- Archive Apur privée SHA `f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11`. Grille 500m : **456 cellules**, **128 089 emprises uniques** ; **104 GEOS invalides et 13 clés métier nulles exclues**, compte rendu et manifeste dans le checkpoint. Les fichiers géographiques restent hors Git et hors site public.
 - Interface VACANT : périodes et hauteurs Apur **uniquement sur localhost avec `?apur_lab=1`**, sur extrait de 150 objets ; grille Paris complète sous `experiments/apur-grid/` et **pas encore raccordée** au site. Aucune jointure de taux de vacance par bâtiment. Millésime scientifique Apur toujours non confirmé, ODbL à cadrer avant rediffusion.
 - Production `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0` volontairement inchangée, ancienne release de secours préservée. Aucune migration, aucun déploiement ; gérer/verrouiller le dépôt via AgentCTL avant toute nouvelle écriture.
 
