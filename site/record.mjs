@@ -52,7 +52,10 @@ export function isParisPolygon(geometry) {
 }
 
 export function normalizeRecord(record) {
-  if (!record || !isParisPolygon(record.geom)) {
+  // Paris Data Opendatasoft API wraps geom in a GeoJSON Feature object.
+  // Accept raw polygons for internal fixtures and extracts, but never trust arbitrary nested data.
+  const geometry = record?.geom?.type === "Feature" ? record.geom.geometry : record?.geom;
+  if (!isParisPolygon(geometry)) {
     throw new Error("invalid or out-of-Paris polygon");
   }
   const id = record.n_sq_vb;
@@ -70,7 +73,7 @@ export function normalizeRecord(record) {
   return {
     type: "Feature",
     id: String(id),
-    geometry: record.geom,
+    geometry,
     properties: {
       volume_id: String(id),
       arrondissement,

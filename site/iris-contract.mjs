@@ -23,7 +23,7 @@ export function validateIrisImport(collection, manifest, {forPublication=false}=
   const inputs = [manifest.statistics, manifest.contours];
   const domains = [
     /^https:\/\/(?:www\.insee\.fr|api\.insee\.fr)\//,
-    /^https:\/\/(?:(?:www\.)?data\.gouv\.fr|geoservices\.ign\.fr)\//
+    /^https:\/\/(?:(?:www\.)?data\.gouv\.fr|geoservices\.ign\.fr|data\.geopf\.fr)\//
   ];
   for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];

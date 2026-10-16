@@ -28,6 +28,14 @@ test("valid contemporary polygon with explicit unknowns", () => {
   assert.equal(feature.properties.licence, "ODbL");
   assert.ok(!Object.hasOwn(feature.properties, "d_cre"));
 });
+test("real Opendatasoft geom Feature wrapper is normalized to Polygon geometry", () => {
+  const input = {...valid(), geom:{type:"Feature",geometry:valid().geom,properties:{unknown:"not exposed"}}};
+  const feature = normalizeRecord(input);
+  assert.equal(feature.geometry.type, "Polygon");
+  assert.equal(feature.geometry.coordinates.length, 1);
+  assert.ok(!Object.hasOwn(feature.properties, "unknown"));
+  assert.throws(()=>normalizeRecord({...valid(),geom:{type:"Feature",geometry:null}}),/polygon/);
+});
 test("geometry rejects wrong coordinate order and open rings", () => {
   assert.equal(isParisPolygon({type: "Polygon", coordinates: [
     [[48.854, 2.375], [48.855, 2.375], [48.855, 2.376], [48.854, 2.375]]

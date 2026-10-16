@@ -52,6 +52,12 @@ test("fail closed on address fields, duplicates, invalid count and region",()=>{
   c.features[0].properties.iris_code="751990101";
   assert.throws(()=>validateIrisImport(c,manifest()),/Paris IRIS/);
 });
+test("official IGN geoplateforme contours URL accepted with full provenance",()=>{
+  const m=manifest();
+  m.contours.url="https://data.geopf.fr/telechargement/download/CONTOURS-IRIS/CONTOURS-IRIS_3-0__GEOPARQUET_WGS84G_FRA_2025-01-01/contours_iris.parquet";
+  const result=validateIrisImport(collection(),m,{forPublication:true});
+  assert.equal(result.metadata.contours.url,m.contours.url);
+});
 test("strict coverage and audited sources required for output",()=>{
   const m=manifest();delete m.expected_iris_count;
   assert.throws(()=>validateIrisImport(collection(),m,{forPublication:true}),/declared expected IRIS count/);
