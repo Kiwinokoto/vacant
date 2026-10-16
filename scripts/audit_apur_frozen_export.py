@@ -40,7 +40,7 @@ def audit(path, manifest, *, full_geometries=False):
     import shapefile
     from shapely.geometry import shape
     from shapely.validation import explain_validity
-    from pyproj import Transformer
+    from pyproj import Transformer, CRS
     path = Path(path)
     if path.stat().st_size > 250_000_000:
         raise ValueError("Archive exceeds limit")
@@ -55,6 +55,8 @@ def audit(path, manifest, *, full_geometries=False):
             raise ValueError("Unexpected archive members or expansion")
         if archive.testzip():
             raise ValueError("ZIP CRC failure")
+        if CRS.from_wkt(archive.read("EMPRISE_BATIE_PARIS.prj").decode("utf-8")).to_epsg() != 2154:
+            raise ValueError("Unexpected source CRS (expected EPSG:2154)")
         with archive.open("EMPRISE_BATIE_PARIS.shp") as shp, archive.open("EMPRISE_BATIE_PARIS.shx") as shx, archive.open("EMPRISE_BATIE_PARIS.dbf") as dbf:
             reader = shapefile.Reader(shp=shp, shx=shx, dbf=dbf, encoding="utf-8")
             for feature in reader.iterShapeRecords():
