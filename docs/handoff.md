@@ -2,6 +2,9 @@
 
 ## Passe 16/10/2026 — éditions historiques et correctif ergonomique
 
+- **Contrôles réalisés** : Node 25/25, Python 40/40. Chromium réel sur clone de la branche avec dérivés agrégés publics aux SHA validés (IRIS 2023 `0b79e30a...`, arrondissements `97667772...`) : bascule de couches, quatre années, labels de géographie, retour aux volumes, deux échecs réseau simulés avec restauration de la couche précédente, mobile 390 px sans débordement ; résultat `BROWSER_ALL_PASSED` le 16/10/2026. Aucune archive géographique historique non autorisée employée dans la recette.
+- **Publication** : la branche ne déploie pas automatiquement la correction UI. Contrôler revue/PR/CI avant fusion et obtenir l'accord de déploiement avant modification de la release publique.
+
 - GitHub main de départ : b492ede6567d68cc6df1b18db852d68eb4cf09c5 ; aucune PR ouverte ; branche dev/iris-archive-readiness dans clone /srv/vacant/work-geography-readiness. À la reprise vérifier HEAD, travaux locaux/agents, PR, CI et leases AgentCTL.
 - Recherche : IGN Contours…IRIS édition 2008 v1.0 ; édition 2018 = IRIS 2017 consolidés + 2018 provisoires ; édition 2019 = IRIS 2018 consolidés + 2019 provisoires. Livraison 2018-06-08 avec dossier FXX-2017 non assimilable automatiquement au fond RP2016 géographie 2018. AUCUNE nouvelle archive 2008/2018 acquise ; détails : docs/iris-archive-readiness.md.
 - L'IGN a déjà reçu le courriel le 16/10/2026. Ne pas réexpédier. La provenance juridique/date 2013 du candidat RP2011 reste à confirmer.
