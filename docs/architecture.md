@@ -17,6 +17,13 @@
 
 **Statuts de preuve** : OBSERVATION_ADMINISTRATIVE, STATISTIQUE_AGREGEE, ESTIMATION, RECONSTRUCTION_DOCUMENTEE, INDISPONIBLE. Les deux dates (date de l'objet et date du document / référentiel) restent distinctes. Ne jamais créer une observation ancienne d'un bâtiment à partir de sa seule année de construction.
 
+## Chronologie statistique indépendante de la carte
+
+- `site/timeline.mjs` intègre **quatre lignes agrégées pour Paris entier**, transcrites depuis les tableaux officiels INSEE RP2022 (2006/2011/2016) et RP2023 (2023). Le code n'effectue **aucune** attribution statistique à un immeuble ou IRIS.
+- La sélection 2006 / 2011 / 2016 / 2023 est *discrète* et indique deux périmètres distincts (résidences secondaires et logements occasionnels != logements vacants). Aucune année intermédiaire ni « interpolation ».
+- RP2023 est un autre schéma harmonisé et sera validé au format brut avant un vrai affichage IRIS. L'annotation « niveau Paris » empêche une confusion avec la carte.
+- Vérifications arithmétiques (sommes à une unité près en raison de l'arrondi statistique) et min. cinq ans d'intervalle entre jalons. Voir [chronologie](chronologie.md).
+
 ## Actuellement implémenté
 
 Dans site/record.mjs, une réponse API doit satisfaire :

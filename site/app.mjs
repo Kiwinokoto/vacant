@@ -1,4 +1,7 @@
 import { SOURCE, normalizeBatch } from "./record.mjs";
+import { renderParisTimeline } from "./timeline.mjs";
+
+renderParisTimeline();
 
 const status = document.querySelector("#status");
 const button = document.querySelector("#load");
