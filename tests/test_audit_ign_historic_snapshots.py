@@ -32,6 +32,9 @@ class HistoricAuditTests(unittest.TestCase):
    x=650000+i*25;y=6860000+i*25
    w.poly([[[x,y],[x+10,y],[x+10,y+10],[x,y+10],[x,y]]])
    w.record(f"BATIMENT{i:017d}",10+i);w.close()
+   # pyshp writes lower-case components, historical IGN packages upper-case.
+   for ext in (".shp",".shx",".dbf"):
+    name.with_suffix(ext).rename(name.with_suffix(ext.upper()))
    name.with_suffix(".PRJ").write_text("Lambert 93")
    name.with_suffix(".CPG").write_text("UTF-8")
   return d
@@ -52,11 +55,11 @@ class HistoricAuditTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as t:
    root=Path(t);d=self._sample(root,"2018-03-29")
    p=next(d.glob("*INDUSTRIEL.DBF"))
-   # Change only the second ID to match first using its raw record bytes.
-   # The DBF is a unit fixture, never a source archive.
+   # Overwrite only the first record's fixed-width ID field.
    data=bytearray(p.read_bytes())
-   start=33+32*2+1
-   data[start:start+24]=b"BATIMENT00000000000000000"
+   start=32+32*2+1
+   data[start:start+30]=b"BATIMENT00000000000000000".ljust(30,b" ")
    p.write_bytes(data)
-   with self.assertRaises(ValueError):mod.validate_footprints("2018-03-29",d)
+   with self.assertRaisesRegex(ValueError,"Duplicate"):
+    mod.validate_footprints("2018-03-29",d)
 if __name__=="__main__":unittest.main()
