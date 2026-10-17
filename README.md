@@ -13,6 +13,15 @@ Projet public expérimental et atlas 2D **de données officielles**. Les origina
 
 Chaque champ absent reste absent. Une statistique IRIS n'est **jamais** attribuée à un bâtiment ou un appartement.
 
+## Priorité : comprendre la vacance résidentielle dans le temps
+
+Deux rails, explicités et ordonnés dans le [backlog VACANT](ROADMAP.md) : **(V) vacance résidentielle et sa variation dans le temps en priorité**, et **(B) reconstruction documentée de l'évolution du bâti parisien en parallèle**.
+
+- [Évolution Insee de la vacance à Paris de 1968 à 2023](site/evolution.html) : neuf recensements datés, taux **et nombres**, période de méthode distincte, tableau précis ; [provenance et précautions](docs/vacance-evolution-1968-2023.md).
+- [Carte VACANT](site/index.html) : couche géographique IRIS **2023** et comparaison historique **par arrondissement 2006, 2011, 2016, 2023** ; les valeurs Paris entier ne sont pas attribuées aux bâtiments.
+- Le tableau Insee indique **139 075 logements vacants / 1 402 024 au total en 2023 (9,9 %)**. Cela ne signifie ni 139 075 logements durablement abandonnés ni que chaque IRIS a le taux moyen parisien.
+- Projet historique du bâti : [PR #28](https://github.com/Kiwinokoto/vacant/pull/28) en recherche ; les éditions IGN 2008/2011/2018 ne sont pas encore une série directement comparable. Pas de promotion de ces géométries par analogie avec le taux IRIS.
+
 ## Démarrage local
 
 Prérequis : un navigateur récent et Python 3 (pour servir les fichiers) ; aucune base de données ni installation npm.
@@ -54,6 +63,9 @@ Voir [le protocole temporel](docs/chronologie.md) et [le contrat géographique](
 Le script `scripts/collect_insee.py` télécharge, **uniquement avec `--execute`**, les archives officielles RP2006, RP2011, RP2016, RP2023 et le dictionnaire de correspondance RP2023. Il archive les fichiers immuables et leurs empreintes SHA-256. **Sept fichiers officiels sont maintenant archivés sur le VPS**, avec manifestes et empreintes SHA-256 ; la carte dérivée 2023 a passé les contrôles Node et GEOS. Voir [la procédure, les URLs et les limites](docs/acquisition.md).
 
 ## Documentation
+
+- [Backlog : vacance d'abord et reconstruction historique en parallèle](ROADMAP.md)
+- [Vacance : évolution Paris 1968–2023, tableaux Insee et distinctions de méthode](docs/vacance-evolution-1968-2023.md)
 
 - [Audit des sources et droits](docs/sources.md)
 - [Modèle de données, architecture et validations](docs/architecture.md)
