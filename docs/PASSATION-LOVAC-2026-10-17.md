@@ -1,0 +1,15 @@
+# VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
+
+Document de reprise pour un nouveau chat. Lire aussi `docs/PASSATION-2026-10-17.md`, `ROADMAP.md`, `AGENTS.md` et `README.md`. **GitHub est source de vérité.**
+
+**Vision :** vacance résidentielle Paris en priorité (~70 %), reconstruction documentée du bâti en parallèle (~30 %). Jamais de taux de vacance au bâtiment, jamais d'adresse ou propriétaire LOVAC. Ordinateur prioritaire.
+
+**PR brouillon :** #29 vacance Insee 1968–2023 + IRIS ; #30 comparateur des 20 arrondissements, empilée sur #29 ; **#31 LOVAC public 2020–2026**, empilée sur #30 ; #28 recherche IGN 2008/2011/2018, indépendante. **Ordre de fusion : #29 → #30 → #31** après revue, #28 à part. Aucun déploiement de ces PR.
+
+**V-04 réalisé sur branche #31 :** trois CSV publics Cerema juin 2026 figés et validés SHA-256 sur VPS (`/srv/vacant/data/raw/lovac/open-aggregate-20260625/`), vingt codes 75101–75120 sans secrétisation, sommes exactement identiques au département 75. `scripts/audit_lovac_open_paris.py` (6 tests Python), `site/data/lovac-paris-open-2026.json` (agrégats publics seulement, SHA-256 `383978506b23b21d75a22b84e6a4499e26a41b347e6e1108e833e86eb98fb326`), `site/lovac.html` et contrat JS (2 tests). Recette Chromium desktop 1440×900/mobile simulé 390×844, 7 barres, 20 lignes, zéro erreur.
+
+**Chiffres et ruptures :** Insee RP2023 Paris = 139 075 logements vacants sur 1 402 024 (9,9 % du parc total) ; LOVAC 2026 = 105 785 logements du parc privé fiscal, dont 26 264 depuis plus de deux ans, **observation au 01/01/2025**. Le millésime 2023 « longue durée » observe 01/01/2022, « tous vacants » 01/01/2023. Pas de dénominateur 2026 aligné ; **aucun taux LOVAC 2026 calculable de manière justifiée**. Rupture méthodologique GMBI dès 2024 puis changement de traitement en 2025 : ne pas attribuer une baisse apparente à des remises en occupation. Source et dates : `docs/lovac-open-audit-20261017.md`.
+
+**Production :** `https://vacant.kiwinokoto.fr` reste sur la release `8711f3071abd41b169c92dfe0daaa79708be9acf` ; aucune des PR #28–#31 n'est déployée. Ancienne release de rollback conservée. AgentCTL (`repo:Kiwinokoto/vacant`, `state:vacant`) avant modifications. Source de vérité GitHub ; ne jamais fusionner directement main ni exposer les originaux privés.
+
+**Prochaine priorité :** revue et préparation de la **cartographie descriptive LOVAC à la maille des 20 arrondissements**, avec année de production *et* date de référence visibles, légendes adaptées et comparaisons méthodologiquement défendables seulement. En parallèle (rail B), continuer l'appariement géométrique IGN 2011–2018 et qualifier l'édition 2008 (non comparable directement). Vérifier d'abord les têtes des PR #28–#31, puis finir tests et recette avant toute fusion ou déploiement.

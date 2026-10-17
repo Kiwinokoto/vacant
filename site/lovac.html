@@ -1,0 +1,32 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VACANT · LOVAC et vacance du parc privé</title>
+<link rel="stylesheet" href="./evolution.css">
+<link rel="stylesheet" href="./lovac-chart.css">
+</head><body><header class="site-head">
+<a class="brand" href="./index.html"><span class="logo">V</span><span><strong>VACANT</strong><small>Atlas critique de la vacance parisienne</small></span></a>
+<nav aria-label="Navigation"><a href="./index.html">Carte</a><a href="./evolution.html">Insee · tous logements</a><a href="./lovac.html" aria-current="page">LOVAC · parc privé</a></nav>
+</header><main>
+<div class="eyebrow">Données fiscales publiques · Cerema · LOVAC 2020–2026</div>
+<h1>Vacance du parc privé : un deuxième regard sur Paris</h1>
+<p class="lead"><strong>LOVAC n'est pas le recensement Insee.</strong> Les données fiscales portent sur le parc privé et distinguent la vacance de longue durée. Les millésimes 2024 et 2025 marquent des changements majeurs liés aux déclarations GMBI : les fortes variations observées ne prouvent pas que des logements ont été libérés ou occupés.</p>
+<section class="chart-panel" aria-labelledby="lovac-title">
+<h2 id="lovac-title">Sept millésimes de production, des méthodes différentes</h2>
+<p>Les dates sont celles du <strong>millésime LOVAC</strong>, pas nécessairement celles de l'observation. Les catégories sont affichées séparément, sans ligne de tendance continue.</p>
+<div class="metric-buttons" role="group" aria-label="Mesure LOVAC">
+<button id="metric-vacant" type="button" aria-pressed="true">Tous les vacants privés</button>
+<button id="metric-long" type="button" aria-pressed="false">Vacants depuis plus de deux ans</button></div>
+<div id="lovac-bars" class="lovac-bars" role="img" aria-label="Barres de dénombrement par millésime"></div>
+<p id="lovac-status" role="status" aria-live="polite">Chargement des agrégats publics…</p></section>
+<section class="method"><h2>Pourquoi la rupture de série est fondamentale</h2>
+<p><strong>2020–2023 :</strong> chaîne fiscale antérieure. <strong>2024 :</strong> intégration de GMBI et possibles classifications par défaut. <strong>2025 :</strong> seuls les logements déclarés vacants par leur propriétaire sont retenus, avec sous-estimation possible de la vacance courte. <strong>2026 :</strong> nouvelle phase de stabilisation.</p>
+<p>Le dictionnaire LOVAC indique par exemple que <strong>le millésime 2026 observe le 1er janvier 2025</strong>. Aucune proportion 2026 du parc privé n'est publiée ici, faute de dénominateur à la même date. En 2023, l'indicateur « plus de deux ans » porte sur le 1er janvier 2022.</p>
+<p>Source : <a href="https://www.data.gouv.fr/datasets/61816c6e23197bb34835228e" rel="noopener noreferrer">DGALN / Cerema, LOVAC agrégats publics, Licence Ouverte 2.0</a>. Voir la <a href="https://doc-datafoncier.cerema.fr/doc/fiche_descriptive/lovac">documentation</a>. Aucun détail par logement ou propriétaire n'est collecté.</p></section>
+<section><h2>Détail par arrondissement</h2><label for="lovac-year">Millésime de production</label>
+<select id="lovac-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option selected>2026</option></select>
+<p id="lovac-reference"></p><div class="table-wrap">
+<table><caption>Comptages fiscaux publics agrégés, jamais adresses individuelles</caption>
+<thead><tr><th scope="col">Arrondissement</th><th scope="col">Tous vacants privés</th><th scope="col">Dont plus de 2 ans</th></tr></thead>
+<tbody id="lovac-districts"></tbody></table></div></section>
+<footer><a href="./evolution.html">← Comparer à la série Insee (tous logements, méthode différente)</a></footer>
+</main><script type="module" src="./lovac.mjs"></script></body></html>
