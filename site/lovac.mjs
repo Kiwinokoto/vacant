@@ -1,8 +1,47 @@
 import {checkLovac,years} from "./lovac-public-contract.mjs";
+import {COUNT_BINS,lovacColor,validateLovacGeography,districtLovac} from "./lovac-map-contract.mjs";
 const fmt=new Intl.NumberFormat("fr-FR");
 const $=id=>document.getElementById(id);
 const status=$("lovac-status"),bars=$("lovac-bars");
-let dataset=null,metric="vacant";
+let dataset=null,metric="vacant",geography=null,map=null,polygonLayer=null;
+const mapStatus=$("lovac-map-status");
+const selectedYear=()=>Number($("lovac-year").value);
+function mapView(){
+ if(!geography||!polygonLayer)return;
+ const year=selectedYear(),date=dataset.years[year-2020].date_by_variable[metric];
+ const title=metric==="vacant"?"Tous les logements vacants privés":"Vacance privée de plus de deux ans";
+ $("lovac-map-title").textContent=title+" · LOVAC "+year+" · observation au "+date+" · nombres, pas des taux";
+ polygonLayer.setStyle(f=>({color:"#253943",weight:1.2,fillOpacity:.82,fillColor:lovacColor(districtLovac(dataset,f.properties.arrondissement_code,year,metric).count,metric)}));
+ polygonLayer.eachLayer(layer=>layer.bindPopup(()=>{
+  const item=districtLovac(dataset,layer.feature.properties.arrondissement_code,year,metric);
+  const wrapper=document.createElement("div");
+  wrapper.append(cell("strong",item.arrondissement+"e arrondissement"));
+  wrapper.append(cell("p",fmt.format(item.count)+" logements · "+title));
+  wrapper.append(cell("p","Observation : "+date+" · millésime "+year));
+  wrapper.append(cell("p","LOVAC, parc privé fiscal · agrégat territorial, pas de localisation de logements."));
+  return wrapper;
+ }));
+ const legend=$("lovac-map-legend");legend.replaceChildren();
+ for(const bin of COUNT_BINS[metric]){
+  const row=cell("div","");row.className="lovac-legend-row";
+  const swatch=cell("i","");swatch.style.backgroundColor=bin.color;
+  row.append(swatch,cell("span",bin.label+" logements"));legend.append(row);
+ }
+ mapStatus.textContent="20 arrondissements · comptages publics, contours IGN 2025. Comparaisons temporelles limitées par les ruptures GMBI 2024 et 2025.";
+}
+async function loadMap(){
+ try{
+  if(typeof window.L==="undefined")throw Error("Bibliothèque cartographique indisponible");
+  const response=await fetch("./data/arrond-history.geojson",{cache:"no-store"});
+  if(!response.ok)throw Error("Contours des arrondissements indisponibles (HTTP "+response.status+")");
+  const candidate=await response.json();validateLovacGeography(candidate,dataset);geography=candidate;
+  map=L.map("lovac-map",{scrollWheelZoom:false}).setView([48.8566,2.3522],12);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap contributors"}).addTo(map);
+  polygonLayer=L.geoJSON(geography).addTo(map);
+  map.fitBounds(polygonLayer.getBounds().pad(.025));mapView();
+ }catch(e){mapStatus.textContent="Carte indisponible : "+e.message+". Le tableau LOVAC reste consultable.";}
+}
+
 function cell(tag,content){const e=document.createElement(tag);e.textContent=content;return e}
 function draw(){
  const values=dataset.years.map(x=>x.paris[metric]);
@@ -27,6 +66,7 @@ function draw(){
  $("metric-vacant").setAttribute("aria-pressed",String(metric==="vacant"));
  $("metric-long").setAttribute("aria-pressed",String(metric==="long"));
  status.textContent=title+" · chiffres fiscaux par millésime de production, sans comparaison causale à travers la rupture GMBI.";
+ mapView();
 }
 function table(){
  const year=Number($("lovac-year").value);
@@ -44,6 +84,7 @@ function table(){
   tr.append(head,cell("td",fmt.format(data.vacant)),cell("td",fmt.format(data.long)));
   body.append(tr);
  }
+ mapView();
 }
 try{
  const response=await fetch("./data/lovac-paris-open-2026.json",{cache:"no-store"});
@@ -53,7 +94,7 @@ try{
   $("metric-"+button).addEventListener("click",()=>{metric=button;draw()});
  }
  $("lovac-year").addEventListener("change",table);
- draw();table();
+ draw();table();await loadMap();
 }catch(e){
  status.textContent="LOVAC non affiché : "+e.message;
  $("lovac-year").disabled=true;

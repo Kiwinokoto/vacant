@@ -3,6 +3,7 @@
 <title>VACANT · LOVAC et vacance du parc privé</title>
 <link rel="stylesheet" href="./evolution.css">
 <link rel="stylesheet" href="./lovac-chart.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head><body><header class="site-head">
 <a class="brand" href="./index.html"><span class="logo">V</span><span><strong>VACANT</strong><small>Atlas critique de la vacance parisienne</small></span></a>
 <nav aria-label="Navigation"><a href="./index.html">Carte</a><a href="./evolution.html">Insee · tous logements</a><a href="./lovac.html" aria-current="page">LOVAC · parc privé</a></nav>
@@ -22,6 +23,10 @@
 <p><strong>2020–2023 :</strong> chaîne fiscale antérieure. <strong>2024 :</strong> intégration de GMBI et possibles classifications par défaut. <strong>2025 :</strong> seuls les logements déclarés vacants par leur propriétaire sont retenus, avec sous-estimation possible de la vacance courte. <strong>2026 :</strong> nouvelle phase de stabilisation.</p>
 <p>Le dictionnaire LOVAC indique par exemple que <strong>le millésime 2026 observe le 1er janvier 2025</strong>. Aucune proportion 2026 du parc privé n'est publiée ici, faute de dénominateur à la même date. En 2023, l'indicateur « plus de deux ans » porte sur le 1er janvier 2022.</p>
 <p>Source : <a href="https://www.data.gouv.fr/datasets/61816c6e23197bb34835228e" rel="noopener noreferrer">DGALN / Cerema, LOVAC agrégats publics, Licence Ouverte 2.0</a>. Voir la <a href="https://doc-datafoncier.cerema.fr/doc/fiche_descriptive/lovac">documentation</a>. Aucun détail par logement ou propriétaire n'est collecté.</p></section>
+<section><h2>Répartition des logements vacants par arrondissement</h2>
+<p>Carte de <strong>comptages absolus</strong> du parc privé fiscal, sans taux : les arrondissements de tailles différentes ne peuvent pas être comparés comme des proportions. Contours IGN 2025 utilisés uniquement pour situer les agrégats territoriaux LOVAC.</p>
+<p id="lovac-map-title" class="map-caption"></p>
+<div class="lovac-map-layout"><div id="lovac-map" role="region" aria-label="Carte des vingt arrondissements de Paris"></div><div><div id="lovac-map-legend" class="lovac-map-legend" aria-label="Légende du nombre de logements"></div><p id="lovac-map-status" role="status" aria-live="polite">Chargement de la carte…</p></div></div></section>
 <section><h2>Détail par arrondissement</h2><label for="lovac-year">Millésime de production</label>
 <select id="lovac-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option selected>2026</option></select>
 <p id="lovac-reference"></p><div class="table-wrap">
@@ -29,4 +34,4 @@
 <thead><tr><th scope="col">Arrondissement</th><th scope="col">Tous vacants privés</th><th scope="col">Dont plus de 2 ans</th></tr></thead>
 <tbody id="lovac-districts"></tbody></table></div></section>
 <footer><a href="./evolution.html">← Comparer à la série Insee (tous logements, méthode différente)</a></footer>
-</main><script type="module" src="./lovac.mjs"></script></body></html>
+</main><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script type="module" src="./lovac.mjs"></script></body></html>
