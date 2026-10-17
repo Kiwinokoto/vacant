@@ -1,3 +1,16 @@
+# VACANT — état de production au 17 octobre 2026
+
+**Déploiement Apur ODbL terminé et vérifié.** Voir [le procès-verbal de mise en ligne](apur-odbl-deployment-20261017.md) avant toute nouvelle intervention.
+
+- **Production active** : `https://vacant.kiwinokoto.fr/`, release GitHub `8711f3071abd41b169c92dfe0daaa79708be9acf`. Les PR #23, #24, #25, #26 ont été fusionnées **sans squash** ; `main` a désormais progressé depuis `72a9d063`. Les anciens checkpoints qui parlent de « PR en brouillon non fusionnée » sont **historiques**.
+- **ODbL public** : © Apur, archive adaptée de **456 cellules GeoJSON**, 128 089 emprises uniques, ZIP 28 106 318 octets SHA `9bef60651f2b0f20158392157ffe2e0a6757257a57757532348384e4521e9e24`, manifeste public SHA `2b0683c33e236b906163c73786133f300182ccc4f00c70485bbcf1e84eb75711`. Téléchargement libre via `/data/apur-grid/` (manifeste, NOTICE, cellules, ZIP).
+- **Carte publique** : périodes attribuées Apur et hauteur médiane `h_med` en mètres, séparées des taux de vacance IRIS et arrondissements. **Aucune déduction de vacance à l'immeuble**. Millésime scientifique Apur toujours non confirmé ; extraction figée le 16/10/2026.
+- **Tests post-déploiement** : 75/75 Node, 93/93 Python ; Nginx gzip `Via`, ZIP/manifeste et droits vérifiés via URL publique ; vrai Chromium HTTPS desktop 1280 et mobile simulé 390, 2 284 emprises, passages de couches réussis sans erreur JS. Pas de téléphone physique par choix du porteur de projet.
+- **Rollback préservé** : release précédente `1e6d47c6df13faf83b5b9e7e2d752ce02d9897d0`, procédure dans le procès-verbal. Nouveau répertoire stable `/srv/vacant/work-release-8711f307`. Ne pas réécrire les anciennes releases.
+- **Prochaine priorité** : reprise scientifique de VACANT, datation historique distincte de la période Apur, optimisation de navigation desktop ; vérifier les nouvelles réponses Apur de `data@apur.org`. GitHub est la source canonique de tout changement.
+
+---
+
 # VACANT — passation du 17/10/2026 : base adaptée Apur ouverte sous ODbL
 
 **Nouvelle priorité : [notice scientifique, attribution et protocole public](apur-odbl-public-dataset-20261017.md).** Le téléphone physique n'est **pas un prérequis** demandé par l'utilisateur ; conserver une responsivité correcte, privilégier le desktop.
