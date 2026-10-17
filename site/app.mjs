@@ -13,6 +13,7 @@ const status = document.querySelector("#status");
 const button = document.querySelector("#load");
 const irisToggle = document.querySelector("#iris-toggle");
 const irisStatus = document.querySelector("#iris-status");
+const irisInsights = document.querySelector("#iris-insights");
 const arrondToggle = document.querySelector("#arrond-toggle");
 const arrondStatus = document.querySelector("#arrond-status");
 let selectedYear = 2023;
@@ -114,6 +115,7 @@ if (typeof window.L === "undefined") {
       await loadHistory();
       saveStreetView();
       irisToggle.checked=false;
+      irisInsights.hidden=true;
       map.removeLayer(irisPolygons);
       map.removeLayer(volumes);
       arrondissementPolygons.addTo(map);
@@ -137,6 +139,7 @@ if (typeof window.L === "undefined") {
   });
   irisToggle.addEventListener("change",async()=>{
     if(!irisToggle.checked){
+      irisInsights.hidden=true;
       if(map.hasLayer(irisPolygons))map.removeLayer(irisPolygons);
       if(!map.hasLayer(volumes) && !arrondToggle.checked)volumes.addTo(map);
       if(!arrondToggle.checked)restoreStreetView();
@@ -182,8 +185,10 @@ if (typeof window.L === "undefined") {
       irisStatus.textContent="IRIS 2023 · 992 quartiers vérifiés · "+shown+
         " taux représentés. Gris : aucun logement ou moins de 50 logements. "+
         "Aucune information individuelle ni par bâtiment.";
+      irisInsights.hidden=false;
       showMapMode("iris");
     }catch(error){
+      irisInsights.hidden=true;
       irisToggle.checked=false;
       if(arrondToggle.checked && map.hasLayer(arrondissementPolygons)){
         map.removeLayer(volumes);
