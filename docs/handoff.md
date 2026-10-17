@@ -1,3 +1,26 @@
+## Mise à jour du rail B — concordance géométrique complète 2011 ↔ 2018 (17/10/2026)
+
+- Audit reproductible ajouté dans `scripts/compare_ign_geometry.py` (3 nouveaux tests Python) et [rapport de recherche](ign-bdtopo-historic-20261017.md). Source : archives IGN 2011/2018 **privées**, SHA figés et schémas vérifiés, aucun fichier SIG suivi par Git.
+- **113 634 IDs communs ; 112 567 empreintes de coordonnées identiques ; 1 067 modifiées**, dont **353** à recouvrement GEOS IoU ≥0,99 et **176** à IoU <0,50 ; IoU médian **0,908579**. **1 442** reclassifications et **8 815** valeurs de hauteur différentes entre documents.
+- Les **3 796 ID propres à l'édition 2011** et les **3 138 propres à 2018** restent des **objets du référentiel non appariés**, pas des destructions/constructions attestées. Chercher ensuite rapprochements spatiaux n:m et conditions de licence, et garder le site public sans couche historique.
+- En parallèle sur une **autre PR #29**, l'utilisateur a demandé **VACANCE prioritaire** : backlog `ROADMAP.md`, page Insee Paris 1968–2023 et synthèse IRIS 2023. Ne pas fusionner ces PR au hasard ; elles sont basées séparément sur le même main.
+
+# VACANT — checkpoint recherche IGN du 17 octobre 2026 (après déploiement Apur ODbL)
+
+**Priorité pour la suite : [audit des vraies éditions IGN BD TOPO 2008/2011/2018](ign-bdtopo-historic-20261017.md)**, puis contrôles de concordance spatiale 2011 ↔ 2018. Les sections antérieures restent l'historique des passes. **Ne pas déployer les SHP IGN ni publier la comparaison tant que les licences exactes et les différences de méthode ne sont pas validées.**
+
+- Source GitHub canonique `Kiwinokoto/vacant`, main au démarrage `22f0ad1a07f0c8ea5bc6931c6369df410fac65bc`. Production active inchangée `8711f3071abd41b169c92dfe0daaa79708be9acf`. Nouvelle branche `dev/ign-bdtopo-historic-audit-20261017`.
+- 3 vraies archives historiques du bâti Paris D075 issues du **miroir archivistique** `data.cquest.org` : septembre **2008**, avril **2011**, mars **2018** ; fichiers 7z figés sur VPS (hors Git), SHA, date d'édition et extraction/reexport vérifiés via XML. Attribution IGN, Licence Ouverte 2.0 indiquée par catalogue officiel, droits des fichiers précis à confirmer avant publication.
+- Bâtiments (indifférencié/industriel/remarquable) : **25 738 (2008), 117 430 (2011), 116 772 (2018)**. Uniquement **1 557 IDs communs** 2008/2011, contre **113 634 IDs** 2011/2018. **2008 NON comparable** pour un comptage direct : cette discontinuité ne prouve aucune vague de constructions.
+- Échantillon géométrique déterministe 1 % des IDs 2011/2018 : **1 128 IDs communs**, **1 120 listes de coordonnées identiques**, **8 différentes** ; **14** reclassifications et **72** valeurs de hauteur modifiées. Ne pas convertir en constructions/démolitions ni joindre à la vacance de l'IRIS.
+- Extraction privée même carré WGS84 `[2.373,48.854,2.376,48.856]` : **22 polygones en 2008**, **96 en 2011**, **97 en 2018**. Fichiers private-only sous `/srv/vacant/data/processed/ign/bdtopo-historic-audit-20261017/<edition>/neighborhood-comparison-private.geojson`.
+- Outils versionnés : `scripts/audit_ign_historic_snapshots.py`, tests `tests/test_audit_ign_historic_snapshots.py` ; prototype cartographique **localhost seulement** `experiments/ign-history/index.html?ign_lab=1`, comparateur 2011↔2018 deux cartes synchronisées, source privée sous `_local/` non Git, tests `tests/ign-history-preview.test.mjs`.
+- Recette Chromium desktop 1280×800 et mobile simulé 390×844 sur copies privées autorisées : **2 Canvas réels, 96/97 polygones, 96 ID communs**, zéro erreur JS et débordement, sans paramètres localhost refusé. Aucun changement de production, test vrai téléphone non prioritaire.
+- Derniers tests de branche réussis : **79/79 JS, 99/99 Python** (à revérifier après ultime documentation). Retour GitHub dans une petite PR, aucune fusion ni déploiement demandé pour la couche historique tant que l'évaluation scientifique n'est pas terminée.
+- Étape suivante : clarifier pourquoi 2008 ne contient que ~22 % des objets 2011, comparer le contenu **2018-09** (archive fractionnée possible) à **2018-03**, puis réaliser une comparaison spatiale rigoureuse (même CRS, tolérance géométrique, scissions/fusions, corrections de saisie). Les taux de vacance restent exclusivement territoriaux.
+
+---
+
 # VACANT — état de production au 17 octobre 2026
 
 **Déploiement Apur ODbL terminé et vérifié.** Voir [le procès-verbal de mise en ligne](apur-odbl-deployment-20261017.md) avant toute nouvelle intervention.

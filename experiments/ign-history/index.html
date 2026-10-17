@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VACANT · comparaison historique IGN (local)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#1b2f3c;background:#f5f3ee}
+*{box-sizing:border-box}body{margin:0}
+header{padding:16px 22px;background:#152d3a;color:#fff}
+header h1{margin:0;font-size:1.3rem}header p{margin:.3rem 0 0;opacity:.85;font-size:.85rem}
+main{padding:15px 20px;max-width:1800px;margin:auto}
+.intro{padding:10px 14px;background:#fff;border-left:4px solid #cd8f42;line-height:1.55}
+.maps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+article{background:#fff;min-width:0;padding:12px;border-radius:8px;border:1px solid #d7dedf}
+h2{font-size:1.05rem;margin:.2rem 0 .4rem}
+.map{height:min(65vh,640px);min-height:350px}
+.metric{font-size:.84rem;margin:8px 0;color:#365161}
+#status{font-size:.86rem;margin:10px 0 16px}
+a{color:#b5deeb}
+@media(max-width:720px){main{padding:8px}.maps{grid-template-columns:1fr}.map{height:350px;min-height:300px}}
+</style></head>
+<body>
+<header><h1>VACANT · Empreintes historiques IGN</h1>
+<p>Comparaison documentaire de deux éditions · uniquement sur localhost · aucun état de vacance inféré</p></header>
+<main><p class="intro">Comparaison expérimentale des polygones <strong>BD TOPO 2011 et 2018</strong>. Les deux cartes utilisent le même cadrage et se déplacent ensemble. Les IDs seuls ne prouvent ni construction ni disparition : révisions, mises à jour, classification et précision peuvent changer. Aucune donnée n'est envoyée au serveur VACANT public.</p>
+<p id="status" role="status">Vérification des deux fichiers SIG privés en cours…</p>
+<div class="maps">
+ <article><h2>Édition 12 avril 2011</h2><p id="metric-2011" class="metric">—</p><div id="map-2011" class="map" aria-label="Carte de comparaison 2011"></div></article>
+ <article><h2>Édition 29 mars 2018</h2><p id="metric-2018" class="metric">—</p><div id="map-2018" class="map" aria-label="Carte de comparaison 2018"></div></article>
+</div></main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="./app.mjs"></script></body></html>
