@@ -1,5 +1,13 @@
 # VACANT — passation immédiate (17 octobre 2026)
 
+## Contrôle final de cette reprise — 17/10/2026
+
+- **Code testé** : `c128bfcf6b83dd2c961c05bfc78055f60ae37c65` (page 2026 + note d'audit), **111/111 JS**, **99/99 Python**, `git diff --check`, clone temporaire propre. **Chromium réel** desktop 1440×900 / mobile simulé 390×844 : section 2026 complète (83 115 / 9 725 / 1 402 / 8 323, et révision 2023 83 284 / 9 104), anciens 3 millésimes et 20 arrondissements visibles, aucun débordement ni erreur JavaScript.
+- **Audit GitHub lecture seule** : PR #28–#37 ouvertes, en brouillon et déclarées fusionnables au contrôle ; **aucun check-run GitHub sur chacun des HEAD** et aucun statut combiné de CI sur les HEAD contrôlés. Ne pas confondre fusionnabilité avec validation. Aucun workflow Actions relancé.
+- **Apur** : brouillon Gmail vers `data@apur.org` créé (sujet « BDCOM Paris 2017–2026 : clarification des dénombrements et des locaux en travaux »), **non envoyé**. Écart 2020 texte 8 541/graphique 8 560, édition 2026 révisant 2023 9 104 vs édition initiale 9 059/ API 9 060. Attendre réponse / tableau de passage pour toute harmonisation.
+- **Livraison** : pas de fusion, changement de main, ni de production. Vérifier à nouveau lock Git/AgentCTL et HEAD avant prochaine modification.
+
+
 ## État de GitHub
 - Dépôt : [Kiwinokoto/vacant](https://github.com/Kiwinokoto/vacant) ; **main** : `22f0ad1a07f0c8ea5bc6931c6369df410fac65bc`, production historique `8711f307`. Relire les HEAD actuels avant intervention.
 - **Chaîne de PR brouillons sans fusion** : #29 (Insee / IRIS) → #30 (comparaison des arrondissements) → #31 (LOVAC ouvert) → #32 (carte LOVAC) → #33 (part de longue durée) → #34 (potentiel de réemploi) → #35 (BDCOM 2023) → #36 (BDCOM 2017–2023) → **#37** (dénominateurs). **#28** IGN historique indépendante. Ne pas pousser sur main. Tous les HEAD observés déclarés mergeable, mais **aucun statut CI et aucun check-run** ne sont publiés sur les HEAD échantillonnés : cela n'est pas une recette.
