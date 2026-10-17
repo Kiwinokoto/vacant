@@ -4,7 +4,7 @@
 
 - **Code testé** : `c128bfcf6b83dd2c961c05bfc78055f60ae37c65` (page 2026 + note d'audit), **111/111 JS**, **99/99 Python**, `git diff --check`, clone temporaire propre. **Chromium réel** desktop 1440×900 / mobile simulé 390×844 : section 2026 complète (83 115 / 9 725 / 1 402 / 8 323, et révision 2023 83 284 / 9 104), anciens 3 millésimes et 20 arrondissements visibles, aucun débordement ni erreur JavaScript.
 - **Audit GitHub lecture seule** : PR #28–#37 ouvertes, en brouillon et déclarées fusionnables au contrôle ; **aucun check-run GitHub sur chacun des HEAD** et aucun statut combiné de CI sur les HEAD contrôlés. Ne pas confondre fusionnabilité avec validation. Aucun workflow Actions relancé.
-- **Apur** : brouillon Gmail vers `data@apur.org` créé (sujet « BDCOM Paris 2017–2026 : clarification des dénombrements et des locaux en travaux »), **non envoyé**. Écart 2020 texte 8 541/graphique 8 560, édition 2026 révisant 2023 9 104 vs édition initiale 9 059/ API 9 060. Attendre réponse / tableau de passage pour toute harmonisation.
+- **Apur** : courriel BDCOM à `data@apur.org` **envoyé le 17/10/2026** (objet « VACANT / BDCOM 2017–2026 — demande de clarification des révisions et des locaux en travaux », Gmail message `1a149909decf1bfc`). Le premier courriel du **16/10/2026** portait sur les emprises bâties ; son contrôle humain Mailinblack a été confirmé par l'utilisateur. Aucun retour scientifique reçu à la dernière vérification. Écart 2020 texte 8 541/graphique 8 560, édition 2026 révisant 2023 9 104 vs édition initiale 9 059/ API 9 060. Attendre réponse / tableau de passage pour toute harmonisation.
 - **Livraison** : pas de fusion, changement de main, ni de production. Vérifier à nouveau lock Git/AgentCTL et HEAD avant prochaine modification.
 
 
@@ -23,7 +23,7 @@
 
 ## Sources / tâches
 - [Audit BDCOM](bdcom-historical-audit-20261017.md), [sources](sources.md), [méthode potentiel](potentialite-locaux-20261017.md), [passation LOVAC](PASSATION-LOVAC-2026-10-17.md), [roadmap](../ROADMAP.md).
-- **Contact Apur** : [data@apur.org](https://www.apur.org/fr/open-data-cartes/open-data/base-donnees-commerces-parisiens) ; brouillon Gmail préparé **mais non envoyé**, pour demander correspondance 2017–2026, révision des travaux, double version 2023 et mise en ligne BDCOM 2026. Ne prétendre ni envoi ni réponse.
+- **Contact Apur** : [data@apur.org](https://www.apur.org/fr/open-data-cartes/open-data/base-donnees-commerces-parisiens) ; courriel méthodologique **envoyé le 17/10/2026**, distinct du premier courriel sur les emprises daté du 16/10/2026. Demande : correspondance 2017–2026, révisions des travaux, double version 2023 et mise en ligne BDCOM 2026. **Aucune réponse humaine reçue à la dernière vérification.**
 - **Prochaine étape** : revue/fusion éventuelle des PR dans l'ordre seulement après contrôles et consentement à la promotion ; attendre les métadonnées Apur avant taux historiques. Rail B IGN #28 parallèle.
 
 ## Concurrence / livraison
