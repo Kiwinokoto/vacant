@@ -56,6 +56,7 @@ Le script `scripts/collect_insee.py` télécharge, **uniquement avec `--execute`
 ## Documentation
 
 - [Audit des sources et droits](docs/sources.md)
+- [Premiers états du bâti parisien IGN (éditions 2008/2011/2018), incompatibilités et comparaison locale](docs/ign-bdtopo-historic-20261017.md)
 - [Modèle de données, architecture et validations](docs/architecture.md)
 - [Décision chronologique 2006–2023, preuves et limites](docs/chronologie.md)
 - [Passation / limites et suite](docs/handoff.md)
