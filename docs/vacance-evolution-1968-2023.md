@@ -26,6 +26,14 @@ La carte 2023 reste **la seule cartographie fine IRIS officiellement validée et
 
 La mini-chronologie de la carte conserve ses jalons propres **2006, 2011, 2016, 2023** : issus des sources RP2022 / RP2023 précédemment validées, ils pilotent les agrégats par arrondissement. Les séries **2007, 2012, 2017, 2023** de la nouvelle page viennent du tableau historique RP2023 : **ne pas remplacer silencieusement** le moteur de carte avec une date différente.
 
+## Distribution réelle des taux IRIS 2023 (nouvelle synthèse de carte)
+
+Lecture du dérivé Insee/IGN 2023 **déjà diffusé** (`992` IRIS, géographie 2025), sans aucune adresse ni appartement identifié : après classement sur le rapport **non arrondi** `vacant_count / housing_count`, **77 IRIS** sont sous 5 %, **241** entre 5 et 8 %, **362** entre 8 et 12 %, **237** entre 12 et 20 %, **12** à 20 % ou plus ; **63 IRIS** dont le parc est inférieur à 50 logements sont grisés. Parmi les **929 IRIS à taux affichable**, **852 atteignent au moins 5 %** et **249 au moins 12 %**.
+
+Les 63 IRIS grisés représentent un parc cumulé d'environ **276 logements seulement** : ils ne doivent pas devenir des zones artificiellement « à taux nul ». L'ensemble des 992 IRIS (petits compris) somme au parc Insee de **1 402 024 logements** et aux **139 075 vacants**, soit le taux **pondéré 9,9 %** pour Paris. **Ne pas moyenner simplement les 929 pourcentages d'IRIS** ni confondre nombre d'IRIS et part de la surface de Paris.
+
+L'ancienne carte classait quelques cellules proches des seuils à partir de la **valeur arrondie à une décimale** `vacancy_percent` ; le moteur corrigé utilise `100 × vacant_count / housing_count` pour la couleur tout en gardant la valeur à une décimale dans les infobulles. La nouvelle synthèse affichée dans le panneau de la carte est calculée depuis le même fichier IRIS vérifié, avec assertion indépendante des totaux Paris.
+
 ## Limites / suite
 
 - **Écart méthodologique 1999 → 2007** : pas de comparaison causale directe ni de tendance annuelle continue.
