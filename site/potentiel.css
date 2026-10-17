@@ -1,0 +1,19 @@
+.source-grid,.triage-grid,.dimension-grid{display:grid;gap:15px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.source-grid article,.triage-grid article,.dimension-grid>div{min-width:0;border:1px solid #365967;border-radius:9px;padding:20px;background:#122934}
+.source-grid article h3{font-size:17px;line-height:1.3;margin:12px 0}
+.source-kind{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:#c2d4df;font-weight:650}
+.source-number{display:block;font-size:clamp(32px,3.5vw,47px);color:#f0ca80;letter-spacing:-.035em;margin:9px 0;font-variant-numeric:tabular-nums}
+.source-grid article p,.triage-grid article p,.dimension-grid p{font-size:14px;color:#d3e1e4}
+.source-grid article a{font-size:13px;overflow-wrap:anywhere}
+.boundary{padding:14px 19px;border-left:4px solid #e9bd70;background:#172f3b;color:#e5eef1;margin:20px 0 35px}
+.dimension-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dimension-grid h3,.triage-grid h3{font-size:17px;margin:0 0 8px}
+.triage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.triage-grid article{border-left:3px solid #90b5bd}
+.meaning-table{min-width:750px}
+.meaning-table th:first-child{text-align:left;min-width:195px}
+.meaning-table td:last-child,.meaning-table th:last-child{text-align:left;white-space:normal;min-width:250px}
+.meaning-table td:nth-child(2){text-align:left;white-space:normal;min-width:260px}
+main section{margin:25px 0 38px}
+h2{margin:0 0 16px}
+@media(max-width:750px){.source-grid,.triage-grid,.dimension-grid{grid-template-columns:1fr}.source-grid article,.triage-grid article{padding:15px}.source-number{font-size:34px}}
