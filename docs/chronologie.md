@@ -51,6 +51,12 @@ Les contours [IGN Contours...IRIS](https://www.data.gouv.fr/datasets/contours-ir
 - **Vacance commerciale / bureaux** : métrique différente ; aucun historique intégré.
 
 
+## Deux chronologies de recensement **distinctes** — ajout du 17/10/2026
+
+La carte par arrondissement conserve les quatre jalons **2006 / 2011 / 2016 / 2023**, élaborés depuis les tables IRIS contemporaines de chaque géographie.
+
+La [nouvelle page « Évolution »](../site/evolution.html) présente, **uniquement pour Paris entier**, les neuf valeurs de la table Insee LOG T1 du dossier RP2023 : **1968, 1975, 1982, 1990, 1999, 2007, 2012, 2017, 2023**. Les recensements anciens ne sont pas directement comparables aux recensements rénovés sans avertissement. Voir [audit et données](vacance-evolution-1968-2023.md). Les dates 2007/2012/2017 **ne remplacent pas** les millésimes 2006/2011/2016 du moteur de carte. Aucun taux ancien n'est géolocalisé à un bâtiment.
+
 ## Mise à jour historique — 16/10/2026
 
 Les archives originales Insee 2006, 2011 et 2016 ont été lues : 992 IRIS parisiens uniques et sans valeurs manquantes sur total/vacants pour chacun ; les totaux Paris correspondent aux chiffres officiels. Le format 2023 a été validé dans le dictionnaire avec OCS=DW_VAC pour la vacance et OCS=_T pour le total.
