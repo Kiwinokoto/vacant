@@ -1,3 +1,13 @@
+# Validation finale PR #36 — 17 octobre 2026
+
+**PR [#36](https://github.com/Kiwinokoto/vacant/pull/36)** brouillon sur `dev/bdcom-historical-comparison-20261017` empilée sur #35. **Code recetté `6868825d5fb5e03a82971a072cf4bdb98e331004`** : **109/109 tests JavaScript et 99/99 Python**, `node --check`, `git diff --check`, clone propre. **Chromium réel** serveur local desktop 1440×900 et mobile simulé 390×844 : trois lignes 2017/2020/2023, trois barres, vingt lignes BDCOM 2023 présentes, années rendues sans espaces, aucun débordement et zéro erreur JavaScript.
+
+**Résultats historiques en effectifs, aucun taux harmonisé** : 2017 (6954 vacants +899 travaux =7853), 2020 (7247 +1517 =8764), 2023 (7495 +1565 =9060). Écarts Apur réels : 2020 publication de 2021 **8760**, rétrospective 2023 **8560**, API **8764**. Ne pas interpoler, attribuer des causes ou appliquer des taux aux adresses/bâtiments. Sources, requêtes, licence et limites : [audit BDCOM historique](bdcom-historical-audit-20261017.md).
+
+**Prochaines actions** : clarifier l'écart de 200 locaux 2020 avec l'Apur ; vérifier les dénominateurs par édition avant tout taux ; qualifier séparément la vacance réelle des bureaux et son potentiel de transformation. Site public non modifié. Avant reprise : HEAD, locks, CI et chaîne #29 → #30 → #31 → #32 → #33 → #34 → #35 → #36, #28 séparée. Ne pas fusionner sans revue.
+
+---
+
 # Passation prioritaire — VACANT / comparaison BDCOM 2017–2023, PR #36
 
 Au 17/10/2026 : PR **#36** brouillon, branche `dev/bdcom-historical-comparison-20261017` empilée sur PR #35 (`8945896`). **GitHub est la vérité**. Série en **effectifs uniquement**, indépendamment du parc de logements : 2017 **6 954 AA101 + 899 AA102**, 2020 **7 247 AA101 (dont 3 minuscules) + 1 517 AA102**, 2023 **7 495 AA101 + 1 565 AA102**. Les données publiques ArcGIS Apur sont agrégées : pas de fichiers d'adresses ou points. Audit `docs/bdcom-historical-audit-20261017.md`, affichage dans `site/potentiel.html`.

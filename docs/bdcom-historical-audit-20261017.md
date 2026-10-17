@@ -30,3 +30,7 @@
 Validation JS `site/bdcom-history-contract.mjs` : exactement les trois éditions, provenance institutionnelle, nombres entiers et concordance, signalement explicite des divergences éditoriales ; refus de champs supplémentaires (notamment adresse) ; **aucune conversion en taux historiques**. `tests/bdcom-history.test.mjs` vérifie le contrat et le lien à la page accessible. Les barres constituent une comparaison **des comptages archivés**, pas une trajectoire inférée de la disponibilité de logements.
 
 À confirmer auprès de l'Apur : cause des divergences 2020/2023, éventuelle révision 2017, liste complète de changements de codes et de périmètre, fichiers définitifs et droits de partage des agrégats. En particulier, rechercher les dénominateurs BDCOM 2017 et 2020 provenant d'éditions correspondantes avant publication de taux ; **ne pas** réutiliser les 83 154 locaux de 2023 pour un taux de 2017/2020. Le rail V conserve le logement résidentiel comme sujet prioritaire et la conversion commerciale comme potentiel séparé.
+
+## Validation du livrable de PR #36
+
+Code `6868825d5fb5e03a82971a072cf4bdb98e331004` : **109/109 tests JS, 99/99 Python**, syntaxe JS et `git diff --check` réussis. Recette de la page `site/potentiel.html` en **Chromium desktop 1440×900 et mobile simulé 390×844** : 3 barres, 3 lignes et 20 arrondissements (bloc 2023) ; années 2017, 2020 et 2023 affichées sans espaces de groupement ; aucun débordement ; aucune erreur JavaScript. Ces vérifications portent sur la PR et non la production.
