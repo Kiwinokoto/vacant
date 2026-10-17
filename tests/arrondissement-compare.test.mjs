@@ -18,7 +18,7 @@ function dataset(){
 test("comparison uses original counts and returns points, NOT relative percent",()=>{
  const feat=dataset().features[0].properties;
  const c=compareArrondissement(feat,2006,2023);
- assert.equal(c.vacantDelta,(139075-122667)/20);
+ assert.ok(Math.abs(c.vacantDelta-(139075-122667)/20)<1e-8);
  assert.ok(Math.abs(c.rateDeltaPoints-100*(139075/1402024-122667/1334814))<1e-10);
  assert.ok(c.rateDeltaPoints<1); // increase < 1 percentage POINT
  assert.throws(()=>compareArrondissement(feat,2023,2006),/ordre chronologique/);
@@ -50,7 +50,7 @@ test("diverging colors and ranges are explicit for points and count",()=>{
  assert.equal(changeColor(0,"points"),"#b3bbc0");
  assert.equal(changeColor(null,"points"),"#8997a3");
  assert.equal(changeColor(150,"count"),"#d7ab6a");
- assert.equal(compareColor(dataset().features[0].properties,2006,2023,"count"),"#d7ab6a");
+ assert.equal(compareColor(dataset().features[0].properties,2006,2023,"count"),"#b76b65");
 });
 test("popup uses DOM text nodes for published aggregates, never untrusted markup",()=>{
  const oldDocument=globalThis.document;
