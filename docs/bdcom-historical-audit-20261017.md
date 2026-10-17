@@ -34,3 +34,17 @@ Validation JS `site/bdcom-history-contract.mjs` : exactement les trois éditions
 ## Validation du livrable de PR #36
 
 Code `6868825d5fb5e03a82971a072cf4bdb98e331004` : **109/109 tests JS, 99/99 Python**, syntaxe JS et `git diff --check` réussis. Recette de la page `site/potentiel.html` en **Chromium desktop 1440×900 et mobile simulé 390×844** : 3 barres, 3 lignes et 20 arrondissements (bloc 2023) ; années 2017, 2020 et 2023 affichées sans espaces de groupement ; aucun débordement ; aucune erreur JavaScript. Ces vérifications portent sur la PR et non la production.
+
+## Audit complémentaire des dénominateurs — 17/10/2026
+
+| Édition | Locaux recensés | Provenance exacte | Réserve |
+| --- | ---: | --- | --- |
+| 2017 | **83 720** | [Fiche BDCOM 2017 d'origine, version 20/03/2018](https://www.apur.org/open_data/BDCOM_2017_OD.pdf) | Publication contemporaine 2017 : **7 804** locaux vacants ; archive rétrospective : **7 853** vacants/travaux. **Versions non identiques**. |
+| 2020 | **83 399** | Somme du champ `localrdc` des 20 arrondissements dans [BDCOM 2020 structure, MapServer/0](https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2020_structure/MapServer/0) | Note de février 2021 arrondit à **83 400**. Le service donne aussi **8 764** `localvacant`. |
+| 2023 | **83 154** | [BDCOM 2023, MapServer/1](https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2023/MapServer/1) | Total cohérent avec la note et les agrégats PR #35. |
+
+**Source du conflit 2020, partiellement localisée :** le service 2020 distingue **7 247 vacants hors travaux** et **1 517 en travaux** ; la rétrospective Apur 2023 publie environ **1 310 en travaux** pour 2020, soit **207 de moins** dans la catégorie travaux, et ramène le total regroupé de ~8 760 à **8 560** (différence ~200). Les éventuelles révisions de la catégorie « travaux » ne sont **pas expliquées** : ne pas invoquer une reprise économique sans preuve.
+
+**Contrôle de l'ancienne structure :** l'addition des catégories du service `bdcom2020_structure` produit 84 023 locaux pour les colonnes 2017, alors que la fiche d'origine en annonce 83 720 ; en 2020, cette somme produit 83 390 au lieu du champ officiel `localrdc = 83 399`. Le champ `tous_17/tous_20` ne peut pas non plus être assimilé sans vérification à tout le parc. Les nouvelles tailles de parc figurent **uniquement comme contexte de couverture** dans `site/potentiel.html`. **Aucun taux historique comparatif calculé** : trouver le dénominateur n'établit pas l'identité des protocoles et révisions des numérateurs.
+
+**Contrôles :** le validateur JSON vérifie les 3 dénominateurs, leur provenance, les années, la séparation travaux/vacance et les divergences publiées. Aucune donnée BDCOM individuelle ni coordonnées ne sont distribuées.

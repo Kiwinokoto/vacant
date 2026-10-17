@@ -1,3 +1,13 @@
+# Passation prioritaire — PR #37, dénominateurs BDCOM (17/10/2026)
+
+**Branche** `dev/bdcom-denominator-provenance-20261017` empilée sur #36. **Parcs recensés** : 2017 **83 720** (fiche Apur d'origine), 2020 **83 399** (somme de `localrdc` des 20 arrondissements depuis la structure BDCOM2020), 2023 **83 154** (couche BDCOM2023). Ce sont trois **périmètres documentés** ; les numérateurs ne sont pas prouvés historiquement harmonisés, et la page ne calcule aucun taux longitudinal.
+
+**Différences encore ouvertes** : en 2017 la publication originale recense 7 804 locaux vacants alors que l'archive rétrospective inclut 7 853 vacants/travaux ; en 2020 le service original dénombre **1 517 locaux en travaux** (arrondi initial 1 520), mais la rétrospective de 2023 seulement **1 310**. L'écart de **207 travaux** recoupe largement celui de **200 locaux** de vacance regroupée, sans preuve de la cause du recalcul. L'addition brute des catégories `bdcom2020_structure` donne 83 390 contre 83 399 locaux en 2020, et 84 023 contre 83 720 en 2017. Ne pas employer ces additions comme dénominateurs. Voir [audit détaillé](bdcom-historical-audit-20261017.md).
+
+**Restant** : contrôler HEAD GitHub, locks AgentCTL, tests JS/Python, recette Chromium, compléter SHA/test final puis laisser PR brouillon. Obtenir auprès d'Apur la signification des révisions avant un taux interprété comme tendance ou flux. Les bureaux en m² et logements Insee/LOVAC sont des univers distincts. Chaîne #29 → #30 → #31 → #32 → #33 → #34 → #35 → #36 → #37, #28 IGN parallèle. Production inchangée.
+
+---
+
 # Validation finale PR #36 — 17 octobre 2026
 
 **PR [#36](https://github.com/Kiwinokoto/vacant/pull/36)** brouillon sur `dev/bdcom-historical-comparison-20261017` empilée sur #35. **Code recetté `6868825d5fb5e03a82971a072cf4bdb98e331004`** : **109/109 tests JavaScript et 99/99 Python**, `node --check`, `git diff --check`, clone propre. **Chromium réel** serveur local desktop 1440×900 et mobile simulé 390×844 : trois lignes 2017/2020/2023, trois barres, vingt lignes BDCOM 2023 présentes, années rendues sans espaces, aucun débordement et zéro erreur JavaScript.

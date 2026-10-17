@@ -21,10 +21,10 @@ try {
   chart.append(a,b);
   line.append(chart,node("strong",fmt.format(entry.combined)));root.append(line);
   const tr=document.createElement("tr");
-  for(const [i,value] of [entry.year,entry.vacant,entry.in_works,entry.combined].entries())tr.append(node("td",i===0?String(value):fmt.format(value)));
+  for(const [i,value] of [entry.year,entry.vacant,entry.in_works,entry.combined,entry.surveyed].entries())tr.append(node("td",i===0?String(value):fmt.format(value)));
   tbody.append(tr);
  }
- status.textContent="Trois éditions recensées : 2017, 2020, 2023 · effectifs et non taux harmonisés · sources Apur.";
+ status.textContent="Trois éditions recensées : 2017, 2020, 2023 · effectifs et parcs recensés par édition · aucun taux longitudinal harmonisé · sources Apur.";
 }catch(error){
  status.textContent="Comparaison BDCOM indisponible : "+error.message+". Aucune interpolation ni estimation de remplacement.";
  root.replaceChildren();tbody.replaceChildren();
