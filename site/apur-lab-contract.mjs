@@ -1,4 +1,4 @@
-/* Private laboratory only: never fetch live Apur or assume a public historical vintage. */
+/* Apur: audited public derivative or localhost laboratory only. No live Apur API. */
 export const SOURCE_SHA256="f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11";
 export const PERIODS=Object.freeze([
   [1,"Avant 1800","#65583d"],[2,"1801–1850","#a48e48"],
@@ -18,8 +18,9 @@ const MAX_BYTES=250000;
 const EXPECTED_COUNT=150;
 function fail(reason){throw new Error("Données Apur refusées : "+reason);}
 export function labEnabled(loc){
-  return ["localhost","127.0.0.1","[::1]"].includes(loc.hostname) &&
-    new URLSearchParams(loc.search).get("apur_lab")==="1";
+  return loc.hostname==="vacant.kiwinokoto.fr" ||
+    (["localhost","127.0.0.1","[::1]"].includes(loc.hostname) &&
+    new URLSearchParams(loc.search).get("apur_lab")==="1");
 }
 export function periodStyle(code){
   const value=code == null?99:code;
