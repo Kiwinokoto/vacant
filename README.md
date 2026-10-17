@@ -5,7 +5,7 @@ Projet public expérimental et atlas 2D **de données officielles**. Les origina
 ## Ce que nous savons et ce que nous ne savons pas
 
 - Des géométries de **volumes bâtis existants** sont publiées par la Ville de Paris sous licence ODbL. La couche Paris Data renseigne le **nombre d'étages**, **pas la hauteur en mètres**.
-- L'Apur dispose d'une couche de datation du bâti et d'informations de hauteur, à qualifier et apparier avant de les afficher à l'objet.
+- L'Apur diffuse les **emprises bâties actuelles** et des périodes de construction attribuées et hauteurs médianes **en mètres** sous ODbL. VACANT prépare une base adaptée publique et une carte distincte des logements vacants : ce n'est ni une reconstruction historique certifiée ni une mesure de l'occupation.
 - **Départ temporel choisi : 2006** pour les statistiques territoriales IRIS (jalons 2006, 2011, 2016 et 2023 ; pas d'interpolation annuelle). La chronologie agrégée Paris entier et une **couche indépendante IRIS 2023** (Insee 2023 + contours IGN 2025) sont intégrées ; les volumes bâtis ne représentent jamais des logements vacants. 1968–1999 ne sert qu'au contexte agrégé ; LOVAC privé 2020–2026 est une série distincte.
 - L'Insee publie des **statistiques de logements vacants à la maille IRIS**, pas une liste publique de logements vides.
 - Les données ouvertes LOVAC concernent des **agrégats communaux**, avec deux ruptures : changement de source GMBI en 2023 (impact millésime LOVAC 2024) et nouvelle extraction fiscale en 2025.
@@ -62,6 +62,7 @@ Le script `scripts/collect_insee.py` télécharge, **uniquement avec `--execute`
 - [Collecte Insee et stockage privé](docs/acquisition.md)
 - [Règles de collaboration](AGENTS.md)
 - [Déploiement statique Traefik, sous contrôle AgentCTL](deploy/README.md)
+- [Distribution libre du dérivé Apur sous ODbL 1.0 et contrôles SHA](docs/apur-odbl-public-dataset-20261017.md)
 
 ## Principes non négociables
 
