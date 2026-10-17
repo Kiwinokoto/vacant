@@ -26,6 +26,12 @@ Ce n'est **ni** l'ensemble des bureaux de Paris (notamment étages absents), **n
 
 **À auditer avant toute couche non résidentielle :** schémas exacts de BDCOM 2017/2020/2023 et valeurs « vacant », « en travaux », granularité, couverture et licence ; puis une source distincte de bureaux vacants **Paris intra-muros** (surfaces en m², disponibilité vs vacance effective, dates, licence). Pas de taux attribué à un immeuble depuis une géographie agrégée. Voir [cadrage potentiel](potentialite-locaux-20261017.md).
 
+## Audit complémentaire BDCOM et bureaux (17/10/2026)
+
+**Source BDCOM ouverte interrogée directement** : ArcGIS Apur `BDCOM/bdcom2023/MapServer/1`, 83 154 locaux, vingt arrondissements ; champ `codact` **AA101 = 7 495 locaux vacants hors travaux**, **AA102 = 1 565 locaux en travaux**. `type=V` les regroupe, soit **9 060** contre **9 059** dans la note n°236 Apur : divergence **+1** conservée, pas de correction inventée. **6 898** objets classés `type=B` « bureau en boutique », **pas** des bureaux vacants. Source ODbL, dérivé agrégé uniquement, relevé le 17 octobre 2026. Détail technique, requêtes, droits et dates : [audit BDCOM 2023](bdcom-open-audit-20261017.md).
+
+**Bureaux Paris intra-muros :** Colliers ([S1 2026](https://www.colliers.com/fr-fr/etudes/2026-2t-etude-marche-bureaux)) annonce **1,542 million de m²** d'offre disponible fin juin 2026 ; Cushman & Wakefield ([T2 2026](https://cw-prod-gblgws-a-cm.cushwake.com/fr-fr/france/news/2026/07/immostat-s1-2026)) environ **1,5 million de m²**, +8 % en trois mois. Mais Colliers ([T1 2026](https://www.colliers.com/fr-fr/etudes/2026-1t-etude-marche-bureaux)) annonce **795 000 m²** fin mars. Incohérence de série T1→T2 **non élucidée** : ne pas tracer de croissance trimestrielle. Surface d'**offre de marché** ≠ bureau garanti vide ≠ surface immédiatement transformable. Aucune conversion en nombre de logements / places d'accueil.
+
 ## Décision sur la profondeur temporelle
 
 Le point de départ de **la série cartographique de vacance IRIS est 2006** (recensement rénové, premier millésime disponible ici et documenté à l'IRIS). Jalons d'étude : **2006, 2011, 2016, 2023**. **1968, 1975, 1982, 1990 et 1999** ne sont envisagés qu'en complément agrégé Paris/arrondissements ; ils ne sont pas reportés dans les polygones IRIS 2006. LOVAC 2020–2026 relève d'un instrument distinct, limité à Paris commune pour la diffusion ouverte. [Document de décision et protocole de comparaison](chronologie.md).

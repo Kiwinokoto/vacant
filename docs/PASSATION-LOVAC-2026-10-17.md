@@ -1,5 +1,14 @@
 # VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
 
+## Nouveau jalon BDCOM — PR #35
+
+Étude du potentiel non résidentiel à partir de **données ouvertes BDCOM réellement interrogées** (17/10/2026) : **83 154** locaux de rez-de-chaussée Paris, `AA101`=**7 495 vacants hors travaux** ; `AA102`=**1 565 en travaux**, `type=V`=**9 060**, tandis que la note Apur indique **9 059**. L'écart **+1** reste à expliquer, aucune correction manuelle. Vingt arrondissements agrégés, aucune adresse, licence ODbL. Source et méthode `docs/bdcom-open-audit-20261017.md`.
+
+**Bureaux** : Paris intra-muros ≈ **1,5 million de m² d'offre immédiate** fin juin 2026 (Colliers et Cushman & Wakefield). L'observation Colliers de mars 2026 (795 000 m²) semble incompatible avec celle de juin (1,542 million), ne pas relier ces points comme évolution observée avant clarification. Aucune conversion automatique en nombre de logements.
+
+PR #35 brouillon empilée sur #34, chaîne **#29 → #30 → #31 → #32 → #33 → #34 → #35** ; IGN historique #28 autonome. Aucune modification de main ou prod. `docs/handoff.md` conserve la passation immédiate.
+
+
 ## Nouveau périmètre transverse (PR #34)
 
 **Décision utilisateur :** comparer séparément les logements habitables et non habitables, mais conserver **bureaux vacants, commerces vacants et logements dégradés** dans la recherche sur les espaces sous-utilisés, afin d'étudier un éventuel accueil temporaire ou pérenne des personnes sans logement. Un local sans eau, lumière ni équipements peut être un **potentiel à étudier**, mais jamais un logement immédiatement habitable ou une solution de nuit sûre sans diagnostic de sécurité, hygiène, accès, évacuation et droit d'usage. Inconnu par défaut : les bases de vacance disponibles ne permettent pas de distinguer les logements effectivement prêts à habiter.

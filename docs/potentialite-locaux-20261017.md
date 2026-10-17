@@ -20,6 +20,12 @@ Cinq dimensions indépendantes : (1) destination, (2) occupation et date, (3) é
 
 Ne jamais additionner Insee et LOVAC (champs résidentiels partiellement recouvrants) ni ajouter les locaux Apur aux logements. Même deux décomptes de locaux distincts ne sont pas nécessairement sommables si leur couverture se recoupe. Aucun taux territorial appliqué au bâtiment.
 
+## Mise à jour audit vérifié des locaux non résidentiels (PR #35)
+
+**Attention à la définition « vacant »** : BDCOM 2023 utilise `type='V'` pour **7 495 locaux vacants hors travaux (AA101) et 1 565 en travaux (AA102)**, soit **9 060** dans le service de données contre 9 059 dans la note Apur (écart de 1 inexpliqué). Ces deux statuts ne doivent plus être confondus dans les classements. Une lecture à 20 arrondissements est disponible sous forme de **statistiques agrégées uniquement**, sans coordonnées ni adresses. Le dénominateur est le parc des locaux BDCOM recensés (83 154), pas les bureaux ou logements de Paris. La ligne de référence du tableau précédent (9 059) représente **le chiffre éditorial incluant des travaux**, pas un décompte de 9 059 locaux vacants hors travaux. Voir [audit complet](bdcom-open-audit-20261017.md).
+
+**Bureaux** : environ **1,5 million de m²** d'offre immédiatement disponible à Paris intra-muros au 30/06/2026 (Colliers 1,542 million, Cushman & Wakefield ≈1,5 million) ; **offre locative, non capacité d'hébergement**. Incohérence entre Colliers T1 (795 000 m²) et T2 (1,542 million), interdiction de tracer une courbe T1→T2 tant que les définitions ne sont pas éclaircies. Distinction **offre en m² / nombre de bureaux / vacance réelle / adaptabilité** maintenue.
+
 ## Cadre de faisabilité avant tout scénario d'accueil
 
 - [Insee : logement vacant](https://www.insee.fr/fr/metadonnees/definition/c1059) inclut les logements vétustes : aucune preuve d'habitabilité dans le décompte.

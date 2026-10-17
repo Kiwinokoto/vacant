@@ -1,4 +1,4 @@
-.source-grid,.triage-grid,.dimension-grid{display:grid;gap:15px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.source-grid,.triage-grid,.dimension-grid{display:grid;gap:15px;grid-template-columns:repeat(2,minmax(0,1fr))}
 .source-grid article,.triage-grid article,.dimension-grid>div{min-width:0;border:1px solid #365967;border-radius:9px;padding:20px;background:#122934}
 .source-grid article h3{font-size:17px;line-height:1.3;margin:12px 0}
 .source-kind{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:#c2d4df;font-weight:650}
@@ -17,3 +17,7 @@
 main section{margin:25px 0 38px}
 h2{margin:0 0 16px}
 @media(max-width:750px){.source-grid,.triage-grid,.dimension-grid{grid-template-columns:1fr}.source-grid article,.triage-grid article{padding:15px}.source-number{font-size:34px}}
+
+.bdcom-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:15px 0}.bdcom-toolbar label{font-weight:600}.bdcom-toolbar select{max-width:100%;padding:10px;background:#1a3541;color:#eff4f5;border:1px solid #72909c;border-radius:5px}
+.bdcom-table{min-width:720px}.bdcom-table th:first-child,.bdcom-table td:first-child{text-align:left}.bdcom-table td,.bdcom-table th{font-variant-numeric:tabular-nums}.bdcom-table td:last-child{font-weight:650;color:#efd296}.bdcom-table tbody tr:first-child{background:#254553}
+@media(max-width:750px){.bdcom-toolbar{display:grid;grid-template-columns:minmax(0,1fr)}.bdcom-toolbar select{min-width:0;width:100%}}

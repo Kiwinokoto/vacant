@@ -1,3 +1,16 @@
+# Dernière reprise — PR #35, BDCOM 2023 et offre de bureaux (17/10/2026)
+
+**Github source de vérité ; PR #35 brouillon `dev/bdcom-groundfloor-snapshot-20261017` empilée sur #34.** Chaîne antérieure #29 → #30 → #31 → #32 → #33 → #34 ; #28 IGN indépendante. À reprendre en lisant [audit des sources](bdcom-open-audit-20261017.md), [méthode potentiel](potentialite-locaux-20261017.md), [roadmap](../ROADMAP.md) et AGENTS.md.
+
+- **Données BDCOM réelles** : source [ArcGIS Apur couche 1](https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2023/MapServer/1), enquête 2023, ODbL ; **83 154** locaux, 20 arrondissements ; `codact=AA101` = **7 495 vacants hors travaux**, `AA102` = **1 565 en travaux**, regroupés `type=V` = **9 060**. Note Apur annonce **9 059** et 1 565 travaux. Décalage de 1 **non expliqué**, sans retouche ; couche 0 plus restrictive contient 60 845 commerces contre 60 846 de la note. Date terrain avril/juin selon les deux sources : année 2023 certaine.
+- **Bureaux Paris intra-muros** : **1,542 million de m²** annoncés par Colliers en juin 2026, C&W ≈1,5 million, source d'offre immédiate, **pas de m² immédiatement convertibles en logements**. Colliers annonce 795 000 m² T1 : incohérence non résolue, éviter série T1/T2.
+- Code envisagé : page `site/potentiel.html` enrichie, agrégat `site/data/bdcom-paris-arrond-2023.json` limité à 20 lignes, contrat `site/bdcom-contract.mjs`, table de classement, tests. Aucun détail nominatif ou adresse. Source open data ODbL, attribution Apur ; autres chiffres Insee/LOVAC non additionnés.
+- **Reste à réaliser lors de la reprise** : vérifier HEAD #34/#35, verrou AgentCTL avant mutation, tests JS/Python et recette navigateur sur la PR ; actualiser le dernier SHA testé puis laisser PR brouillon hors production. Ensuite, examiner BDCOM 2017/2020 et résoudre la divergence Apur et Colliers, sans inventer de nombre de logements ou places mobilisables.
+
+**Contraintes durables :** ne pas transformer une statistique territoriale en statut de bâtiment, pas de logement jugé habitable sur simple vacance, pas de publication de fichier BDCOM point/adresse, pas de fusion/main ni déploiement avant revue.
+
+---
+
 **Recette #34 vérifiée** : 102 JS, 99 Python, Chromium desktop 1440 et mobile simulé 390 sans débordement, liens 3/3 OK, aucune erreur JS de la nouvelle page. Branche `dev/vacancy-reuse-potential-20261017` initialement à `5d4cde6`, PR en brouillon. Prochaine vérification : audit des données BDCOM originales et bureaux. Aucun déploiement.
 
 # Dernière passation — PR #34, réemploi des espaces vacants (17/10/2026)

@@ -1,0 +1,162 @@
+{
+  "kind": "bdcom_2023_aggregate_by_paris_arrondissement",
+  "survey": "2023-04",
+  "snapshot_utc": "2026-10-17T09:35:51Z",
+  "license": "ODbL",
+  "source": "https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2023/MapServer/1",
+  "query_fields": {
+    "geography": "arro",
+    "denominator": "COUNT(OBJECTID) where 1=1",
+    "vacant": "COUNT(OBJECTID) where codact='AA101'",
+    "in_works": "COUNT(OBJECTID) where codact='AA102'"
+  },
+  "paris": {
+    "surveyed": 83154,
+    "vacant": 7495,
+    "in_works": 1565,
+    "combined": 9060,
+    "reported_combined_in_apur_note": 9059
+  },
+  "arrondissements": [
+    {
+      "arrondissement": 1,
+      "code": "75101",
+      "surveyed": 2655,
+      "vacant": 238,
+      "in_works": 75
+    },
+    {
+      "arrondissement": 2,
+      "code": "75102",
+      "surveyed": 3021,
+      "vacant": 323,
+      "in_works": 106
+    },
+    {
+      "arrondissement": 3,
+      "code": "75103",
+      "surveyed": 3150,
+      "vacant": 349,
+      "in_works": 55
+    },
+    {
+      "arrondissement": 4,
+      "code": "75104",
+      "surveyed": 2367,
+      "vacant": 174,
+      "in_works": 40
+    },
+    {
+      "arrondissement": 5,
+      "code": "75105",
+      "surveyed": 3005,
+      "vacant": 214,
+      "in_works": 66
+    },
+    {
+      "arrondissement": 6,
+      "code": "75106",
+      "surveyed": 3451,
+      "vacant": 217,
+      "in_works": 62
+    },
+    {
+      "arrondissement": 7,
+      "code": "75107",
+      "surveyed": 2567,
+      "vacant": 139,
+      "in_works": 49
+    },
+    {
+      "arrondissement": 8,
+      "code": "75108",
+      "surveyed": 3887,
+      "vacant": 298,
+      "in_works": 162
+    },
+    {
+      "arrondissement": 9,
+      "code": "75109",
+      "surveyed": 4677,
+      "vacant": 466,
+      "in_works": 115
+    },
+    {
+      "arrondissement": 10,
+      "code": "75110",
+      "surveyed": 5000,
+      "vacant": 518,
+      "in_works": 82
+    },
+    {
+      "arrondissement": 11,
+      "code": "75111",
+      "surveyed": 6936,
+      "vacant": 688,
+      "in_works": 107
+    },
+    {
+      "arrondissement": 12,
+      "code": "75112",
+      "surveyed": 4478,
+      "vacant": 284,
+      "in_works": 80
+    },
+    {
+      "arrondissement": 13,
+      "code": "75113",
+      "surveyed": 3569,
+      "vacant": 322,
+      "in_works": 49
+    },
+    {
+      "arrondissement": 14,
+      "code": "75114",
+      "surveyed": 3841,
+      "vacant": 304,
+      "in_works": 60
+    },
+    {
+      "arrondissement": 15,
+      "code": "75115",
+      "surveyed": 6258,
+      "vacant": 512,
+      "in_works": 73
+    },
+    {
+      "arrondissement": 16,
+      "code": "75116",
+      "surveyed": 3964,
+      "vacant": 202,
+      "in_works": 91
+    },
+    {
+      "arrondissement": 17,
+      "code": "75117",
+      "surveyed": 6140,
+      "vacant": 611,
+      "in_works": 62
+    },
+    {
+      "arrondissement": 18,
+      "code": "75118",
+      "surveyed": 6767,
+      "vacant": 891,
+      "in_works": 79
+    },
+    {
+      "arrondissement": 19,
+      "code": "75119",
+      "surveyed": 3325,
+      "vacant": 310,
+      "in_works": 85
+    },
+    {
+      "arrondissement": 20,
+      "code": "75120",
+      "surveyed": 4096,
+      "vacant": 435,
+      "in_works": 67
+    }
+  ]
+}
