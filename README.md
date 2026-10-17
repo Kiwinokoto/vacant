@@ -26,6 +26,8 @@ Deux rails, explicités et ordonnés dans le [backlog VACANT](ROADMAP.md) : **(V
 
 La carte `site/index.html` peut désormais comparer deux recensements **2006/2011/2016/2023**, seulement après activation de la couche des 20 arrondissements. Un sélecteur de dates colore la **variation en points de taux** ou la **variation du nombre estimé de logements vacants**, avec deux valeurs de départ/arrivée en popup, légende et classement. Les contours IGN **2025** ne servent que de support d'affichage : les valeurs proviennent des recensements aux géographies IRIS respectives, agrégés au niveau arrondissement. Voir [protocole de comparaison](docs/vacance-arrond-comparison-20261017.md).
 
+La lecture de la [vacance de longue durée par arrondissement](docs/lovac-long-duration-20261017.md) distingue l'effectif de plus de deux ans et sa part **parmi les seuls logements privés fiscalement recensés comme vacants**. Ce ratio ne constitue pas le taux de vacance du parc : il est exclu en 2023 car les deux observations ont des dates différentes. Le code est en PR de développement, pas en production.
+
 ## Démarrage local
 
 Prérequis : un navigateur récent et Python 3 (pour servir les fichiers) ; aucune base de données ni installation npm.
