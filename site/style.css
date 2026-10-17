@@ -26,3 +26,7 @@
 #apur-mode:focus-visible{outline:3px solid #f7c96a}
 #apur-lab-legend{margin-top:7px}
 #apur-lab-legend i{flex:none}
+#apur-grid-reload{display:block;width:100%;min-height:38px;background:#d5b46f;color:#172632;border:0;border-radius:5px;margin:12px 0 6px;font-weight:700;cursor:pointer}
+#apur-grid-reload[hidden]{display:none}
+#apur-grid-reload:focus-visible{outline:3px solid #f7c96a;outline-offset:2px}
+#apur-grid-reload:disabled{opacity:.55;cursor:wait}

@@ -1,3 +1,16 @@
+# VACANT — passation prioritaire : grille Apur dans le laboratoire VACANT (16/10/2026)
+
+**Lire d'abord [le checkpoint d'intégration](apur-grid-site-local-20261016.md), puis [la consolidation #23](checkpoint-apur-consolidated-20261016.md).** Les notes plus anciennes ci-dessous restent historiques.
+
+- GitHub source canonique : `Kiwinokoto/vacant`, `main 72a9d063` au départ, PR #23 à `242799a8` (base de travail). Branche de suivi empilée : `dev/apur-grid-site-local-20261016`, PR de revue à retrouver sur GitHub. **Aucune promotion main ni déploiement.**
+- Le site VACANT possède désormais, **seulement sur localhost + `?apur_lab=1`**, deux nouvelles options : **grille privée de Paris 500 m — périodes** et **grille privée — hauteurs médianes en mètres**. Prévisualisation de 150 emprises conservée. Aucun bâtiment n'est désigné vacant.
+- Contrat partagé `site/apur-grid-client.mjs`, laboratoire historique réexporté par `experiments/apur-grid/grid-client.mjs`. Manifeste SHA `bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c`, **456 cellules, 128 089 objets uniques**, 104 invalides GEOS et 13 clés métier nulles exclues à la source. Ressources privées sur VPS, jamais dans Git ni la release.
+- Chargement à la demande de cellules visibles, plafond 12 cellules / 10 Mo / 5000 occurrences, SHA et dédoublonnage avant toute mutation. Périodes ↔ hauteurs change seulement la couleur (**0 requête**). Après déplacement, bouton de rechargement ; fichier cassé (503)/SHA non conforme préserve l'ancienne carte.
+- Recette Chromium desktop 1280 et mobiles simulés 390/320 validée, et transitions Apur → IRIS → arrondissements → volumes validées. Tests JS **71/71**, tests Python **81/81** à reconfirmer sur commit final. Aucun appel API Apur, aucun débordement horizontal. Essais réseau **local**, pas de vrai smartphone/4G.
+- Production inchangée `1e6d47c`, pas de modification Docker/BDD/DNS/SSH. Millésime Apur non confirmé ; ODbL et contrat de distribution de la base adaptée restent une condition de publication. Conserver PR #17–#23 tant que la revue n'a pas été faite. En fin de passe : vérifier état Git, libérer AgentCTL.
+
+---
+
 # VACANT — passation active : consolidation Apur (16/10/2026)
 
 **Consulter d'abord [le checkpoint consolidé](checkpoint-apur-consolidated-20261016.md).** Les notes ci-dessous conservent le contexte historique, parfois devenu obsolète.

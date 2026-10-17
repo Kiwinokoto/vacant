@@ -47,14 +47,17 @@
           <label for="apur-mode">Afficher les emprises actuelles par :</label>
           <select id="apur-mode">
             <option value="off">Désactivé (volumes Paris Data)</option>
-            <option value="period">Période de construction attribuée</option>
-            <option value="height">Hauteur médiane en mètres</option>
+            <option value="period">Période attribuée (150 emprises)</option>
+            <option value="height">Hauteur médiane en mètres (150 emprises)</option>
+            <option value="grid-period">Paris, grille privée de 500 m · périodes</option>
+            <option value="grid-height">Paris, grille privée de 500 m · hauteurs en mètres</option>
           </select>
+          <button id="apur-grid-reload" type="button" hidden>Recharger les cellules visibles</button>
           <a class="note" href="#map">Voir la carte après sélection ↓</a>
           <p id="apur-lab-status" class="note" role="status" aria-live="polite">Source figée privée : aucune publication.</p>
           <div id="apur-lab-legend" class="legend" aria-label="Légende des emprises Apur"></div>
           <p class="note">© Apur, licence ODbL · extraction 16/10/2026, millésime métier non confirmé.
-            Une emprise peut couvrir plusieurs bâtiments. Aucun taux de vacance par bâtiment.</p>
+            Une emprise peut couvrir plusieurs bâtiments. Aucun taux de vacance par bâtiment. La grille privée est plafonnée à 12 cellules, 5 000 occurrences ou 10 Mo par demande, et doit être rechargée manuellement après déplacement.</p>
         </section>
         <label class="layer muted"><input type="checkbox" disabled> <span>Évolution géométrique des bâtiments <small>Non disponible : le sélecteur Insee pilote uniquement les statistiques territoriales par arrondissement, jamais les volumes bâtis.</small></span></label>
       </section>
