@@ -44,6 +44,26 @@
         <p id="iris-insights" class="iris-insights" aria-live="polite" hidden>Les quartiers colorés représentent des parts de logements, pas des adresses identifiées. Activez la couche IRIS pour obtenir la répartition chiffrée.</p>
         <label class="layer" for="arrond-toggle"><input id="arrond-toggle" type="checkbox"> <span><strong>Évolution de la vacance · arrondissements</strong><small>20 arrondissements, recensements 2006, 2011, 2016 et 2023. Choisir l'année dans la chronologie.</small></span></label>
         <p class="note" id="arrond-status" role="status" aria-live="polite">Comparaison sur les limites des arrondissements (géométrie IGN 2025). Les données historiques ont été agrégées depuis leurs IRIS d'époque : aucun taux ancien n'est attribué aux contours des quartiers actuels.</p>
+        <section id="arrond-compare-panel" class="arrond-compare-panel" hidden aria-labelledby="arrond-compare-title">
+          <h3 id="arrond-compare-title">Comparer deux recensements</h3>
+          <label class="layer" for="arrond-compare-on"><input id="arrond-compare-on" type="checkbox"> <span><strong>Colorer la variation entre deux dates</strong><small>Par arrondissement, jamais par immeuble</small></span></label>
+          <div class="arrond-compare-years">
+            <label for="arrond-compare-from">De <select id="arrond-compare-from"><option value="2006">2006</option><option value="2011">2011</option><option value="2016">2016</option><option value="2023">2023</option></select></label>
+            <label for="arrond-compare-to">À <select id="arrond-compare-to"><option value="2006">2006</option><option value="2011">2011</option><option value="2016">2016</option><option value="2023" selected>2023</option></select></label>
+          </div>
+          <label for="arrond-compare-unit">Afficher la variation</label>
+          <select id="arrond-compare-unit">
+            <option value="points">Taux · points de pourcentage</option>
+            <option value="count">Nombre de logements vacants</option>
+          </select>
+          <p id="arrond-compare-summary" class="note" role="status" aria-live="polite">Activer pour comparer.</p>
+          <div id="arrond-compare-legend" class="arrond-compare-legend" aria-label="Légende des variations" hidden></div>
+          <details id="arrond-compare-ranking" hidden>
+            <summary>Classement des 20 arrondissements</summary>
+            <ol id="arrond-compare-list"></ol>
+          </details>
+          <p class="note">Sources : recensements Insee des IRIS de chaque millésime, agrégés par arrondissement. Les contours affichés sont ceux des arrondissements IGN 2025. Variation statistique, pas logements ou bâtiments identifiés.</p>
+        </section>
         <section id="apur-local" hidden aria-labelledby="apur-local-title">
           <h2 id="apur-local-title">Bâti parisien · périodes et hauteurs (Apur)</h2>
           <label for="apur-mode">Afficher les emprises actuelles par :</label>

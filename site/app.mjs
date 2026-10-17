@@ -1,6 +1,7 @@
 import { SOURCE, normalizeBatch } from "./record.mjs";
 import { renderParisTimeline } from "./timeline.mjs";
 import { statForYear, validateArrondissementSeries, buildArrondissementPopup } from "./arrondissement-history.mjs";
+import { compareColor, compareArrondissement, buildComparisonPopup, summarizeArrondissementChanges, CHANGE_PALETTES } from "./arrondissement-compare.mjs";
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
 import { summarizeIrisVacancy2023 } from "./iris-insights.mjs";
@@ -16,6 +17,15 @@ const irisStatus = document.querySelector("#iris-status");
 const irisInsights = document.querySelector("#iris-insights");
 const arrondToggle = document.querySelector("#arrond-toggle");
 const arrondStatus = document.querySelector("#arrond-status");
+const comparePanel = document.querySelector("#arrond-compare-panel");
+const compareOn = document.querySelector("#arrond-compare-on");
+const compareFrom = document.querySelector("#arrond-compare-from");
+const compareTo = document.querySelector("#arrond-compare-to");
+const compareUnit = document.querySelector("#arrond-compare-unit");
+const compareSummary = document.querySelector("#arrond-compare-summary");
+const compareLegend = document.querySelector("#arrond-compare-legend");
+const compareRanking = document.querySelector("#arrond-compare-ranking");
+const compareList = document.querySelector("#arrond-compare-list");
 let selectedYear = 2023;
 function showMapMode(layer){
   const copy=viewDescriptor(layer,selectedYear);
@@ -49,13 +59,26 @@ if (typeof window.L === "undefined") {
     }),
     onEachFeature:(feature,layer)=>layer.bindPopup(()=>buildIRISPopup(feature))
   });
+  const comparisonYears=()=>[Number(compareFrom.value),Number(compareTo.value)];
+  const isComparing=()=>compareOn.checked;
+  const comparisonColor=p=>{
+    const [a,b]=comparisonYears();
+    return compareColor(p,a,b,compareUnit.value);
+  };
   const arrondissementPolygons = L.geoJSON(null, {
     style: feature => ({
       color:"#33424c", weight:1.2, fillOpacity:0.73,
-      fillColor:colorForIRIS(statForYear(feature.properties, selectedYear))
+      fillColor:isComparing()?comparisonColor(feature.properties):colorForIRIS(statForYear(feature.properties, selectedYear))
     }),
-    onEachFeature:(feature,layer)=>layer.bindPopup(()=>buildArrondissementPopup(feature,selectedYear))
+    onEachFeature:(feature,layer)=>layer.bindPopup(()=>{
+      if(isComparing()){
+        const [a,b]=comparisonYears();
+        return buildComparisonPopup(feature,a,b);
+      }
+      return buildArrondissementPopup(feature,selectedYear);
+    })
   });
+  let arrondDataset=null;
   let historyLoaded=false;
   let irisLoaded=false;
   let savedStreetView=null;
@@ -69,14 +92,79 @@ if (typeof window.L === "undefined") {
     }
   }
   function updateHistoryView(){
+    const [first,last]=comparisonYears();
+    const cmp=isComparing()?summarizeArrondissementChanges(arrondDataset,first,last):null;
     arrondissementPolygons.setStyle(feature=>({
       color:"#33424c",weight:1.2,fillOpacity:0.73,
-      fillColor:colorForIRIS(statForYear(feature.properties,selectedYear))
+      fillColor:cmp?comparisonColor(feature.properties):colorForIRIS(statForYear(feature.properties,selectedYear))
     }));
-    arrondStatus.textContent="Recensement "+selectedYear+" · 20 arrondissements. "+
-      "Statistiques calculées sur les IRIS de l'époque ; limites d'arrondissement affichées sur le fond IGN 2025. "+
-      "Aucun taux de vacance attribué à un immeuble ou à un IRIS d'une autre année.";
-    showMapMode("arrondissement");
+    // Popup factory uses the *current* controls, not stale closures from first load.
+    arrondissementPolygons.eachLayer(layer=>layer.bindPopup(()=>{
+      if(isComparing()){
+        const [a,b]=comparisonYears();
+        return buildComparisonPopup(layer.feature,a,b);
+      }
+      return buildArrondissementPopup(layer.feature,selectedYear);
+    }));
+    if(!cmp){
+      compareSummary.textContent="Cochez « Colorer la variation » pour comparer deux recensements.";
+      compareLegend.hidden=true;
+      compareRanking.hidden=true;
+      arrondStatus.textContent="Recensement "+selectedYear+" · 20 arrondissements. "+
+        "Statistiques calculées sur les IRIS de l'époque ; limites d'arrondissement affichées sur le fond IGN 2025. "+
+        "Aucun taux de vacance attribué à un immeuble ou à un IRIS d'une autre année.";
+      showMapMode("arrondissement");
+      return;
+    }
+    const formNumber=new Intl.NumberFormat("fr-FR",{maximumFractionDigits:0});
+    const formPoints=new Intl.NumberFormat("fr-FR",{minimumFractionDigits:1,maximumFractionDigits:1});
+    const signed=(n,fmt)=>(n>0?"+":"")+fmt.format(n);
+    compareSummary.textContent="Paris entier · "+first+" → "+last+" : "+
+      signed(cmp.changedVacant,formNumber)+" logements vacants estimés ; "+
+      signed(cmp.changedRatePoints,formPoints)+" points de taux pondéré. "+
+      cmp.increased+" arrondissements voient leur taux augmenter, "+cmp.decreased+" diminuer. "+
+      "Ce ne sont pas des bâtiments localisés.";
+    const legend=CHANGE_PALETTES[compareUnit.value];
+    compareLegend.replaceChildren();
+    for(const item of legend){
+      const line=document.createElement("div");
+      const swatch=document.createElement("i");swatch.style.backgroundColor=item.color;
+      const text=document.createElement("span");text.textContent=item.label;
+      line.append(swatch,text);
+      compareLegend.append(line);
+    }
+    compareLegend.hidden=false;
+    const metric=compareUnit.value==="points"?"rateDeltaPoints":"vacantDelta";
+    const ranking=[...cmp.rows].sort((a,b)=>b[metric]-a[metric]);
+    compareList.replaceChildren();
+    for(const row of ranking){
+      const li=document.createElement("li");
+      li.textContent=row.arrondissement+"e : "+
+        signed(row[metric],metric==="rateDeltaPoints"?formPoints:formNumber)+
+        (metric==="rateDeltaPoints"?" points":" logements");
+      compareList.append(li);
+    }
+    compareRanking.hidden=false;
+    document.querySelector("#map-title").textContent="Évolution des logements vacants · "+first+" → "+last;
+    document.querySelector("#map-subtitle").textContent=
+      "Insee RP · variations par arrondissement en "+(compareUnit.value==="points"?"points de taux":"logements")+
+      " · limites affichées IGN 2025 (pas IRIS historiques)";
+    arrondStatus.textContent="Comparaison "+first+" → "+last+
+      " · géographies IRIS de chaque recensement agrégées aux 20 arrondissements ;"+
+      " contours actuels seulement pour l'affichage. Aucun taux par bâtiment.";
+  }
+  function onComparisonChange(){
+    if(!arrondToggle.checked||!historyLoaded)return;
+    if(compareOn.checked && Number(compareFrom.value)>=Number(compareTo.value)){
+      compareOn.checked=false;
+      updateHistoryView();
+      compareSummary.textContent="Années incompatibles : choisissez une année de départ antérieure à l'année d'arrivée. Comparaison désactivée.";
+      return;
+    }
+    updateHistoryView();
+  }
+  for(const control of [compareOn,compareFrom,compareTo,compareUnit]){
+    control.addEventListener("change",onComparisonChange);
   }
   async function loadHistory(){
     if(historyLoaded)return;
@@ -85,6 +173,7 @@ if (typeof window.L === "undefined") {
     const dataset=await response.json();
     validateArrondissementSeries(dataset);
     arrondissementPolygons.addData(dataset);
+    arrondDataset=dataset;
     historyLoaded=true;
   }
   document.addEventListener("vacant:census-year",event=>{
@@ -98,6 +187,7 @@ if (typeof window.L === "undefined") {
   });
   arrondToggle.addEventListener("change",async()=>{
     if(!arrondToggle.checked){
+      comparePanel.hidden=true;
       map.removeLayer(arrondissementPolygons);
       if(!irisToggle.checked){
         volumes.addTo(map);
@@ -120,9 +210,11 @@ if (typeof window.L === "undefined") {
       map.removeLayer(volumes);
       arrondissementPolygons.addTo(map);
       map.fitBounds(arrondissementPolygons.getBounds().pad(0.025));
+      comparePanel.hidden=false;
       updateHistoryView();
     }catch(error){
       arrondToggle.checked=false;
+      comparePanel.hidden=true;
       if(irisToggle.checked && map.hasLayer(irisPolygons)){
         map.removeLayer(volumes);
         showMapMode("iris");
@@ -175,6 +267,7 @@ if (typeof window.L === "undefined") {
       saveStreetView();
       if(arrondToggle.checked){
         arrondToggle.checked=false;
+        comparePanel.hidden=true;
         map.removeLayer(arrondissementPolygons);
       }
       if(map.hasLayer(volumes))map.removeLayer(volumes);
