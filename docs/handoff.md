@@ -1,3 +1,17 @@
+# VACANT — passation prioritaire du 17 octobre 2026 : VACANCE D'ABORD, BÂTI EN PARALLÈLE
+
+**Lire en priorité [ROADMAP.md](../ROADMAP.md) et [le protocole temporel 1968–2023](vacance-evolution-1968-2023.md).**
+
+- Le porteur du projet rappelle sa mission **fondamentale : mesurer, cartographier et comprendre l'évolution de la vacance résidentielle**, avec la maille la plus fine crédible. L'histoire et la reconstruction graphique du bâti sont un **deuxième rail**, esthétique et documentaire ; effort indicatif 70 % vacance / 30 % bâti. Desktop prioritaire, petits écrans utilisables sans recette obligatoire sur téléphone physique.
+- GitHub est la vérité, branche de travail actuelle `dev/vacancy-timeline-and-roadmap-20261017`, départ de `main=22f0ad1a07f0c8ea5bc6931c6369df410fac65bc`. Production active `8711f3071abd41b169c92dfe0daaa79708be9acf` ; ne pas confondre avec la tête documentaire de main. AgentCTL `repo:Kiwinokoto/vacant` et `state:vacant` pris pour la passe, à libérer après fin des tests.
+- **Rail V/V-02 implémenté sur branche, avant fusion :** nouvelle page `site/evolution.html` avec **9 jalons Insee** historiques pour Paris entier (1968, 1975, 1982, 1990, 1999, 2007, 2012, 2017, 2023), graphique de barres (part / nombre) et tableau. **Rupture visuelle entre les dénombrements anciens et les RP rénovés.** Source officielle Insee LOG T1 `https://www.insee.fr/fr/statistiques/2011101?geo=DEP-75`, 2023 : **139 075 / 1 402 024 = 9,9 %**. Pas d'interpolation ni projection sur un bâtiment, une adresse ou un IRIS. `site/evolution-data.mjs` et tests dédiés.
+- **Quatre jalons de carte** 2006, 2011, 2016, 2023 conservés : leur source/historique est distinct du tableau 2007/2012/2017 de la nouvelle page. Ne pas injecter ces années historiques dans la carte des arrondissements.
+- **Rail V/V-01 implémenté dans cette passe :** répartition des 992 IRIS par classes calculées sur des taux **non arrondis**, 852/929 affichables ≥5 %, 249/929 ≥12 %, 63 IRIS sous 50 logements grisés, taux Paris pondéré vérifié 9,9 %, sans mélange avec les couleurs des bâtiments. **Rail V/V-03 ensuite :** comparaison de deux RP par arrondissement en **nombre** et en **points de pourcentage**. **LOVAC agrégé public 2020–2026** constitue une série à part (parc privé fiscal, ruptures 2024/2025), jamais à joindre aux taux du RP. Aucun détail nominatif LOVAC.
+- **Rail B :** la PR [#28](https://github.com/Kiwinokoto/vacant/pull/28) d'audit IGN 2008/2011/2018 est en brouillon, séparée ; ~97 % d'IDs communs en 2011/2018, édition 2008 non directement comparable. La recherche parallèle PR #28 a désormais un **audit exact des 113 634 IDs communs** : 112 567 géométries identiques, 1 067 modifiées, IoU GEOS des changements ; aucune démolition/construction inférée. Les polygones historiques sont privés. Ne pas faire de fausses constructions/démolitions.
+- Déploiement : PR documentaire et tests d'abord, aucune promotion automatique de cette tranche. Le prochain agent doit reprendre en inspectant les PR, finaliser les tests et prioriser la lecture de la vacance sur la page d'accueil. Les anciennes notes ci-dessous restent historiques.
+
+---
+
 # VACANT — état de production au 17 octobre 2026
 
 **Déploiement Apur ODbL terminé et vérifié.** Voir [le procès-verbal de mise en ligne](apur-odbl-deployment-20261017.md) avant toute nouvelle intervention.

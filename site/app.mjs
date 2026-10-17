@@ -3,6 +3,7 @@ import { renderParisTimeline } from "./timeline.mjs";
 import { statForYear, validateArrondissementSeries, buildArrondissementPopup } from "./arrondissement-history.mjs";
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
+import { summarizeIrisVacancy2023 } from "./iris-insights.mjs";
 import { viewDescriptor } from "./view-state.mjs";
 import { labEnabled } from "./apur-lab-contract.mjs";
 
@@ -12,6 +13,7 @@ const status = document.querySelector("#status");
 const button = document.querySelector("#load");
 const irisToggle = document.querySelector("#iris-toggle");
 const irisStatus = document.querySelector("#iris-status");
+const irisInsights = document.querySelector("#iris-insights");
 const arrondToggle = document.querySelector("#arrond-toggle");
 const arrondStatus = document.querySelector("#arrond-status");
 let selectedYear = 2023;
@@ -113,6 +115,7 @@ if (typeof window.L === "undefined") {
       await loadHistory();
       saveStreetView();
       irisToggle.checked=false;
+      irisInsights.hidden=true;
       map.removeLayer(irisPolygons);
       map.removeLayer(volumes);
       arrondissementPolygons.addTo(map);
@@ -136,6 +139,7 @@ if (typeof window.L === "undefined") {
   });
   irisToggle.addEventListener("change",async()=>{
     if(!irisToggle.checked){
+      irisInsights.hidden=true;
       if(map.hasLayer(irisPolygons))map.removeLayer(irisPolygons);
       if(!map.hasLayer(volumes) && !arrondToggle.checked)volumes.addTo(map);
       if(!arrondToggle.checked)restoreStreetView();
@@ -154,6 +158,17 @@ if (typeof window.L === "undefined") {
         const payload=await response.json();
         const checked=validateIrisImport(payload,payload.metadata,{forPublication:true});
         if(checked.features.length!==992)throw new Error("cardinalité IRIS inattendue");
+        // Aggregate counts and the 9.9% weighted city baseline are checked
+        // independently against the published Insee Paris LOG T1 totals.
+        const insights=summarizeIrisVacancy2023(checked);
+        document.querySelector("#iris-insights").textContent=
+          "Lecture des quartiers 2023 : "+insights.atLeastFive+" des "+
+          insights.visible+" IRIS à taux affichable sont à au moins 5 % de vacance ; "+
+          insights.atLeastTwelve+" sont à au moins 12 %. "+
+          insights.hidden+" autres IRIS restent grisés (moins de 50 logements). "+
+          "Pour Paris entier : "+insights.parisRate.toLocaleString("fr-FR")+
+          " % des logements, taux pondéré sur le parc total, pas moyenne des quartiers. "+
+          "Les quartiers ne représentent ni des immeubles ni des logements localisés.";
         irisPolygons.addData(checked);
         irisLoaded=true;
       }
@@ -170,8 +185,10 @@ if (typeof window.L === "undefined") {
       irisStatus.textContent="IRIS 2023 · 992 quartiers vérifiés · "+shown+
         " taux représentés. Gris : aucun logement ou moins de 50 logements. "+
         "Aucune information individuelle ni par bâtiment.";
+      irisInsights.hidden=false;
       showMapMode("iris");
     }catch(error){
+      irisInsights.hidden=true;
       irisToggle.checked=false;
       if(arrondToggle.checked && map.hasLayer(arrondissementPolygons)){
         map.removeLayer(volumes);

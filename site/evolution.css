@@ -1,0 +1,42 @@
+*{box-sizing:border-box}
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#09141e;color:#eaf0f3;color-scheme:dark}
+body{margin:0;line-height:1.55}
+a{color:#9acde9}a:focus-visible,button:focus-visible{outline:3px solid #f3ca74;outline-offset:3px}
+.site-head{border-bottom:1px solid #36505c;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px clamp(18px,4vw,56px);background:#0d1e29}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;letter-spacing:.12em}
+.brand .logo{border:2px solid #e4bb69;color:#e4bb69;font-size:23px;font-weight:700;padding:0 11px}.brand strong,.brand small{display:block}.brand strong{font-size:18px}.brand small{font-size:11px;color:#b9cbd1;letter-spacing:0}
+nav{display:flex;gap:20px;flex-wrap:wrap}nav a[aria-current]{text-decoration:none;color:#eccd8c;border-bottom:2px solid;padding:4px 0}
+main{max-width:1280px;margin:auto;padding:clamp(18px,3vw,38px)}
+.eyebrow{font-weight:700;color:#f0c784;text-transform:uppercase;letter-spacing:.12em;font-size:12px}
+h1{font-size:clamp(29px,4vw,48px);letter-spacing:-.04em;line-height:1.12;margin:12px 0 20px;max-width:860px}h2{font-size:clamp(20px,2vw,27px);letter-spacing:-.025em}
+.lead{font-size:clamp(17px,1.5vw,20px);color:#cad7db;max-width:980px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:30px 0}
+.cards div{background:#152d38;border:1px solid #425d64;border-radius:8px;padding:16px 18px}
+.cards strong{font-size:clamp(23px,3vw,38px);letter-spacing:-.03em;color:#efcc89;display:block;font-variant-numeric:tabular-nums}
+.cards span{color:#b9cbd1;font-size:13px}
+.chart-panel,.method{border:1px solid #364c56;border-radius:9px;background:#122631;padding:22px 25px;margin:25px 0}
+.heading-row{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.heading-row h2{margin:0}.heading-row p{margin:5px 0;font-size:13px;color:#c6d5dd}
+.metric-buttons{display:flex;gap:4px;flex-wrap:wrap}
+.metric-buttons button{padding:10px 12px;border:1px solid #748b94;background:#223b47;border-radius:5px;font-size:13px;color:#f5f6f0;cursor:pointer}
+.metric-buttons button[aria-pressed=true]{background:#e8c681;border-color:#e8c681;color:#182e39;font-weight:700}
+figure{margin:16px 0 0}svg{width:100%;height:auto;max-height:420px;overflow:visible}
+svg text{fill:#e1e8eb;font-family:system-ui,sans-serif;font-size:15px}
+svg .axis{stroke:#66818b;stroke-width:1;opacity:.65}
+svg .bar{fill:#72b2ad}svg .bar.old{fill:#7596a5}
+svg .bar.highlight{fill:#e7c57f}
+svg .break{stroke:#e2ac70;stroke-dasharray:5 5;stroke-width:1.7}
+svg .value{font-size:14px;font-weight:650}
+figcaption{font-size:13px;color:#b9cbd1}
+#chart-status{font-size:13px;color:#c5d4da}
+.method p{max-width:1010px;color:#ccd9de;font-size:14px}
+.recent-change{border-left:3px solid #e8c681;padding-left:13px;font-weight:650}
+.table-wrap{overflow-x:auto;border:1px solid #3b525f;border-radius:8px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;min-width:690px}
+caption{text-align:left;font-size:12px;color:#bfd0d6;padding:11px}
+th,td{padding:12px 13px;border-bottom:1px solid #35505e;text-align:right;white-space:nowrap}
+td:last-child,th:last-child{text-align:left}
+thead{background:#263f4b;color:#efcf8f}tbody tr:nth-child(even){background:#152a35}tbody tr:last-child td{border:0}
+.break-row td{border-top:3px solid #be995d}
+footer{padding:35px 0 5px;color:#9db5c0;font-size:13px}
+@media(max-width:700px){.site-head{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:1fr}.chart-panel,.method{padding:15px}.cards strong{font-size:28px}.metric-buttons button{flex:1}}
