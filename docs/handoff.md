@@ -1,3 +1,8 @@
+# Contrôles terminés — PR #37, 17 octobre 2026
+**Validation PR #37 (commit testé `f28ca91789c4649115dd1d3d7a802860426c4ad8`) :** 110/110 tests JavaScript, 99/99 Python dans le venv du VPS, `node --check`, `git diff --check`, clone Git propre. Recette Chromium réelle sur serveur temporaire : desktop 1440×900 et mobile simulé 390×844, trois tableaux historiques à cinq colonnes dont parcs 83 720 / 83 399 / 83 154, 3 barres de catégories et vingt arrondissements BDCOM 2023. Aucun débordement, aucune erreur JavaScript. **Aucune promotion ni changement de production.** Les taux historiques restent bloqués jusqu'à validation des éditions/numérateurs par Apur.
+
+---
+
 # Passation prioritaire — PR #37, dénominateurs BDCOM (17/10/2026)
 
 **Branche** `dev/bdcom-denominator-provenance-20261017` empilée sur #36. **Parcs recensés** : 2017 **83 720** (fiche Apur d'origine), 2020 **83 399** (somme de `localrdc` des 20 arrondissements depuis la structure BDCOM2020), 2023 **83 154** (couche BDCOM2023). Ce sont trois **périmètres documentés** ; les numérateurs ne sont pas prouvés historiquement harmonisés, et la page ne calcule aucun taux longitudinal.

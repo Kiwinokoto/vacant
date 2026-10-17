@@ -48,3 +48,7 @@ Code `6868825d5fb5e03a82971a072cf4bdb98e331004` : **109/109 tests JS, 99/99 Pyth
 **Contrôle de l'ancienne structure :** l'addition des catégories du service `bdcom2020_structure` produit 84 023 locaux pour les colonnes 2017, alors que la fiche d'origine en annonce 83 720 ; en 2020, cette somme produit 83 390 au lieu du champ officiel `localrdc = 83 399`. Le champ `tous_17/tous_20` ne peut pas non plus être assimilé sans vérification à tout le parc. Les nouvelles tailles de parc figurent **uniquement comme contexte de couverture** dans `site/potentiel.html`. **Aucun taux historique comparatif calculé** : trouver le dénominateur n'établit pas l'identité des protocoles et révisions des numérateurs.
 
 **Contrôles :** le validateur JSON vérifie les 3 dénominateurs, leur provenance, les années, la séparation travaux/vacance et les divergences publiées. Aucune donnée BDCOM individuelle ni coordonnées ne sont distribuées.
+
+## Contrôles définitifs PR #37
+**Validation PR #37 (commit testé `f28ca91789c4649115dd1d3d7a802860426c4ad8`) :** 110/110 tests JavaScript, 99/99 Python dans le venv du VPS, `node --check`, `git diff --check`, clone Git propre. Recette Chromium réelle sur serveur temporaire : desktop 1440×900 et mobile simulé 390×844, trois tableaux historiques à cinq colonnes dont parcs 83 720 / 83 399 / 83 154, 3 barres de catégories et vingt arrondissements BDCOM 2023. Aucun débordement, aucune erreur JavaScript. **Aucune promotion ni changement de production.** Les taux historiques restent bloqués jusqu'à validation des éditions/numérateurs par Apur.
+
