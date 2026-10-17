@@ -11,6 +11,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import shapefile
+import zlib
 
 EDITIONS = {
  "2008-09-14": {
@@ -94,6 +95,34 @@ def overlap_stats(a,b):
  return {"shared_ids":common,"first_fraction":round(common/len(a),5),
          "second_fraction":round(common/len(b),5)}
 
+def sampled_shapes(folder):
+ """Stable 1% systematic hash sample for document/version continuity, NOT change detection."""
+ result={}
+ for kind in TYPES:
+  shp=next(folder.rglob("BATI_"+kind+".SHP"))
+  reader=shapefile.Reader(str(shp),encoding="utf8")
+  names=[x[0] for x in reader.fields[1:]]
+  for feat in reader.iterShapeRecords():
+   fid=feat.record[0]
+   if zlib.crc32(fid.encode("utf8"))%100:continue
+   raw=json.dumps([list(feat.shape.parts),list(feat.shape.points)],separators=(",",":"))
+   result[fid]=(kind,sha256(raw.encode()).hexdigest(),
+                feat.record[names.index("HAUTEUR")])
+  reader.close()
+ return result
+
+def geometry_sample_stats(a,b):
+ shared=a.keys() & b.keys()
+ return {
+  "sample_selection":"crc32(feature_id) % 100 == 0",
+  "sample_a":len(a),"sample_b":len(b),"shared":len(shared),
+  "same_exact_vertex_lists":sum(a[k][1]==b[k][1] for k in shared),
+  "different_exact_vertex_lists":sum(a[k][1]!=b[k][1] for k in shared),
+  "changed_type":sum(a[k][0]!=b[k][0] for k in shared),
+  "changed_height_value":sum(a[k][2]!=b[k][2] for k in shared),
+  "interpretation":"Non-equal vertices/attributes may be revisions, not construction/demolition",
+ }
+
 def build_report(archives:Path,unpacked:Path):
  ids={};report={"dataset":"IGN BD TOPO historic Paris D075 — documentary snapshots",
      "license_reference":"Licence Ouverte v2.0 — verify conditions for each edition",
@@ -111,6 +140,9 @@ def build_report(archives:Path,unpacked:Path):
  for a,b in (("2008-09-14","2011-04-12"),("2011-04-12","2018-03-29"),
              ("2008-09-14","2018-03-29")):
   report["comparisons"][a+" vs "+b]=overlap_stats(ids[a],ids[b])
+ report["2011_2018_sample_1pct"]=geometry_sample_stats(
+  sampled_shapes(unpacked/"2011-04-12"),
+  sampled_shapes(unpacked/"2018-03-29"))
  if report["comparisons"]["2008-09-14 vs 2011-04-12"]["first_fraction"]>=0.5:
   raise ValueError("2008 compatibility status must be reviewed anew")
  if report["comparisons"]["2011-04-12 vs 2018-03-29"]["first_fraction"]<=0.90:
