@@ -61,3 +61,11 @@ Code `5d4cde688476c207fb1cd3a5a2aeb118a4e0e60e` : **102/102 tests JavaScript**, 
 ## Validation PR #36 (séries de locaux commerciaux, rail V)
 
 Code `6868825` recetté : **109/109 tests JS, 99/99 Python**, Chromium desktop/mobile simulé 390 px sans débordement ni erreur JS, 3 éditions BDCOM et vingt arrondissements 2023. Statistiques distinctes des logements LOVAC et des m² de bureaux. PR [#36](https://github.com/Kiwinokoto/vacant/pull/36) reste en brouillon ; aucune fusion ni mise en prod. Audit complet dans `docs/bdcom-historical-audit-20261017.md`.
+
+## PR #37 — dénominateurs documentés (17/10/2026)
+
+Nouvelles tailles de parcs BDCOM : 2017 **83 720**, 2020 **83 399**, 2023 **83 154**. Source 2017 = fiche Apur d'origine ; 2020 = somme `localrdc` de 20 arrondissements ; 2023 = couche officielle BDCOM. Le 2017 d'origine recense **7 804** vacants contre **7 853** dans l'archive ; pour 2020, la rétrospective 2023 mentionne **1 310** locaux en travaux contre **1 517** dans l'édition initiale. **Aucun taux 2017–2023 recalculé**, car révisions encore non expliquées. Voir `docs/bdcom-historical-audit-20261017.md` et `docs/handoff.md`. PR empilée sur #36, brouillon sans production.
+
+## Contrôles définitifs PR #37
+**Validation PR #37 (commit testé `f28ca91789c4649115dd1d3d7a802860426c4ad8`) :** 110/110 tests JavaScript, 99/99 Python dans le venv du VPS, `node --check`, `git diff --check`, clone Git propre. Recette Chromium réelle sur serveur temporaire : desktop 1440×900 et mobile simulé 390×844, trois tableaux historiques à cinq colonnes dont parcs 83 720 / 83 399 / 83 154, 3 barres de catégories et vingt arrondissements BDCOM 2023. Aucun débordement, aucune erreur JavaScript. **Aucune promotion ni changement de production.** Les taux historiques restent bloqués jusqu'à validation des éditions/numérateurs par Apur.
+

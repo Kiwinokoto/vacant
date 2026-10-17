@@ -13,6 +13,10 @@ Projet public expérimental et atlas 2D **de données officielles**. Les origina
 
 Chaque champ absent reste absent. Une statistique IRIS n'est **jamais** attribuée à un bâtiment ou un appartement.
 
+## Parcs des locaux recensés (PR #37)
+
+Par édition BDCOM, nous avons identifié **83 720 locaux en 2017** (fiche d'origine Apur), **83 399 en 2020** (service de structure Apur, somme des 20 `localrdc`) et **83 154 en 2023** (service Apur). Le tableau de la page « Potentiel » indique ces univers d'enquête à côté des effectifs de vacants hors travaux et en travaux. **Ils ne suffisent pas à constituer un taux longitudinal scientifiquement harmonisé** : le décompte original 2017 (7 804 vacants) diffère de l'archive rétrospective (7 853), et la rétrospective Apur de 2023 recode peut-être les travaux 2020 (1 310 contre 1 517 en source 2020). Rien n'en démontre encore la cause. Voir [l'audit scientifique](docs/bdcom-historical-audit-20261017.md).
+
 ## Comparaison BDCOM 2017–2023 (PR #36)
 
 En prolongement de #35, VACANT dispose de **trois comptages d'éditions réelles du référentiel Apur**, distinguant vacants hors travaux et locaux en travaux (2017 : 6 954 + 899 ; 2020 : 7 247 + 1 517 ; 2023 : 7 495 + 1 565). Une visualisation à barres et un tableau les présentent séparément dans `site/potentiel.html`. **Ni interpolation, ni taux de vacance historiquement harmonisé**, ni possibilité de conversion/accueil déduite de ces seuls effectifs.

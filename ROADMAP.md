@@ -15,6 +15,14 @@
 
 **Ordre de la pile avant revue : #29 → #30 → #31 → #32 → #33 → #34**. Rail B IGN #28 indépendant. Pas de fusion ni déploiement de ces travaux.
 
+## V-07 — Note Apur BDCOM 2026, sources et révisions (complément PR #37)
+
+**Premier résultat officiel octobre 2026 :** 83 115 locaux, 9 725 vacants travaux inclus, dont 1 402 travaux (8 323 hors travaux ; 11,7 % / 10,0 % selon Apur). La même publication **révise 2023** à 83 284 locaux / 9 104 vacants, versus 83 154 / 9 059 dans la publication initiale 2023, et 9 060 dans l'API 2023. Le texte de 2023 mentionne également **8 541** vacants 2020 là où le graphique indique **8 560**. **Ne pas harmoniser sans confirmation Apur.** Page `site/potentiel.html` avec photographie 2026 distincte du JSON historique 2017–2023. Brouillon d'interrogation à `data@apur.org` préparé dans Gmail mais **non envoyé** ; demande de dictionnaires et tables de correspondance. Revue de la pile PR avant fusion ; GitHub combined statuses et check-runs vérifiés : aucun signal de CI associé aux HEAD contrôlés, ne pas assimiler « mergeable » à une certification de qualité.
+
+## V-07 — Dénominateurs historiques retrouvés, compatibilité ouverte (PR #37)
+
+La fiche Apur 2017 donne **83 720 locaux** ; le service Apur 2020 donne **83 399** (somme `localrdc`), et la couche 2023 **83 154**. Ce sont des **tailles de parcs par édition**, non une preuve que l'on peut comparer les taux. Le 2017 d'origine donne 7 804 vacants et la série rétrospective 7 853 vacants/travaux ; le désaccord 2020 (8 760 contre 8 560) se concentre en partie dans les **travaux : 1 517 contre 1 310**. La raison de ces révisions est inconnue. La page « Potentiel » affiche désormais la couverture des enquêtes, sans fabriquer de taux harmonisés. Détails : `docs/bdcom-historical-audit-20261017.md`. Prochaine action : demander métadonnées des éditions à Apur et valider les conventions des numérateurs avant une courbe de taux. Chaîne en brouillon #29 → #30 → #31 → #32 → #33 → #34 → #35 → #36 → #37 ; IGN #28 distincte.
+
 ## Mise à jour V-07 — Historique prudent des locaux BDCOM, PR #36
 
 Éditions publiques 2017/2020/2023 auditées sur ArcGIS Apur. **7 853 / 8 764 / 9 060** locaux classés vacants **ou en travaux**, respectivement, séparés par codes AA101/AA102 : **6 954/899**, **7 247/1 517** (dont trois `aa101` en minuscule), **7 495/1 565**. Divergences avec les notes : 2020 **8 760** dans la note 2021 mais **8 560** dans la rétrospective 2023, écart de **200**. À ne **pas** transformer en taux ou courbe annuelle de vacance « réelle » avant expertise de la comparabilité, des corrections et des dénominateurs d'époque. Livrables : JSON de trois agrégats, contrat JS, graphique et tableau, tests, [audit détaillé](docs/bdcom-historical-audit-20261017.md). Prochaine priorité : résoudre les écarts en demandant les métadonnées Apur et reconstruire si possible les dénominateurs 2017/2020 ; garder rail bureaux en m² séparé.
