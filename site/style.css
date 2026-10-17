@@ -17,3 +17,12 @@
 /* Vacancy rates by independently verified IRIS polygons (not buildings). */
 .v0{background:#74c3aa}.v1{background:#80a8cf}.v2{background:#e5c97c}.v3{background:#dd9875}.v4{background:#b8647c}.vx{background:#8997a3}
 #iris-toggle{cursor:pointer}
+
+/* Apur evaluation is hidden unless explicitly enabled on localhost. */
+#apur-local[hidden]{display:none}
+#apur-local{border:1px solid #567383;border-radius:6px;padding:0 12px 12px;margin:16px 0;background:#152b34}
+#apur-local label{display:block;font-size:13px;margin:12px 0 5px}
+#apur-mode{display:block;width:100%;min-height:38px;padding:7px;border-radius:5px;color:#152b34;background:#faf9f3;font:inherit}
+#apur-mode:focus-visible{outline:3px solid #f7c96a}
+#apur-lab-legend{margin-top:7px}
+#apur-lab-legend i{flex:none}

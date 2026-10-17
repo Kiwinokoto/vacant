@@ -1,0 +1,3 @@
+# Reserved for locally staged, access-controlled fixtures and Leaflet assets.
+# Never commit Apur geometry data or temporary browser screenshots.
+_local/
