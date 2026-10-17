@@ -34,3 +34,6 @@ LOVAC fiscal n'est pas le recensement Insee ; aucun taux IRIS ou bâtiment ne re
 - Carte LOVAC : bascule part parmi les vacants / effectifs de longue durée / tous vacants et millésime. Ratio 2023 explicitement indisponible.
 - `tests/lovac-long-analysis.test.mjs` : chiffres 2026, top par effectif/part, année incompatible, pondération et données corrompues.
 - Source : https://www.data.gouv.fr/datasets/61816c6e23197bb34835228e ; documentation : https://doc-datafoncier.cerema.fr/doc/fiche_descriptive/lovac .
+
+## Recette finale du code (17/10/2026)
+Commit testé : `717f5bdc55f5dc7f72b02fb65cf95de28fa31a0d` sur la branche de PR #33 ; **98/98 tests JavaScript et 99/99 tests Python** (venv du VPS). Contrôle Chromium headless sur serveur statique temporaire avec le **vrai GeoJSON des arrondissements** servi par VACANT : 20 polygones, 20 rangs, 20 lignes, 5 classes de légende, 8e premier sur le ratio 2026, refus du ratio 2023, comptages 2023 disponibles, retour à 2026 ; largeur desktop 1440 et mobile émulée 390, **zéro débordement** et zéro erreur JavaScript applicative. Contours IGN 2025 réutilisés seulement à l'échelle des vingt arrondissements. Pas de publication.

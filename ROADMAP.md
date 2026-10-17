@@ -4,6 +4,8 @@
 
 **Source de vérité** : GitHub `Kiwinokoto/vacant`. App desktop prioritaire, petits écrans utilisables sans recette sur téléphone physique obligatoire. Une PR `dev/*` courte, tests et revue avant toute promotion ; produire les dérivés depuis des sources figées, sans données nominatives LOVAC.
 
+**Point de reprise PR #33 (17/10/2026) :** la PR #31 donne les agrégats LOVAC ouverts ; #32 ajoute leur carte par arrondissement ; **#33** étudie la vacance longue par **effectif et part parmi les vacants privés**, en interdisant le ratio 2023 (dates non alignées) et en exposant les ruptures 2024–2025. 98 JS et 99 Python, Chromium desktop et 390 px validés sur code `717f5bd`. Tout reste **en brouillon hors production** ; ordre #29 → #30 → #31 → #32 → #33, #28 en parallèle. Prochaine priorité scientifique : contextes/contrastes territoriaux sans comparer des taux incompatibles ni des immeubles.
+
 ## Rail V — Vacance résidentielle (prioritaire, environ 70 % de l'effort)
 
 | ID | Priorité | Livrable et critère de validation | État au 17/10 |

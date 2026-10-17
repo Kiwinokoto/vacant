@@ -1,5 +1,12 @@
 # VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
 
+## Dernier état — PR #33, vacance de longue durée par arrondissement
+**PR [#33](https://github.com/Kiwinokoto/vacant/pull/33)** en brouillon, branche `dev/lovac-long-duration-analysis-20261017`, empilée sur **#32**. Commit fonctionnel testé `717f5bdc55f5dc7f72b02fb65cf95de28fa31a0d`. Nouvelle carte/classement 20 arrondissements pour la proportion longue parmi les seuls logements privés fiscalement **déjà vacants**, ou les deux effectifs séparés. 2026 observé au **01/01/2025** : Paris **26 264 / 105 785 = 24,8 %**, 8e **41,2 %** parmi les vacants, 18e **2 449** vacants longue durée. **Jamais un taux sur tout le parc privé**. Ratio 2023 interdit (dates incompatibles). Ruptures GMBI 2024 et 2025. Aucun fichier individuel, aucune adresse.
+
+**Recette sur code `717f5bd` : 98/98 tests JavaScript, 99/99 Python dans le venv ; Chromium réel avec contours IGN 2025 réels, 20 polygones, 20 lignes, 20 rangs, 5 classes, millésime 2023 refusé pour la part mais effectifs consultables, desktop 1440×900 et mobile simulé 390×844 sans débordement ; zéro erreur JavaScript applicative.** Correctif mobile du sélecteur vérifié : 432 → 390 px. Faible anomalie résiduelle : demande navigateur de `favicon.ico` donne 404 (hors fonctionnalité). Production et `main` inchangés.
+
+**Chaîne de fusion à reviewer : #29 → #30 → #31 → #32 → #33**, #28 indépendante. Aucun déploiement. Prochaine étape : revue de la chaîne et choix du seuil de lecture de la vacance longue, puis éventuellement enrichissements statistiques IRIS à géographie datée, sans fausses localisations. Ne pas inférer une baisse réelle d'occupation de sa variation de mesure fiscale.
+
 Document de reprise pour un nouveau chat. Lire aussi `docs/PASSATION-2026-10-17.md`, `ROADMAP.md`, `AGENTS.md` et `README.md`. **GitHub est source de vérité.**
 
 **Vision :** vacance résidentielle Paris en priorité (~70 %), reconstruction documentée du bâti en parallèle (~30 %). Jamais de taux de vacance au bâtiment, jamais d'adresse ou propriétaire LOVAC. Ordinateur prioritaire.
