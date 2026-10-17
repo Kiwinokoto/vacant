@@ -1,3 +1,25 @@
+## Mise à jour — recette Nginx réelle et ordre des PR (16/10/2026, fin de soirée)
+
+- Chaîne de revue, **non fusionnée** : [ordre des PR #23 → #24 → #25](apur-review-merge-plan-20261016.md). Les anciennes PR #17–#22 restent intactes. Nouvelle proposition gzip dans `deploy/nginx.conf` **non déployée**.
+- Recette **native Nginx 1.18** avec `scripts/recipe_nginx_gzip_loopback.py` : port éphémère lié exclusivement à `127.0.0.1`, **données synthétiques seulement**, HTTP gzip et identity conformes, `Vary: Accept-Encoding`, MIME GeoJSON/JSON/JS vérifiés, petites réponses non compressées, dotfiles 403 et absent 404. Test spécifique d'une requête avec en-tête `Via` réussi grâce à `gzip_proxied any` derrière un reverse proxy. Processus Nginx de recette arrêté. Aucune géométrie Apur privée servie.
+- Résultats du vrai jeu de données inchangés : 456 cellules 91,5 Mo brut, gzip 27,4 Mo, Brotli 23,1 Mo ; dans le navigateur à débit 1,6 Mbit/s et 150 ms simulés : **9,0 s → 3,3 s** pour 2 284 emprises uniques avec gzip. **Pas de téléphone physique**.
+- `deploy/README.md` prescrit la préparation sûre Git-only et la recette Nginx isolée. Contrats SIG/ODbL et distinction vacance territoriale / emprises Apur inchangés ; aucun déploiement, `main` figée à `72a9d063` au départ. Voir [rapport](apur-publish-readiness-20261016.md).
+- Avant toute nouvelle écriture, revalider GitHub et les leases AgentCTL ; finir la présente session en libérant le verrou `repo:Kiwinokoto/vacant`.
+
+# VACANT — passation prioritaire : revue de release et compression Apur (16/10/2026)
+
+**Consulter d'abord [la revue de prépublication](apur-publish-readiness-20261016.md), puis [le raccordement local](apur-grid-site-local-20261016.md) et [la consolidation](checkpoint-apur-consolidated-20261016.md).**
+
+- GitHub canonique `Kiwinokoto/vacant`. `main=72a9d06377541b7b266e0d8153e89a7ae19afb95` au début ; **PR #23** consolidation, **PR #24** raccordement local, cette branche de revue `dev/apur-release-gate-review-20261016` basée sur #24. Aucune fusion vers `main` ni déploiement.
+- **Danger corrigé dans la procédure :** `cp -r site/*` peut embarquer les 456 cellules privées ignorées par Git. Nouveau `scripts/stage_reviewed_release.py` : prépare seulement une release **neuve**, à partir des fichiers `git archive` d'un SHA Git vérifié, avec les **deux GeoJSON publics explicitement autorisés et vérifiés SHA**, et **aucune géométrie Apur**. Nouvelle procédure obligatoire dans `deploy/README.md`. Le script **ne déploie rien**.
+- Compression observée sur les **456 cellules Apur**, total brut **91 515 440 octets** → gzip-4 **27 435 040** (−70,0 %) ou Brotli-4 **23 089 233** (−74,8 %). Manifeste 152 865 → gzip 39 096 / Brotli 36 314 octets. Aucun dérivé modifié ou écrit.
+- Emulation Chromium 390×844 à **1,6 Mbit/s, 150 ms de latence**, **2 284 emprises uniques** : brut **8 973 ms / 1 610 329 octets transmis**, gzip-4 **3 297 ms / 466 240 octets transmis**. **Pas de téléphone physique ni réseau réel** ; Nginx public inchangé.
+- ODbL Apur confirmée dans sa fiche officielle de 2019 ; licence sections **4.2–4.7** : attribution, partage à l'identique pour base dérivée publiée, accès au dérivé/méthode et pas de restriction technique incompatible. **Millésime scientifique toujours non attesté** et aucun bâtiment vacant identifié par la couche Apur.
+- Tests de sécurité : **7 nouveaux** avec clone synthétique, puis staging réel dans `/tmp` avec IRIS/arrondissements publics et **zéro donnée Apur copiée**. Suite Python consolidée auparavant **81/81**, nouvelle passe **88/88** et suite Node **71/71** à valider sur le commit final. Revalidation de `main`/release et nettoyage des clones avant fin. AgentCTL `repo:Kiwinokoto/vacant` acquis, libérer en fin de passe.
+- **Ne pas fusionner ni activer** avant revue de la chaîne PR #23 → #24 → PR de sûreté, tests de serveurs gzip et téléphone physique, conformité à l'ODbL et décision explicite.
+
+---
+
 # VACANT — passation prioritaire : grille Apur dans le laboratoire VACANT (16/10/2026)
 
 **Lire d'abord [le checkpoint d'intégration](apur-grid-site-local-20261016.md), puis [la consolidation #23](checkpoint-apur-consolidated-20261016.md).** Les notes plus anciennes ci-dessous restent historiques.
