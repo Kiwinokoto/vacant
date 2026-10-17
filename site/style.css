@@ -18,6 +18,7 @@
 .timeline-track span{height:100%;display:block;width:0;background:#eacb83}
 .timeline-source{font-size:12px;display:inline-block;margin-bottom:6px}
 
+.iris-insights{background:#192c38;border-left:3px solid #e6c784;padding:9px 11px;font-size:12px;line-height:1.55;color:#d6e4ea}
 /* Vacancy rates by independently verified IRIS polygons (not buildings). */
 .v0{background:#74c3aa}.v1{background:#80a8cf}.v2{background:#e5c97c}.v3{background:#dd9875}.v4{background:#b8647c}.vx{background:#8997a3}
 #iris-toggle{cursor:pointer}
