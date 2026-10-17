@@ -69,8 +69,11 @@ export function summarizeArrondissementChanges(dataset,first,last){
      Math.abs(beforeHousing-old.total)>1.1||Math.abs(afterHousing-now.total)>1.1)
     throw new Error("Sommes d’arrondissements incompatibles avec les totaux Insee Paris");
   return Object.freeze({
-    first,last,changedVacant:afterTotal-beforeTotal,
-    changedRatePoints:100*(afterTotal/afterHousing-beforeTotal/beforeHousing),
+    first,last,
+    // Paris-wide reference is the independently published Insee total.
+    // Per-arrondissement estimated counts can differ by ~1 when summed due to rounding.
+    changedVacant:now.vacant-old.vacant,
+    changedRatePoints:100*(now.vacant/now.total-old.vacant/old.total),
     increased,decreased,rows:Object.freeze(rows)
   });
 }
