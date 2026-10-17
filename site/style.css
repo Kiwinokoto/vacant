@@ -35,3 +35,21 @@
 #apur-grid-reload[hidden]{display:none}
 #apur-grid-reload:focus-visible{outline:3px solid #f7c96a;outline-offset:2px}
 #apur-grid-reload:disabled{opacity:.55;cursor:wait}
+
+
+/* Two-date arrondissement comparison (vacant dwellings only; no buildings). */
+.arrond-compare-panel[hidden],.arrond-compare-legend[hidden],#arrond-compare-ranking[hidden]{display:none}
+.arrond-compare-panel{border:1px solid #536f7a;border-radius:7px;padding:10px 12px;margin:10px 0;background:#152c37}
+.arrond-compare-panel h3{font-size:14px;margin:3px 0 10px;color:#f0d08b}
+.arrond-compare-panel .layer{background:#1e3540}
+.arrond-compare-years{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+.arrond-compare-years label{display:block;font-size:12px;color:#d6e5ed}
+.arrond-compare-years select,#arrond-compare-unit{display:block;min-height:36px;width:100%;padding:7px 5px;border:1px solid #92a4a9;border-radius:4px;background:#f5f3ec;color:#172c35;font:inherit;font-size:13px}
+.arrond-compare-panel>label[for="arrond-compare-unit"]{display:block;color:#d7e2e6;font-size:12px}
+.arrond-compare-legend{display:grid;grid-template-columns:1fr;gap:5px;margin:10px 0;font-size:12px}
+.arrond-compare-legend div{display:flex;gap:9px;align-items:center}
+.arrond-compare-legend i{display:inline-block;min-width:13px;width:13px;height:13px;border-radius:2px}
+#arrond-compare-ranking{border-top:1px solid #526975;margin:12px 0 0;padding:10px 0}
+#arrond-compare-ranking summary{cursor:pointer;font-size:12px;font-weight:700}
+#arrond-compare-ranking ol{padding:0 0 0 23px;font-size:12px;font-variant-numeric:tabular-nums}
+#arrond-compare-ranking li{margin:5px 0;padding:0}
