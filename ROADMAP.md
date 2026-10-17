@@ -15,6 +15,12 @@
 
 **Ordre de la pile avant revue : #29 → #30 → #31 → #32 → #33 → #34**. Rail B IGN #28 indépendant. Pas de fusion ni déploiement de ces travaux.
 
+## Mise à jour V-07 — Audit sources effectives, PR #35 (17/10/2026)
+
+- **BDCOM 2023 Apur :** vingt arrondissements agrégés depuis l'API des **83 154 locaux en RDC**. Identification des codes `AA101` = **7 495 locaux vacants hors travaux** et `AA102` = **1 565 locaux en travaux**, soit **9 060** contre 9 059 indiqués dans la note publiée. **Ne plus présenter 9 059 comme tous « vacants hors travaux ».** Enrichissement de `site/potentiel.html` avec classement local, validation du contrat, test et provenance ODbL. Aucun point/adresse.
+- **Bureaux :** offre de marché à Paris intra-muros de **~1,5 million de m² fin juin 2026**, Colliers + Cushman & Wakefield. Source trimestrielle Colliers T1 vs T2 contradictoire : **pas de série temporelle avant réconciliation**, pas de taux de transformabilité inventé.
+- **Suite** : qualifier BDCOM 2017/2020, faire confirmer la divergence +1 par Apur, creuser le stock de bureaux structurellement vides, distinguer offre immédiate de surfaces réellement convertibles et évaluer les conditions juridiques de l'accueil. Voir `docs/bdcom-open-audit-20261017.md`. Chaîne PR #29 → #30 → #31 → #32 → #33 → #34 → **#35** ; B-01 #28 indépendante.
+
 ## Rail V — Vacance résidentielle (prioritaire, environ 70 % de l'effort)
 
 | ID | Priorité | Livrable et critère de validation | État au 17/10 |

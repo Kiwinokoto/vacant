@@ -13,6 +13,12 @@ Projet public expérimental et atlas 2D **de données officielles**. Les origina
 
 Chaque champ absent reste absent. Une statistique IRIS n'est **jamais** attribuée à un bâtiment ou un appartement.
 
+## Premier audit BDCOM + bureaux (PR #35)
+
+VACANT distingue les locaux des rez-de-chaussée BDCOM recensés en **2023** en deux catégories effectivement séparées dans l'API Apur : **7 495 vacants hors travaux** (code `AA101`) et **1 565 en travaux** (`AA102`) sur **83 154 locaux recensés**. Leur total **9 060** diffère d'une unité de la note publiée **9 059** ; divergence documentée, sans correction arbitraire. Un tableau classe les 20 arrondissements à partir d'agrégats seulement. **Aucune adresse ni détail de local ne figure dans le dépôt.**
+
+Un ordre de grandeur de **1,5 million de m²** de bureaux immédiatement proposés est documenté pour **Paris intra-muros à fin juin 2026** (Colliers et Cushman & Wakefield), mais les données Colliers T1/T2 sont incompatibles en l'état : ne pas interpréter le saut de niveau comme une hausse effective. **Offre en m² ≠ habitabilité ≠ capacité d'accueil**, pas de logements déduits. Détails et liens : [audit scientifique BDCOM et bureaux](docs/bdcom-open-audit-20261017.md).
+
 ## Quel potentiel au-delà des logements habitables ?
 
 VACANT étudie les logements vacants, mais **ne doit pas exclure les logements dégradés ni les bureaux/commerces inoccupés** du champ d'investigation. Il distingue explicitement **destination**, **occupation**, **état physique/risques** et **possibilité de mobilisation** (accueil temporaire, travaux, conversion pérenne). Aucun espace n'est automatiquement « habitable », « indisponible » ou « prêt à accueillir » faute d'expertise. Un bureau sans eau ou lumière reste un **potentiel à instruire**, jamais une solution de nuit directement recommandée sans vérifications de sécurité, hygiène et droits d'usage.
