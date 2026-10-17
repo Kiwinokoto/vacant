@@ -12,3 +12,5 @@
 .lovac-ranking li{break-inside:avoid;font-variant-numeric:tabular-nums;padding:3px 0}
 .lovac-caution{font-size:13px;color:#c9d6dc}
 @media(max-width:700px){.lovac-ranking ol{columns:1}}
+
+@media(max-width:700px){.lovac-controls{display:grid;grid-template-columns:minmax(0,1fr)}.lovac-controls label{width:100%;min-width:0}.lovac-controls select{width:100%;min-width:0}}
