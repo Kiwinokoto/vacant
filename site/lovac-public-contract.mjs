@@ -8,7 +8,7 @@ export function checkLovac(x){
  for(let i=0;i<7;i++){
   const y=years[i],rec=x.years[i];
   if(rec.production_year!==y||rec.paris.vacant!==totals[i][0]||rec.paris.long!==totals[i][1]||
-    rec.date_by_variable.vacant!==String(y-1)+"-01-01"||
+    rec.date_by_variable.vacant!==(y===2023?"2023-01-01":String(y-1)+"-01-01")||
     rec.date_by_variable.long!==(y===2023?"2022-01-01":String(y-1)+"-01-01")||
     (y===2026&&"stock" in rec.paris))throw Error("LOVAC : totaux ou dates invalides");
   let v=0,l=0;
