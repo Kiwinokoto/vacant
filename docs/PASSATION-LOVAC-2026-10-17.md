@@ -1,5 +1,10 @@
 # VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
 
+## Complément BDCOM historique — PR #36
+
+Comparaison **en effectifs seulement**, jamais taux harmonisés : 2017 vacants hors travaux 6 954 + travaux 899 ; 2020 7 247 + 1 517 ; 2023 7 495 + 1 565 (sources API Apur). **Écart important** : la note 2020 (publiée 2021) indique 8 760 regroupés tandis que la rétrospective 2023 indique 8 560 en 2020 ; API 2020 = 8 764. Aucune interprétation causale ou migration de dénominateur autorisée. Provenance, requêtes, licence et prochaines vérifications : `docs/bdcom-historical-audit-20261017.md`. PR #36 empilée sur #35 ; aucune fusion ni production.
+
+
 ## Nouveau jalon BDCOM — PR #35
 
 Étude du potentiel non résidentiel à partir de **données ouvertes BDCOM réellement interrogées** (17/10/2026) : **83 154** locaux de rez-de-chaussée Paris, `AA101`=**7 495 vacants hors travaux** ; `AA102`=**1 565 en travaux**, `type=V`=**9 060**, tandis que la note Apur indique **9 059**. L'écart **+1** reste à expliquer, aucune correction manuelle. Vingt arrondissements agrégés, aucune adresse, licence ODbL. Source et méthode `docs/bdcom-open-audit-20261017.md`.

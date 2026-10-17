@@ -13,6 +13,12 @@ Projet public expérimental et atlas 2D **de données officielles**. Les origina
 
 Chaque champ absent reste absent. Une statistique IRIS n'est **jamais** attribuée à un bâtiment ou un appartement.
 
+## Comparaison BDCOM 2017–2023 (PR #36)
+
+En prolongement de #35, VACANT dispose de **trois comptages d'éditions réelles du référentiel Apur**, distinguant vacants hors travaux et locaux en travaux (2017 : 6 954 + 899 ; 2020 : 7 247 + 1 517 ; 2023 : 7 495 + 1 565). Une visualisation à barres et un tableau les présentent séparément dans `site/potentiel.html`. **Ni interpolation, ni taux de vacance historiquement harmonisé**, ni possibilité de conversion/accueil déduite de ces seuls effectifs.
+
+**Fortes divergences documentaires** : la note Apur 2020 indique 8 760 vacants, la rétrospective de 2023 indique 8 560 pour cette même année, alors que la couche 2020 donne 8 764. La cause doit être clarifiée. [Audit complet 2017–2023](docs/bdcom-historical-audit-20261017.md).
+
 ## Premier audit BDCOM + bureaux (PR #35)
 
 VACANT distingue les locaux des rez-de-chaussée BDCOM recensés en **2023** en deux catégories effectivement séparées dans l'API Apur : **7 495 vacants hors travaux** (code `AA101`) et **1 565 en travaux** (`AA102`) sur **83 154 locaux recensés**. Leur total **9 060** diffère d'une unité de la note publiée **9 059** ; divergence documentée, sans correction arbitraire. Un tableau classe les 20 arrondissements à partir d'agrégats seulement. **Aucune adresse ni détail de local ne figure dans le dépôt.**

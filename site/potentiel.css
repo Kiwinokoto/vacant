@@ -21,3 +21,15 @@ h2{margin:0 0 16px}
 .bdcom-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:15px 0}.bdcom-toolbar label{font-weight:600}.bdcom-toolbar select{max-width:100%;padding:10px;background:#1a3541;color:#eff4f5;border:1px solid #72909c;border-radius:5px}
 .bdcom-table{min-width:720px}.bdcom-table th:first-child,.bdcom-table td:first-child{text-align:left}.bdcom-table td,.bdcom-table th{font-variant-numeric:tabular-nums}.bdcom-table td:last-child{font-weight:650;color:#efd296}.bdcom-table tbody tr:first-child{background:#254553}
 @media(max-width:750px){.bdcom-toolbar{display:grid;grid-template-columns:minmax(0,1fr)}.bdcom-toolbar select{min-width:0;width:100%}}
+
+.bdcom-history-legend{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:13px 0;font-size:14px}
+.bdcom-history-legend span{height:14px;width:22px;display:inline-block;border-radius:3px}
+.bdcom-legend-vacant,.bdcom-history-vacant{background:#9ccbc9}
+.bdcom-legend-works,.bdcom-history-works{background:#e9bd70}
+.bdcom-history-bars{display:grid;gap:12px;margin:18px 0}
+.bdcom-history-line{display:grid;grid-template-columns:45px minmax(0,1fr) 80px;gap:10px;align-items:center;font-variant-numeric:tabular-nums}
+.bdcom-history-bar{display:flex;height:25px;min-width:0;background:#243f4a;border-radius:3px;overflow:hidden}
+.bdcom-history-bar span{display:block;height:100%}
+.bdcom-history-table{min-width:550px}
+.bdcom-history-table th,.bdcom-history-table td{font-variant-numeric:tabular-nums}
+@media(max-width:550px){.bdcom-history-line{grid-template-columns:36px minmax(0,1fr) 66px;gap:7px}}
