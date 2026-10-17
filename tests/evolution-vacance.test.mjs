@@ -28,7 +28,7 @@ test("changes compare distinct recent RP observations not fabricated annual move
  const delta=comparableRecentChange(selectHistoricYear(2012),selectHistoricYear(2023));
  assert.equal(delta.vacantDelta,38376);
  assert.equal(delta.ratePoints,2.5);
- assert.throws(()=>comparableRecentChange(selectHistoricYear(2017),selectHistoricYear(2023-1)),/Cannot present|undefined/);
+ assert.throws(()=>comparableRecentChange(selectHistoricYear(2017),selectHistoricYear(2017)),/Cannot present/);
 });
 test("failed categories, missing source, or impossible census cannot pass validation",()=>{
  const broken=VACANCY_HISTORY.map((p,i)=>i===4?{...p,vacant:p.vacant+100}:p);
