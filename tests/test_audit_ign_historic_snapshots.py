@@ -15,6 +15,15 @@ class HistoricAuditTests(unittest.TestCase):
   self.assertEqual(x["shared_ids"],2)
   self.assertAlmostEqual(x["first_fraction"],.66667,places=5)
   self.assertTrue("does_not_prove_building" in SCRIPT.read_text())
+ def test_sample_distinguishes_geometry_changes_from_construction(self):
+  a={"x":("INDIFFERENCIE","same",12),"y":("INDUSTRIEL","before",16)}
+  b={"x":("INDIFFERENCIE","same",14),"y":("REMARQUABLE","after",16)}
+  r=mod.geometry_sample_stats(a,b)
+  self.assertEqual(r["same_exact_vertex_lists"],1)
+  self.assertEqual(r["different_exact_vertex_lists"],1)
+  self.assertEqual(r["changed_type"],1)
+  self.assertEqual(r["changed_height_value"],1)
+  self.assertIn("not construction/demolition",r["interpretation"])
  def test_bad_sha_or_size_rejected(self):
   with tempfile.TemporaryDirectory() as tmp:
    p=Path(tmp)/"archive.7z";p.write_bytes(b"not a real archive")
