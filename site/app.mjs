@@ -3,6 +3,7 @@ import { renderParisTimeline } from "./timeline.mjs";
 import { statForYear, validateArrondissementSeries, buildArrondissementPopup } from "./arrondissement-history.mjs";
 import { validateIrisImport } from "./iris-contract.mjs";
 import { colorForIRIS, isReliableIRIS } from "./iris-colors.mjs";
+import { summarizeIrisVacancy2023 } from "./iris-insights.mjs";
 import { viewDescriptor } from "./view-state.mjs";
 import { labEnabled } from "./apur-lab-contract.mjs";
 
@@ -154,6 +155,17 @@ if (typeof window.L === "undefined") {
         const payload=await response.json();
         const checked=validateIrisImport(payload,payload.metadata,{forPublication:true});
         if(checked.features.length!==992)throw new Error("cardinalité IRIS inattendue");
+        // Aggregate counts and the 9.9% weighted city baseline are checked
+        // independently against the published Insee Paris LOG T1 totals.
+        const insights=summarizeIrisVacancy2023(checked);
+        document.querySelector("#iris-insights").textContent=
+          "Lecture des quartiers 2023 : "+insights.atLeastFive+" des "+
+          insights.visible+" IRIS à taux affichable sont à au moins 5 % de vacance ; "+
+          insights.atLeastTwelve+" sont à au moins 12 %. "+
+          insights.hidden+" autres IRIS restent grisés (moins de 50 logements). "+
+          "Pour Paris entier : "+insights.parisRate.toLocaleString("fr-FR")+
+          " % des logements, taux pondéré sur le parc total, pas moyenne des quartiers. "+
+          "Les quartiers ne représentent ni des immeubles ni des logements localisés.";
         irisPolygons.addData(checked);
         irisLoaded=true;
       }
