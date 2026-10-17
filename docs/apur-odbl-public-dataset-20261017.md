@@ -4,7 +4,7 @@
 
 ## Licences et attribution
 
-Source de la base d'origine : **© Atelier parisien d'urbanisme (Apur)**, [EMPRISE_BATIE_PARIS](https://opendata.apur.org/datasets/emprise-batie-paris), sous [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Les conditions et limitations de l'Apur sont précisées dans sa [page de présentation](https://www.apur.org/fr/open-data-cartes/open-data/emprises-baties-paris-metropole-une-lecture-tissu-urbain) et le résumé de licence associé. 
+Source de la base d'origine : **© Atelier parisien d'urbanisme (Apur)**, [EMPRISE_BATIE_PARIS](https://opendata.apur.org/datasets/emprise-batie-paris), sous [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Les conditions et limitations de l'Apur sont précisées dans sa [page de présentation](https://www.apur.org/fr/open-data-cartes/open-data/emprises-baties-paris-metropole-une-lecture-tissu-urbain) et le résumé de licence associé.
 
 La **base dérivée publiée est elle-même distribuée sous ODbL 1.0** : téléchargement sans inscription de toutes les emprises retenues (format GeoJSON lisible par machine), fichier de provenance/attribution, et manifeste vérifiant chaque fichier SHA-256. Les dispositions pertinentes incluent les sections **4.2, 4.3, 4.4 et 4.6** (notices, attribution, partage à l'identique et accès à une base dérivée). Les droits éventuellement indépendants sur des contenus particuliers doivent être examinés séparément. Ceci n'est pas un avis juridique.
 
