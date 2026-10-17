@@ -1,3 +1,10 @@
+## Mise à jour du rail B — concordance géométrique complète 2011 ↔ 2018 (17/10/2026)
+
+- Audit reproductible ajouté dans `scripts/compare_ign_geometry.py` (3 nouveaux tests Python) et [rapport de recherche](ign-bdtopo-historic-20261017.md). Source : archives IGN 2011/2018 **privées**, SHA figés et schémas vérifiés, aucun fichier SIG suivi par Git.
+- **113 634 IDs communs ; 112 567 empreintes de coordonnées identiques ; 1 067 modifiées**, dont **353** à recouvrement GEOS IoU ≥0,99 et **176** à IoU <0,50 ; IoU médian **0,908579**. **1 442** reclassifications et **8 815** valeurs de hauteur différentes entre documents.
+- Les **3 796 ID propres à l'édition 2011** et les **3 138 propres à 2018** restent des **objets du référentiel non appariés**, pas des destructions/constructions attestées. Chercher ensuite rapprochements spatiaux n:m et conditions de licence, et garder le site public sans couche historique.
+- En parallèle sur une **autre PR #29**, l'utilisateur a demandé **VACANCE prioritaire** : backlog `ROADMAP.md`, page Insee Paris 1968–2023 et synthèse IRIS 2023. Ne pas fusionner ces PR au hasard ; elles sont basées séparément sur le même main.
+
 # VACANT — checkpoint recherche IGN du 17 octobre 2026 (après déploiement Apur ODbL)
 
 **Priorité pour la suite : [audit des vraies éditions IGN BD TOPO 2008/2011/2018](ign-bdtopo-historic-20261017.md)**, puis contrôles de concordance spatiale 2011 ↔ 2018. Les sections antérieures restent l'historique des passes. **Ne pas déployer les SHP IGN ni publier la comparaison tant que les licences exactes et les différences de méthode ne sont pas validées.**
