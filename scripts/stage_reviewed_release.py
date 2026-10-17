@@ -78,7 +78,8 @@ def tracked_site(archive: bytes, site_dir: Path):
 
 
 def stage_public_release(repo: Path, commit: str, dest: Path,
-                         datasets: dict[str, tuple[Path, str]]):
+                         datasets: dict[str, tuple[Path, str]],
+                         apur: tuple[Path, str, str, str] | None = None):
     if len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
         raise ValueError("An immutable full Git commit SHA is mandatory")
     if set(datasets) != set(ALLOWED_DATASETS):
@@ -125,11 +126,30 @@ def stage_public_release(repo: Path, commit: str, dest: Path,
             if digest(output) != expected_sha:
                 raise ValueError("Copied dataset SHA-256 mismatch")
             os.chmod(output, 0o644)
+        if apur is not None:
+            from scripts.package_apur_public import (
+                package_grid, PRIVATE_MANIFEST_SHA, PUBLIC_DATASET_NAME)
+            src, input_sha, published_sha, zip_sha = apur
+            for value in (input_sha, published_sha, zip_sha):
+                assert_sha(value)
+            if input_sha != PRIVATE_MANIFEST_SHA:
+                raise ValueError("Apur source manifest not pinned to reviewed frozen extract")
+            apur_dir = public / "apur-grid"
+            if apur_dir.exists() or apur_dir.is_symlink():
+                raise ValueError("Apur public distribution path already populated")
+            apur_dir.mkdir(mode=0o700)
+            receipt = package_grid(src, apur_dir)
+            if (receipt["source_manifest_sha256"] != input_sha or
+                    receipt["public_manifest_sha256"] != published_sha or
+                    receipt["zip_sha256"] != zip_sha or
+                    not (apur_dir / PUBLIC_DATASET_NAME).is_file()):
+                raise ValueError("Public ODbL derivative hash differs from approved release")
         if not (site / "index.html").is_file():
             raise ValueError("Missing main VACANT page")
         # Fail closed even if someone tracks a file with another extension below
         # a forbidden Apur path in the future.
-        if any("apur-grid" in p.parts or "_local" in p.parts
+        if any("_local" in p.parts or
+               ("apur-grid" in p.parts and apur is None)
                for p in site.rglob("*")):
             raise ValueError("Apur private data directory accidentally staged")
         # Nginx needs to traverse the immutable read-only release.
@@ -160,14 +180,26 @@ def main():
     parser.add_argument("--iris-sha256", required=True)
     parser.add_argument("--arrond", type=Path, required=True)
     parser.add_argument("--arrond-sha256", required=True)
+    parser.add_argument("--publish-apur", action="store_true",
+                        help="Explicit opt-in to distribute the audited ODbL base")
+    parser.add_argument("--apur-private-dir", type=Path)
+    parser.add_argument("--apur-private-manifest-sha256")
+    parser.add_argument("--apur-public-manifest-sha256")
+    parser.add_argument("--apur-public-zip-sha256")
     parser.add_argument("--execute", action="store_true",
                         help="Required: writing a new staged release, never deploying")
     args = parser.parse_args()
     if not args.execute:
         parser.error("No files created; use --execute after reviewing hashes/paths")
+    supplied = (args.apur_private_dir, args.apur_private_manifest_sha256,
+                args.apur_public_manifest_sha256, args.apur_public_zip_sha256)
+    if args.publish_apur != all(x is not None for x in supplied):
+        parser.error("Publishing Apur requires --publish-apur AND all four pinned arguments")
+    apur = supplied if args.publish_apur else None
     result = stage_public_release(args.repo, args.commit, args.destination,
                                   {"iris-2023.geojson": (args.iris, args.iris_sha256),
-                                   "arrond-history.geojson": (args.arrond, args.arrond_sha256)})
+                                   "arrond-history.geojson": (args.arrond, args.arrond_sha256)},
+                                  apur=apur)
     print(f"Prepared immutable static tree: {result} (not deployed)")
 
 
