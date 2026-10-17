@@ -42,3 +42,6 @@ Enquête BDCOM 2026 réalisée en avril selon Apur, mais dataset ouvert accessib
 ## 4. Contrôles automatiques
 
 `site/bdcom-contract.mjs` rejette données sans 20 arrondissements, totaux non égaux au département, doublons, codes erronés, champs individuels, classement inconnu, provenance différente. `tests/bdcom-2023.test.mjs` vérifie ces interdictions. Le JSON dérivé est un jeu de 20 agrégats ; **aucune position de local n'est fournie**. Mise à jour manuelle ou script de collecte futur soumis à une nouvelle vérification SHA/date.
+
+## Recette PR #35 (17 octobre 2026)
+**Code `041c3bd43764553b074dad78f03600185e313f7a` : 105/105 tests JavaScript et 99/99 Python (venv VPS).** `node --check` et `git diff --check` valides. Chromium sur serveur temporaire : bureau 1440×900 (**4 familles, 20 lignes BDCOM, zéro débordement**), modalité « vacants hors travaux » classant le 18e en tête, modalité « travaux » classant le 8e en tête ; mobile émulé 390×844 sans débordement (tableau défilant dans son conteneur). Correction du lien vers la note n°236 testée. **Aucun fichier de points, adresse ou enseigne dans GitHub.** PR en brouillon, ni fusion ni déploiement. Écart de la note 9 059 vs source 9 060 non résolu.

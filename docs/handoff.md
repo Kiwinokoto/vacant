@@ -1,3 +1,10 @@
+# Validation finale PR #35 — 17 octobre 2026
+Branche `dev/bdcom-groundfloor-snapshot-20261017` sur PR #35 en brouillon, empilée sur #34. Code contrôlé `041c3bd` : **105 tests JS, 99 Python**, Chromium desktop 1440×900 et mobile simulé 390×844, 20 arrondissements, classement modifiable, zéro débordement. L'audit Apur des 83 154 locaux distingue **7 495 hors travaux**, **1 565 en travaux**, contre un **regroupement de 9 060** (+1 sur les 9 059 de la note). **Bureaux Paris** : ≈1,5 M m² d'offre disponible fin juin 2026, non convertis en « logements ». Sources et limites : [audit](bdcom-open-audit-20261017.md).
+
+Suite : demander confirmation à l'Apur sur l'écart +1 et le calendrier terrain 2023, clarifier la divergence Colliers mars/juin 2026 ; analyser BDCOM 2017/2020 seulement à schéma et définitions compatibles, travailler la faisabilité des bureaux sans « nombre de places » artificiel. **Aucune fusion ni mise en production**. Verrou AgentCTL à vérifier/libérer après écriture. Ordre #29 → #30 → #31 → #32 → #33 → #34 → #35 ; #28 IGN à part.
+
+---
+
 # Dernière reprise — PR #35, BDCOM 2023 et offre de bureaux (17/10/2026)
 
 **Github source de vérité ; PR #35 brouillon `dev/bdcom-groundfloor-snapshot-20261017` empilée sur #34.** Chaîne antérieure #29 → #30 → #31 → #32 → #33 → #34 ; #28 IGN indépendante. À reprendre en lisant [audit des sources](bdcom-open-audit-20261017.md), [méthode potentiel](potentialite-locaux-20261017.md), [roadmap](../ROADMAP.md) et AGENTS.md.
