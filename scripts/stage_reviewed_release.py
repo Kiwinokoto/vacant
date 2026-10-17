@@ -127,7 +127,7 @@ def stage_public_release(repo: Path, commit: str, dest: Path,
                 raise ValueError("Copied dataset SHA-256 mismatch")
             os.chmod(output, 0o644)
         if apur is not None:
-            from scripts.package_apur_public import (
+            from package_apur_public import (
                 package_grid, PRIVATE_MANIFEST_SHA, PUBLIC_DATASET_NAME)
             src, input_sha, published_sha, zip_sha = apur
             for value in (input_sha, published_sha, zip_sha):
