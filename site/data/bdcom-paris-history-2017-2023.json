@@ -1,0 +1,57 @@
+{
+  "schema": "bdcom-paris-historical-comparison-v1",
+  "geography": "Paris intra-muros, BDCOM ground-floor premises",
+  "count_unit": "premises",
+  "metric": "COUNT of listed surveyed premises classified as vacant (AA101 case-insensitive) or under works (AA102); observational snapshots, no harmonized vacancy rate",
+  "access_date": "2026-10-17",
+  "license": "ODbL",
+  "derived_only": true,
+  "provenance": {
+    "2017": {
+      "url": "https://carto2.apur.org/apur/rest/services/BDCOM/bdcom20032020/MapServer/6",
+      "year_field": "donnees_pour_dataviz_evolution_vacants_csv_annee",
+      "activity_field": "donnees_pour_dataviz_evolution_vacants_csv_codact"
+    },
+    "2020": {
+      "url": "https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2020/MapServer/6",
+      "year_field": null,
+      "activity_field": "C20_CODACT",
+      "note": "AA101 uppercase: 7244; lowercase aa101: 3. Count combined: 7247"
+    },
+    "2023": {
+      "url": "https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2023/MapServer/1",
+      "year_field": null,
+      "activity_field": "codact"
+    }
+  },
+  "observations": [
+    {
+      "year": 2017,
+      "vacant": 6954,
+      "in_works": 899,
+      "combined": 7853,
+      "publication_rounded": 7850
+    },
+    {
+      "year": 2020,
+      "vacant": 7247,
+      "in_works": 1517,
+      "combined": 8764,
+      "publication_rounded": 8760,
+      "publication_revised_2023": 8560
+    },
+    {
+      "year": 2023,
+      "vacant": 7495,
+      "in_works": 1565,
+      "combined": 9060,
+      "publication_rounded": 9059
+    }
+  ],
+  "cautions": [
+    "no stock denominator for a harmonized rate across three surveys",
+    "published 2020 counts conflict (8760 in 2021 first results, 8560 in 2023 retrospective)",
+    "published 2023 9059 differs from 9060 in open ArcGIS",
+    "no addresses or individual premises; observations do not imply housing usability"
+  ]
+}
