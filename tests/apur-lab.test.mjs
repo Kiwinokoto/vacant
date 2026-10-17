@@ -21,10 +21,11 @@ function encode(raw){
  return {buffer:bin.buffer.slice(bin.byteOffset,bin.byteOffset+bin.byteLength),
  sha:createHash("sha256").update(bin).digest("hex")};
 }
-test("disabled everywhere except explicitly enabled loopback",()=>{
- for(const hostname of ["vacant.kiwinokoto.fr","example.com","192.168.0.3"]){
+test("public Apur grid is enabled on VACANT, local preview still opt-in",()=>{
+ for(const hostname of ["example.com","192.168.0.3"]){
   assert.equal(labEnabled({hostname,search:"?apur_lab=1"}),false);
  }
+ assert.equal(labEnabled({hostname:"vacant.kiwinokoto.fr",search:""}),true);
  assert.equal(labEnabled({hostname:"localhost",search:""}),false);
  assert.equal(labEnabled({hostname:"127.0.0.1",search:"?apur_lab=1"}),true);
 });

@@ -17,7 +17,7 @@
     <aside class="sidebar">
       <p class="eyebrow">Atlas · démonstrateur v0.2</p>
       <h1>Ce que la ville nous permet de voir.</h1>
-      <p class="intro">Un volume cartographié n'est pas forcément un immeuble entier. Il ne dit rien de l'occupation des logements.</p>
+      <p class="intro">Un volume cartographié n'est pas forcément un immeuble entier. Il ne dit rien de l'occupation des logements. <a href="#apur-local">Explorer les périodes et les hauteurs Apur</a>.</p>
       <section class="timeline" aria-labelledby="timeline-title">
         <p class="eyebrow">Série officielle · Paris entier</p>
         <h2 id="timeline-title">Vacance résidentielle · Insee</h2>
@@ -36,28 +36,32 @@
       <section aria-labelledby="layers-title">
         <h2 id="layers-title">Couches documentées</h2>
         <label class="layer active"><input id="volumes-indicator" type="checkbox" checked disabled> <span><strong>Volumes bâtis · état actuel</strong><small>Ville de Paris · nombre d'étages</small></span></label>
-        <label class="layer muted"><input type="checkbox" disabled> <span>Hauteur en mètres <small>En attente d'appariement IGN / Apur</small></span></label>
-        <label class="layer muted"><input type="checkbox" disabled> <span>Période de construction <small>En attente de validation Apur</small></span></label>
+        <label class="layer muted"><input type="checkbox" disabled> <span>Hauteur des volumes Paris Data en mètres <small>Non renseignée ; emprises Apur accessibles séparément.</small></span></label>
+        <label class="layer muted"><input type="checkbox" disabled> <span>Âge des volumes Paris Data <small>Non renseigné ; périodes attribuées aux emprises Apur ci-dessous.</small></span></label>
         <label class="layer" for="iris-toggle"><input id="iris-toggle" type="checkbox"> <span><strong>Vacance résidentielle · IRIS 2023</strong><small>992 quartiers Insee / IGN, géographie 2025. Masque les volumes bâtis lorsque cette couche est active.</small></span></label>
         <p class="note" id="iris-status" role="status" aria-live="polite">Activer pour charger les taux du recensement 2023 par IRIS. Aucun taux n'est attribué à un immeuble.</p>
         <label class="layer" for="arrond-toggle"><input id="arrond-toggle" type="checkbox"> <span><strong>Évolution de la vacance · arrondissements</strong><small>20 arrondissements, recensements 2006, 2011, 2016 et 2023. Choisir l'année dans la chronologie.</small></span></label>
         <p class="note" id="arrond-status" role="status" aria-live="polite">Comparaison sur les limites des arrondissements (géométrie IGN 2025). Les données historiques ont été agrégées depuis leurs IRIS d'époque : aucun taux ancien n'est attribué aux contours des quartiers actuels.</p>
         <section id="apur-local" hidden aria-labelledby="apur-local-title">
-          <h2 id="apur-local-title">Laboratoire Apur · données privées</h2>
+          <h2 id="apur-local-title">Bâti parisien · périodes et hauteurs (Apur)</h2>
           <label for="apur-mode">Afficher les emprises actuelles par :</label>
           <select id="apur-mode">
             <option value="off">Désactivé (volumes Paris Data)</option>
-            <option value="period">Période attribuée (150 emprises)</option>
-            <option value="height">Hauteur médiane en mètres (150 emprises)</option>
-            <option value="grid-period">Paris, grille privée de 500 m · périodes</option>
-            <option value="grid-height">Paris, grille privée de 500 m · hauteurs en mètres</option>
+            <option value="period" data-private>Période attribuée (150 emprises, test local)</option>
+            <option value="height" data-private>Hauteur médiane en mètres (150 emprises, test local)</option>
+            <option value="grid-period">Paris, emprises actuelles · périodes attribuées</option>
+            <option value="grid-height">Paris, emprises actuelles · hauteurs en mètres</option>
           </select>
           <button id="apur-grid-reload" type="button" hidden>Recharger les cellules visibles</button>
           <a class="note" href="#map">Voir la carte après sélection ↓</a>
-          <p id="apur-lab-status" class="note" role="status" aria-live="polite">Source figée privée : aucune publication.</p>
+          <p id="apur-lab-status" class="note" role="status" aria-live="polite">Source Apur figée · ODbL · choisir une couche pour charger la zone.</p>
           <div id="apur-lab-legend" class="legend" aria-label="Légende des emprises Apur"></div>
           <p class="note">© Apur, licence ODbL · extraction 16/10/2026, millésime métier non confirmé.
-            Une emprise peut couvrir plusieurs bâtiments. Aucun taux de vacance par bâtiment. La grille privée est plafonnée à 12 cellules, 5 000 occurrences ou 10 Mo par demande, et doit être rechargée manuellement après déplacement.</p>
+            Une emprise peut couvrir plusieurs bâtiments. Aucun taux de vacance par bâtiment.
+            Les périodes attribuées ne prouvent pas que le bâtiment existait à cette date.
+            La demande est plafonnée à 12 cellules, 5 000 occurrences ou 10 Mo ; recharger après déplacement.
+            <a href="./data/apur-grid/apur-paris-grid-500m-2026-10-16-odbl.zip">Télécharger la base adaptée (ZIP, ODbL)</a> ·
+            <a href="./data/apur-grid/NOTICE.md">Provenance, transformations et licence</a>.</p>
         </section>
         <label class="layer muted"><input type="checkbox" disabled> <span>Évolution géométrique des bâtiments <small>Non disponible : le sélecteur Insee pilote uniquement les statistiques territoriales par arrondissement, jamais les volumes bâtis.</small></span></label>
       </section>
@@ -73,7 +77,7 @@
         <h2 id="metadata-title">Source &amp; méthode</h2>
         <p class="note">Géométries et étages : <a href="https://opendata.paris.fr/explore/dataset/volumesbatisparis/" target="_blank" rel="noopener noreferrer">Ville de Paris · Volumes bâtis</a> (ODbL, actualisation annoncée annuelle). Requête sur les centroïdes dans la zone visible, non exhaustive si tronquée. La couche IRIS 2023 est indépendante du bâti et ne localise aucun logement vacant.</p>
         <p class="note">Vacance IRIS 2023 : <a href="https://www.insee.fr/fr/statistiques/9061333" target="_blank" rel="noopener noreferrer">Insee RP2023</a> et <a href="https://www.data.gouv.fr/datasets/contours-iris-r-2" target="_blank" rel="noopener noreferrer">IGN édition 2025</a> (Licence Ouverte 2.0). Ce sont des estimations territoriales.</p>
-        <p class="note">La chronologie Insee concerne Paris entier, et non la zone visible de la carte. Voir <a href="../docs/chronologie.md">protocole temporel</a>.</p><p class="note">L'Apur publie une <a href="https://opendata.apur.org/datasets/emprise-batie-paris" target="_blank" rel="noopener noreferrer">couche datation/hauteur</a>, à auditer avant utilisation. <a href="../docs/sources.md">Audit complet</a>.</p>
+        <p class="note">La chronologie Insee concerne Paris entier, et non la zone visible de la carte. Voir <a href="../docs/chronologie.md">protocole temporel</a>.</p><p class="note">L'Apur publie les <a href="https://opendata.apur.org/datasets/emprise-batie-paris" target="_blank" rel="noopener noreferrer">emprises datées et leurs hauteurs</a> (ODbL). La géographie actuelle ne constitue pas un inventaire historique. Le millésime métier demeure incertain. <a href="../docs/sources.md">Audit complet</a>.</p>
       </section>
       <p class="disclaimer">Aucune carte n'identifie des logements ou propriétaires vacants. Aucune donnée de vacance individuelle n'est collectée.</p>
     </aside>

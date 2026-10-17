@@ -22,8 +22,9 @@ function fixture(){
   const m=encode(manifest);
   return {manifest,m,a};
 }
-test("site gate rejects public hosts even with query parameter",()=>{
-  assert.equal(labEnabled({hostname:"vacant.kiwinokoto.fr",search:"?apur_lab=1"}),false);
+test("public VACANT host enables Apur but not other remote origins",()=>{
+  assert.equal(labEnabled({hostname:"vacant.kiwinokoto.fr",search:"?apur_lab=1"}),true);
+  assert.equal(labEnabled({hostname:"example.net",search:"?apur_lab=1"}),false);
   assert.equal(labEnabled({hostname:"127.0.0.1",search:"?apur_lab=1"}),true);
 });
 test("site uses private, pinned manifest without contacting an API",async()=>{

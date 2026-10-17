@@ -1,4 +1,4 @@
-/* Local research-only Apur grid loader. No remote API or public data publication. */
+/* Audited ODbL derivative reader: loads SHA-256 verified grid cells only. */
 export const SOURCE_SHA256 = "f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11";
 const MAX_MANIFEST_BYTES = 1_000_000;
 const MAX_CELLS = 12;
@@ -28,7 +28,10 @@ function overlap(a,b){
   return a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
 }
 export function validateManifest(raw) {
-  if (!raw || raw.research_only !== true || raw.public_release_allowed !== false ||
+  if (!raw || !((raw.research_only === true && raw.public_release_allowed === false) ||
+    (raw.research_only === false && raw.public_release_allowed === true &&
+    raw.license_uri === "https://opendatacommons.org/licenses/odbl/1-0/" &&
+    raw.source_attribution === "© Atelier parisien d\u0027urbanisme (Apur)")) ||
       raw.contains_vacancy_data !== false || raw.source_archive_sha256 !== SOURCE_SHA256 ||
       raw.source_crs !== "EPSG:2154" || raw.output_crs !== "EPSG:4326" ||
       raw.license !== "ODbL-1.0" || raw.scientific_vintage !== "not confirmed by Apur" ||

@@ -3,7 +3,8 @@ import {labEnabled, PERIODS, HEIGHT_BANDS, periodStyle, heightStyle,
 import {loadLocalManifest, loadVisibleGrid} from "./apur-grid-client.mjs";
 
 export const APUR_LAB_FIXTURE_SHA256="ba14be71c3cb58afcae935bcdc3f775f63ad043d12ecb20f42bdf2da759afaf9";
-export const APUR_GRID_MANIFEST_SHA256="bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c";
+export const APUR_GRID_MANIFEST_SHA256="2b0683c33e236b906163c73786133f300182ccc4f00c70485bbcf1e84eb75711";
+export const APUR_LOCAL_GRID_SHA256="bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c";
 const GRID_PATH="./data/apur-grid/";
 const isGrid=mode=>mode==="grid-period"||mode==="grid-height";
 const isHeight=mode=>mode==="height"||mode==="grid-height";
@@ -17,6 +18,12 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
   const legend=document.querySelector("#apur-lab-legend");
   const reload=document.querySelector("#apur-grid-reload");
   if(!section||!mode||!message||!legend||!reload)throw new Error("Apur lab controls missing");
+  const publicPage=window.location.hostname==="vacant.kiwinokoto.fr";
+  if(publicPage){
+    for(const element of section.querySelectorAll('option[data-private]')){
+      element.hidden=true; element.disabled=true;
+    }
+  }
   section.hidden=false;
   const volumeIndicator=document.querySelector("#volumes-indicator");
   if(volumeIndicator){
@@ -73,7 +80,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
   function updateTitles(selected,amount){
     document.querySelector("#map-title").textContent=
       (isHeight(selected)?"Hauteurs médianes":"Périodes de construction attribuées")+
-      " · Apur (laboratoire privé)";
+      " · Apur (emprises actuelles)";
     document.querySelector("#map-subtitle").textContent=
       "Emprises actuelles Apur · "+(isHeight(selected)?"h_med en mètres":"périodes attribuées")+
       " · "+amount.toLocaleString("fr-FR")+" emprises uniques visibles · millésime non confirmé · aucune vacance";
@@ -92,7 +99,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
     mode.value="off";
     reload.hidden=true;reload.disabled=false;
     legend.replaceChildren();
-    message.textContent="Laboratoire désactivé. Aucun jeu de données Apur récupéré sur Internet.";
+    message.textContent="Couche Apur désactivée. Aucune donnée de logement vacant individuel.";
   }
 
   // On change, the existing IRIS/arrondissement handlers take ownership of the map.
@@ -120,7 +127,9 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
       let next,kind,detail="";
       if(isGrid(selected)){
         if(!gridManifest)gridManifest=await loadLocalManifest(
-          APUR_GRID_MANIFEST_SHA256,fetch,GRID_PATH);
+          publicPage?APUR_GRID_MANIFEST_SHA256:APUR_LOCAL_GRID_SHA256,fetch,GRID_PATH);
+        if(publicPage && gridManifest.public_release_allowed !== true)
+          throw new Error("Manifeste ODbL public non vérifié");
         const bbox=viewBounds(),key=bboxKey(bbox);
         // The two color modes share a verified selection; only an explicit reload refetches.
         if(!refresh&&gridCache&&(source==="grid"||gridCache.key===key)){
@@ -135,6 +144,7 @@ export function mountApurLab({map,volumes,iris,arrond,irisToggle,arrondToggle,bu
         detail=next.cellsLoaded+" cellules, "+next.placements.toLocaleString("fr-FR")+
           " occurrences vérifiées et dédoublonnées, "+next.expectedBytes.toLocaleString("fr-FR")+" octets";
       }else{
+        if(publicPage)throw new Error("Aperçu de laboratoire non diffusé");
         if(!small)small=await fetchLocalSnapshot(APUR_LAB_FIXTURE_SHA256);
         next={collection:small.collection,uniqueObjects:small.collection.features.length};
         kind="small";
