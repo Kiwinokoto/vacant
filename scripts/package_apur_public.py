@@ -128,8 +128,10 @@ def package_grid(source: Path, destination: Path):
                                  (2026, 10, 17, 0, 0, 0))
             zi.compress_type = zipfile.ZIP_DEFLATED
             zi.external_attr = (0o100644 << 16)
-            with f.open("rb") as inp, z.open(zi, "w", force_zip64=True) as out:
-                shutil.copyfileobj(inp, out, length=512 * 1024)
+            # Fixed timestamp/attributes and a seekable known-size payload make
+            # ZIP output byte-for-byte reproducible across staging directories.
+            z.writestr(zi, f.read_bytes(), compress_type=zipfile.ZIP_DEFLATED,
+                       compresslevel=4)
     os.chmod(bundle, 0o644)
     with zipfile.ZipFile(bundle) as z:
         if z.testzip() is not None or len(z.namelist()) != 458:
