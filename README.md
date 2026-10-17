@@ -13,6 +13,12 @@ Projet public expérimental et atlas 2D **de données officielles**. Les origina
 
 Chaque champ absent reste absent. Une statistique IRIS n'est **jamais** attribuée à un bâtiment ou un appartement.
 
+## Quel potentiel au-delà des logements habitables ?
+
+VACANT étudie les logements vacants, mais **ne doit pas exclure les logements dégradés ni les bureaux/commerces inoccupés** du champ d'investigation. Il distingue explicitement **destination**, **occupation**, **état physique/risques** et **possibilité de mobilisation** (accueil temporaire, travaux, conversion pérenne). Aucun espace n'est automatiquement « habitable », « indisponible » ou « prêt à accueillir » faute d'expertise. Un bureau sans eau ou lumière reste un **potentiel à instruire**, jamais une solution de nuit directement recommandée sans vérifications de sécurité, hygiène et droits d'usage.
+
+Nouvelle page de cadrage [espaces inoccupés et potentiel d'accueil](site/potentiel.html), avec les trois univers non sommables : logements Insee, logements privés LOVAC et locaux de RDC BDCOM Apur. [Méthode, sources et limites](docs/potentialite-locaux-20261017.md). Aucun nombre de logements/places convertibles n'est estimé à ce stade ; les bureaux en étage n'ont pas encore de mesure parisienne auditée.
+
 ## Priorité : comprendre la vacance résidentielle dans le temps
 
 Deux rails, explicités et ordonnés dans le [backlog VACANT](ROADMAP.md) : **(V) vacance résidentielle et sa variation dans le temps en priorité**, et **(B) reconstruction documentée de l'évolution du bâti parisien en parallèle**.
