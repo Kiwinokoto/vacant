@@ -1,3 +1,5 @@
+**Recette #34 vérifiée** : 102 JS, 99 Python, Chromium desktop 1440 et mobile simulé 390 sans débordement, liens 3/3 OK, aucune erreur JS de la nouvelle page. Branche `dev/vacancy-reuse-potential-20261017` initialement à `5d4cde6`, PR en brouillon. Prochaine vérification : audit des données BDCOM originales et bureaux. Aucun déploiement.
+
 # Dernière passation — PR #34, réemploi des espaces vacants (17/10/2026)
 
 Nouvelle demande prioritaire : **distinguer logements habitables, logements dégradés, bureaux et commerces sans exclure les locaux aujourd'hui non habitables** du potentiel d'accueil étudié. Les espaces non résidentiels nécessitent expertise technique/juridique préalable (sécurité, santé, accès, eau, évacuation, autorisations) : aucune disponibilité immédiate affirmée. Destinations / état / occupation / transformation sont des dimensions indépendantes ; **inconnu par défaut**.

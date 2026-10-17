@@ -34,3 +34,6 @@ Ne jamais additionner Insee et LOVAC (champs résidentiels partiellement recouvr
 4. Aucun inventaire d'adresses/propriétaires de logements vacants ni join IRIS→bâtiment ; contrôle juridique avant toute donnée fine.
 
 L'histoire du bâti IGN/Apur reste distincte des deux études de vacance et réemploi.
+
+### Recette de la PR #34 et état GitHub (17/10/2026)
+Code `5d4cde688476c207fb1cd3a5a2aeb118a4e0e60e` : **102/102 tests JavaScript**, **99/99 tests Python** depuis le venv du VPS, `git diff --check` sans anomalie, clone éphémère sans changements locaux. **Chromium réel** (serveur statique local) : 3 indicateurs indépendants, 4 scénarios qualitatifs, navigation depuis index / évolution / LOVAC validée ; desktop 1440×900 sans débordement, mobile simulé 390×844 sans débordement (tableau défilant à l'intérieur), aucune erreur JavaScript applicative de la nouvelle page. Aucune source brute confidentielle. PR #34 reste en brouillon ; **aucune fusion ni déploiement**. Avant reprise : vérifier les HEAD et les locks, puis auditer la donnée BDCOM et les sources de vacance de bureaux Paris.
