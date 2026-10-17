@@ -1,3 +1,19 @@
+# VACANT — passation du 17/10/2026 : base adaptée Apur ouverte sous ODbL
+
+**Nouvelle priorité : [notice scientifique, attribution et protocole public](apur-odbl-public-dataset-20261017.md).** Le téléphone physique n'est **pas un prérequis** demandé par l'utilisateur ; conserver une responsivité correcte, privilégier le desktop.
+
+- GitHub canonique `Kiwinokoto/vacant`. `main` avant travail `72a9d06377541b7b266e0d8153e89a7ae19afb95`. PR #23 consolidation → #24 raccordement → #25 release sûre, et branche de distribution `dev/apur-odbl-public-distribution-20261017` basée sur #25. User autorise fusion et déploiement **si les contrôles sont satisfaisants** ; choisir méthode merge qui conserve l'historique et déploiement avec rollback.
+- Apur ODbL 1.0 : la base adaptée est **distribuée sous ODbL** elle-même, avec attribution source/lien licence, extraction du 16/10/2026, limites scientifiques (millésime métier non attesté), 104 géométries invalides/13 ID absents exclus et méthode de reproduction. Ne jamais qualifier les emprises de « vacantes ».
+- Export original privée : SHA `f6d612844829dbf610fabf89dd442f6c50b4d8b04b33745e55e3e983c6e74e11`; grille vérifiée 456 cellules, 128089 uniques, SHA manifest source `bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c`. Une **copie publique dérivée distincte** est préparée via `scripts/package_apur_public.py`.
+- Manifest public reproductible SHA `2b0683c33e236b906163c73786133f300182ccc4f00c70485bbcf1e84eb75711`, archive ODbL complète `apur-paris-grid-500m-2026-10-16-odbl.zip`, **28 106 318 octets** SHA `9bef60651f2b0f20158392157ffe2e0a6757257a57757532348384e4521e9e24`. Les 456 cellules, manifeste public, NOTICE et ZIP sont inclus **uniquement** lors de la préparation explicite `stage_reviewed_release.py --publish-apur`; aucun GeoJSON dans Git.
+- Le script exige les SHA indépendants et refuse toute publication implicite. Tests synthétiques et **préparation réelle réussie sur /tmp**, 459 fichiers en sortie, permissions 755/644. ZIP reproduit deux fois **bit pour bit**. Origine privée préservée.
+- Cartographie Apur rendue disponible sur le domaine public dans le code : périodes (12 classes), hauteurs médianes en mètres (6 classes), une carte/une couche active à la fois ; les deux prévisualisations historiques de 150 emprises restent réservées au laboratoire localhost. Téléchargement ODbL et notice visibles dans la colonne desktop. Manifest et cellules sont contrôlés SHA par le navigateur après HTTPS. 
+- Chromium **HTTPS local avec résolution du domaine public en 127.0.0.1** : desktop 1280×800 et mobile simulé 390×844 validés, **2 284 emprises uniques sur 4 cellules**, période ↔ hauteur sans nouvelle requête, zéro erreur JS et zéro overflow horizontal ; HTTP non sécurisé n'offre pas Web Crypto, d'où recette HTTPS. **Ce n'est pas encore un déploiement public**.
+- Tests avant finalisation sur branche : **75/75 JavaScript et 93/93 Python**, à rejouer sur commit final ; passer la PR en ready seulement après revue de portée, puis fusionner la chaîne dans l'ordre si autorisé et vérifier HEAD après chaque étape. Générer la release réelle depuis le main fusionné après locks de déploiement, QA locale Nginx et rollback.
+- Source de vérité antérieure : [revue gzip et sécurité](apur-publish-readiness-20261016.md) + [plan des PR](apur-review-merge-plan-20261016.md). Aucune annonce de mise en production sans HTTPs/ZIP/manifeste/QA réellement vérifiés.
+
+---
+
 ## Mise à jour — recette Nginx réelle et ordre des PR (16/10/2026, fin de soirée)
 
 - Chaîne de revue, **non fusionnée** : [ordre des PR #23 → #24 → #25](apur-review-merge-plan-20261016.md). Les anciennes PR #17–#22 restent intactes. Nouvelle proposition gzip dans `deploy/nginx.conf` **non déployée**.
