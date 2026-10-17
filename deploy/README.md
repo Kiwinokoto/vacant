@@ -44,6 +44,22 @@ test ! -d "/srv/vacant/releases/$sha/site/data/apur-grid"
 
 Si l'une de ces vérifications échoue, **bloquer la publication et inspecter la release** ; ne jamais la corriger à la main sur place. Les suites `tests/test_stage_reviewed_release.py` assurent la non-régression du garde-fou, y compris la présence de fichiers Apur privés ignorés dans un clone.
 
+## Distribution ODbL de la base adaptée Apur (nouvelle option explicite)
+
+Pour la publication de l'archive Apur complète, consulter **[la procédure datée du 17/10/2026](../docs/apur-odbl-public-dataset-20261017.md)**. L'ajout d'une base adaptée exige **`--publish-apur`**, un dossier source privé et **trois empreintes indépendamment fixées** (manifest source, manifest public, ZIP public). Sans ces paramètres, `stage_reviewed_release.py` continue à créer une release **sans** Apur.
+
+Exemple de paramètres supplémentaires (à ajouter à la commande complète de préparation Git-only ci-dessus) :
+
+```sh
+--publish-apur \
+--apur-private-dir /srv/vacant/data/processed/apur/paris-grid-experiments/cells-500m-original \
+--apur-private-manifest-sha256 bb02fe9ac9ef7919018118659e12ac533b098234250eba540c6975e7b273bb0c \
+--apur-public-manifest-sha256 2b0683c33e236b906163c73786133f300182ccc4f00c70485bbcf1e84eb75711 \
+--apur-public-zip-sha256 9bef60651f2b0f20158392157ffe2e0a6757257a57757532348384e4521e9e24
+```
+
+Les 456 cellules, la notice ODbL et le ZIP restent **hors Git** : ils ne sont ajoutés que lors du staging de la release autorisée. Ils sont **publics par intention** une fois cette release activée ; la sortie privée d'origine reste intacte. Vérifier les liens, les en-têtes, l'attribution et le fichier ZIP après la bascule.
+
 ## Recette de compression Nginx avant toute mise en ligne Apur
 
 Sur un VPS autorisé disposant du binaire Nginx, mais **sans modifier le service VACANT existant** :
