@@ -20,3 +20,10 @@ test("The new page is navigable from VACANT's exploration pages",()=>{
  assert.ok(html.includes('id="bdcom-sort"')&&html.includes('id="bdcom-rows"'));
  assert.ok(html.includes("bdcom.mjs"));
 });
+
+test("2026 preliminary Apur snapshot remains separate from the audited 2017–2023 API series",()=>{
+ for(const fact of ["83 115 locaux","9 725 locaux vacants","1 402 en travaux","8 323 vacants hors travaux","11,7 % avec travaux","10,0 % hors travaux","83 284 locaux et 9 104 vacants","repère éditorial préliminaire","12p296_Commerces_Paris_tendances_enquete_2026.pdf"])assert.ok(html.includes(fact),fact);
+ const sep=html.indexOf('id="bdcom-2026-heading"');
+ const old=html.indexOf('id="bdcom-history-heading"');
+ assert.ok(sep>0 && old>sep,"2026 editorial snapshot must precede and remain separate from historical API figures");
+});
