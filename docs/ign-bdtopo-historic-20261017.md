@@ -45,6 +45,44 @@ Filtre reproductible : `crc32(ID) % 100 == 0`, **sans tirage aléatoire**. Dans 
 
 Il est impossible de distinguer à ce stade une **correction cartographique**, un **changement réel** et une **reclassification** à partir de ces seules différences. Les hauteurs BD TOPO ne sont pas les hauteurs médianes des emprises Apur : pas de jointure automatique.
 
+## Concordance géométrique exhaustive 2011 ↔ 2018 (audit complémentaire)
+
+**Réalisé le 17/10/2026 sur les mêmes archives SHP privées et les identifiants complets.** Nouveau script reproductible `scripts/compare_ign_geometry.py` : vérification des SHA-256 source et métadonnées, lecture des trois classes de bâti, empreinte BLAKE2b des coordonnées exactes Lambert-93 et indices des anneaux ; calcul GEOS du recouvrement par `intersection / union` uniquement lorsque **le même ID** présente des coordonnées différentes.
+
+| Mesure documentaire | Résultat |
+|---|---:|
+| Objets BD TOPO dans l'édition 2011 | 117 430 |
+| Objets dans l'édition 2018 | 116 772 |
+| **Identifiants communs** | **113 634** |
+| Identifiants présents uniquement dans l'édition 2011 | **3 796** |
+| Identifiants présents uniquement dans l'édition 2018 | **3 138** |
+| **Coordonnées géométriques exactement identiques**, ID commun | **112 567** |
+| **Coordonnées différentes**, ID commun | **1 067** |
+| Classe cartographique différente, ID commun | 1 442 |
+| Attribut hauteur différent, ID commun | 8 815 |
+
+Les deux dernières lignes portent sur **l'attribut de l'objet BD TOPO** et ne sont pas nécessairement incluses dans les 1 067 corrections de géométrie ; elles peuvent se superposer ou être indépendantes.
+
+Pour les **1 067** formes modifiées correspondant à un ID commun, comparaison exacte de surface dans la projection Lambert-93 :
+
+- **recouvrement médian (IoU) : 0,908579** ;
+- **353** présentent **au moins 99 %** de recouvrement (formes quasi identiques malgré modification de sommets) ;
+- **176** présentent **moins de 50 %** de recouvrement (changements importants ou situations complexes) ;
+- aucune forme invalide/union vide/erreur GEOS sur cette sous-population.
+
+**Interprétation impérative :** les 3 796 et 3 138 identifiants propres à une édition ne sont pas « des destructions » et « des constructions ». De même, une correction de contour, d'angle, de classe ou de valeur de hauteur peut être **une révision du référentiel sans modification physique du bâti**. Aucun taux de vacance n'est inféré. Les rapprochements d'objets distincts (scissions, fusions, remplacement d'identifiants, n:m) restent à étudier **spatialement** avant une série de transformations historiques.
+
+Le rapport détaillé agrégé, sans coordonnées ni identifiants, est conservé uniquement sur le VPS à `/srv/vacant/data/processed/ign/bdtopo-historic-audit-20261017/audit-spatial-2011-2018-verified-private.json`. Les fichiers SHP ne sont ni joints ni publiés. Exécution reproductible :
+
+```sh
+/srv/vacant/venv/bin/python scripts/compare_ign_geometry.py \
+  --archive-dir /srv/vacant/data/raw/ign/bdtopo-historical-20261017 \
+  --unpacked-dir /srv/vacant/data/processed/ign/bdtopo-historic-audit-20261017 \
+  --output /srv/vacant/data/processed/ign/bdtopo-historic-audit-20261017/nouveau-rapport-private.json
+```
+
+La commande exige un **nouveau nom de sortie**, sans écrasement, et refuse une archive dont le SHA diffère. Les tests synthétiques `tests/test_compare_ign_geometry.py` couvrent l'identité des coordonnées, les modifications et les ratios de recouvrement. **Ne pas diffuser cette couche comme une animation d'événements bâtis réels** sans étude complémentaire des objets non appariés.
+
 ## Essai de cartographie locale 2011 ↔ 2018
 
 Trois petites collections GeoJSON ont été dérivées **privément** d'une même zone WGS84 `[2.373,48.854,2.376,48.856]`, transformation EPSG:2154 vers WGS84, **sans découper ni inventer de contours**. Résultats sur les trois classes :
