@@ -16,12 +16,13 @@
   <main>
     <aside class="sidebar">
       <p class="eyebrow">Atlas · démonstrateur v0.2</p>
+      <a class="evolution-link" href="./evolution.html"><strong>La vacance à Paris depuis 1968 <span aria-hidden="true">↗</span></strong><small>Évolution du nombre de logements vides et de leur part dans le parc · Insee</small></a>
       <h1>Ce que la ville nous permet de voir.</h1>
       <p class="intro">Un volume cartographié n'est pas forcément un immeuble entier. Il ne dit rien de l'occupation des logements. <a href="#apur-local">Explorer les périodes et les hauteurs Apur</a>.</p>
       <section class="timeline" aria-labelledby="timeline-title">
         <p class="eyebrow">Série officielle · Paris entier</p>
         <h2 id="timeline-title">Vacance résidentielle · Insee</h2>
-        <p class="timeline-intro">Recensements espacés de 5 à 7 ans. Ces chiffres représentent <strong>Paris dans son ensemble</strong>, jamais un immeuble sur la carte.</p>
+        <p class="timeline-intro">Quatre jalons récents, de 2006 à 2023. Ces chiffres représentent <strong>Paris dans son ensemble</strong>, jamais un immeuble sur la carte. <a href="./evolution.html">Voir aussi les recensements depuis 1968</a>.</p>
         <div id="timeline-years" class="timeline-years" role="group" aria-label="Choisir le recensement Insee"></div>
         <div class="timeline-numbers">
           <div><strong id="timeline-rate">—</strong><small>Taux de logements vacants</small></div>
@@ -31,7 +32,7 @@
         <p id="timeline-other" class="note"></p>
         <p id="timeline-coverage" class="note"></p>
         <a id="timeline-source" class="timeline-source" target="_blank" rel="noopener noreferrer" href="https://www.insee.fr/fr/statistiques/8581193?geo=DEP-75">Source et tableau Insee</a>
-        <p class="note">1999 et avant : contexte historique possible, pas encore intégré au curseur IRIS. 2020–2026 LOVAC : indicateur différent, non combiné.</p>
+        <p class="note">1968–1999 : contexte historique accessible sur la <a href="./evolution.html">page évolution</a>, non appliqué aux cartes IRIS. 2020–2026 LOVAC : indicateur différent, non combiné.</p>
       </section>
       <section aria-labelledby="layers-title">
         <h2 id="layers-title">Couches documentées</h2>
@@ -40,6 +41,7 @@
         <label class="layer muted"><input type="checkbox" disabled> <span>Âge des volumes Paris Data <small>Non renseigné ; périodes attribuées aux emprises Apur ci-dessous.</small></span></label>
         <label class="layer" for="iris-toggle"><input id="iris-toggle" type="checkbox"> <span><strong>Vacance résidentielle · IRIS 2023</strong><small>992 quartiers Insee / IGN, géographie 2025. Masque les volumes bâtis lorsque cette couche est active.</small></span></label>
         <p class="note" id="iris-status" role="status" aria-live="polite">Activer pour charger les taux du recensement 2023 par IRIS. Aucun taux n'est attribué à un immeuble.</p>
+        <p id="iris-insights" class="iris-insights" aria-live="polite" hidden>Les quartiers colorés représentent des parts de logements, pas des adresses identifiées. Activez la couche IRIS pour obtenir la répartition chiffrée.</p>
         <label class="layer" for="arrond-toggle"><input id="arrond-toggle" type="checkbox"> <span><strong>Évolution de la vacance · arrondissements</strong><small>20 arrondissements, recensements 2006, 2011, 2016 et 2023. Choisir l'année dans la chronologie.</small></span></label>
         <p class="note" id="arrond-status" role="status" aria-live="polite">Comparaison sur les limites des arrondissements (géométrie IGN 2025). Les données historiques ont été agrégées depuis leurs IRIS d'époque : aucun taux ancien n'est attribué aux contours des quartiers actuels.</p>
         <section id="apur-local" hidden aria-labelledby="apur-local-title">

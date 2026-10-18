@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="L'évolution documentée de la vacance résidentielle à Paris : estimations du recensement Insee de 1968 à 2023, logements et pourcentages.">
+<title>VACANT · L'évolution des logements vacants à Paris</title>
+<link rel="stylesheet" href="./evolution.css">
+</head><body>
+<header class="site-head">
+  <a class="brand" href="./index.html"><span class="logo">V</span><span><strong>VACANT</strong><small>Atlas critique de la vacance parisienne</small></span></a>
+  <nav aria-label="Navigation"><a href="./index.html">Carte de la vacance</a><a href="./evolution.html" aria-current="page">Évolution historique</a></nav>
+</header>
+<main>
+  <div class="eyebrow">Vacance résidentielle · Paris dans son ensemble</div>
+  <h1>Comment la vacance a-t-elle évolué à Paris ?</h1>
+  <p class="lead">Un repère central : <strong>139 075 logements vacants en 2023</strong>, soit <strong>9,9 % du parc parisien</strong> selon l'Insee. Un logement recensé vacant n'est pas nécessairement abandonné, durablement inoccupé ou immédiatement disponible.</p>
+  <section class="cards" aria-label="Indicateurs 2023">
+    <div><strong>139 075</strong><span>Logements vacants estimés, 2023</span></div>
+    <div><strong>1 402 024</strong><span>Logements au total, 2023</span></div>
+    <div><strong>9,9 %</strong><span>Part du parc vacant en 2023</span></div>
+  </section>
+  <section aria-labelledby="fig-title" class="chart-panel">
+    <div class="heading-row"><div><h2 id="fig-title">Neuf recensements, pas une courbe annuelle</h2><p>Source : <a href="https://www.insee.fr/fr/statistiques/2011101?geo=DEP-75" target="_blank" rel="noopener noreferrer">Insee, tableau LOG T1 (RP2023, Paris)</a>.</p></div>
+      <div class="metric-buttons" role="group" aria-label="Mesure représentée">
+        <button type="button" id="metric-rate" aria-pressed="true">Part des logements (%)</button>
+        <button type="button" id="metric-count" aria-pressed="false">Nombre de logements</button>
+      </div>
+    </div>
+    <figure><svg id="evolution-chart" viewBox="0 0 940 346" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">Évolution documentée de la vacance à Paris</title><desc id="chart-desc">Neuf observations statistiques de 1968 à 2023. Le tableau ci-dessous fournit les chiffres exacts.</desc></svg>
+    <figcaption>Chaque barre est <strong>un recensement identifié</strong> : rien n'est calculé pour les années intermédiaires. La séparation verticale signale un <strong>changement de méthode</strong> entre dénombrements anciens et recensement rénové.</figcaption></figure>
+    <p id="chart-status" role="status" aria-live="polite">Lecture des neuf observations Insee…</p>
+  </section>
+  <section class="method"><h2>Comment interpréter cette évolution ?</h2>
+    <p><strong>1968–1999 :</strong> recensements anciens par dénombrement. <strong>2007–2023 :</strong> recensements rénovés et estimations statistiques. Les méthodes ne sont pas interchangeables ; les longues comparaisons sont indicatives, pas des mesures parfaitement homogènes.</p>
+    <p><strong>Vacants ≠ résidences secondaires :</strong> celles-ci constituent une catégorie distincte. La vacance comprend notamment les logements proposés à la vente ou à la location, en attente d'occupation ou dont la situation administrative varie. Elle ne mesure pas spécifiquement la vacance de plus de deux ans.</p>
+    <p><strong>Ne pas confondre avec LOVAC :</strong> LOVAC mesure un périmètre différent, le parc privé, à partir de données fiscales. Les ruptures de méthode en 2024 et 2025 interdisent de prolonger naïvement cette série Insee avec LOVAC. Les chiffres ici concernent <strong>Paris entier</strong>, pas les IRIS ni les immeubles.</p>
+    <p id="recent-change" class="recent-change"></p>
+  </section>
+  <section aria-labelledby="table-title"><h2 id="table-title">Les chiffres complets, sans interpolation</h2>
+    <div class="table-wrap"><table><caption>Recensements Insee, logements à Paris. Les pourcentages correspondent aux logements vacants / total des logements.</caption>
+    <thead><tr><th scope="col">Année</th><th scope="col">Logements vacants</th><th scope="col">Total logements</th><th scope="col">Taux vacant</th><th scope="col">Secondaires / occasionnels</th><th scope="col">Méthode</th></tr></thead>
+    <tbody id="evolution-table"><tr><td colspan="6">Chargement des valeurs vérifiées…</td></tr></tbody>
+    </table></div>
+  </section>
+  <footer><a href="./index.html">← Retour à la carte IRIS et arrondissements</a><p>© Données Insee, recensements de la population — géographie Paris. Aucun statut individuel de logement ou de bâtiment n'est publié.</p></footer>
+</main>
+<script type="module" src="./evolution.mjs"></script>
+</body></html>
