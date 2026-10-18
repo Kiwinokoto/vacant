@@ -22,6 +22,10 @@ Deux rails, explicités et ordonnés dans le [backlog VACANT](ROADMAP.md) : **(V
 - Le tableau Insee indique **139 075 logements vacants / 1 402 024 au total en 2023 (9,9 %)**. Cela ne signifie ni 139 075 logements durablement abandonnés ni que chaque IRIS a le taux moyen parisien.
 - Projet historique du bâti : [PR #28](https://github.com/Kiwinokoto/vacant/pull/28) en recherche ; les éditions IGN 2008/2011/2018 ne sont pas encore une série directement comparable. Pas de promotion de ces géométries par analogie avec le taux IRIS.
 
+## Comparaison des arrondissements (V-03)
+
+La carte `site/index.html` peut désormais comparer deux recensements **2006/2011/2016/2023**, seulement après activation de la couche des 20 arrondissements. Un sélecteur de dates colore la **variation en points de taux** ou la **variation du nombre estimé de logements vacants**, avec deux valeurs de départ/arrivée en popup, légende et classement. Les contours IGN **2025** ne servent que de support d'affichage : les valeurs proviennent des recensements aux géographies IRIS respectives, agrégés au niveau arrondissement. Voir [protocole de comparaison](docs/vacance-arrond-comparison-20261017.md).
+
 ## Démarrage local
 
 Prérequis : un navigateur récent et Python 3 (pour servir les fichiers) ; aucune base de données ni installation npm.

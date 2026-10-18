@@ -1,3 +1,18 @@
+# Mise à jour de la passation — V-03, 17 octobre 2026
+
+**Lire cette section en premier en cas de reprise dans un nouveau chat.** Le présent fichier existe dans la branche de développement **`dev/vacancy-arrondissement-compare-20261017`**, qui part de la branche **PR #29** (non directement de main), et figure désormais dans la **[PR #30 empilée](https://github.com/Kiwinokoto/vacant/pull/30)** en brouillon. Les anciennes mentions ci-dessous de « V-03 prochaine tâche » sont historiques ; **V-03 est maintenant codé et recetté hors production**.
+
+- **Priorité immédiate désormais V-04 : LOVAC ouvert et agrégé 2020–2026**, à la seule maille Paris commune et pour le **parc privé** ; *répartir en deux séries/points distincts si les méthodologies sont non comparables*. Rechercher et vérifier les **fichiers publics d'origine, dictionnaires des variables, définitions et licences**, puis contrôler les ruptures GMBI (LOVAC 2024) et extraction fiscale (2025). **Ne jamais utiliser ni chercher à publier LOVAC détail adresses/propriétaires**, jamais joindre ces données à un immeuble Apur/IGN.
+- **V-03 terminé sur branche** : code `site/arrondissement-compare.mjs` + commandes intégrées à `site/index.html` et `site/app.mjs` + `tests/arrondissement-compare.test.mjs`. Comparaison de **deux RP choisis parmi 2006/2011/2016/2023**, colorimétrie en **points de pourcentage** ou **nombre de logements**, popups sourcés et classement vingt arrondissements. Base : 20 agrégats des **IRIS de leur géographie propre**, dessinés sur contours des **arrondissements IGN 2025** ; jamais une vacance au bâtiment.
+- **Recette vraie donnée + vrai navigateur** : sur machine Linux autorisée, Chromium 1440×900 et 390×844 simulé, source `https://vacant.kiwinokoto.fr/data/arrond-history.geojson` copiée uniquement en dossier temporaire local. 20 arrondissements, 5 classes, 20 rangs, dates, changement points↔nombre, périodes invalides refusées, switch vers IRIS 2023, zéro exception JS et overflow. Variation Paris 2006→2023 : **+16 408 logements** et **+0,7 point**, 13 arrondissements avec taux en hausse, 7 en baisse. Correction de précision : pour le total Paris on reprend les **totaux officiels** Insee (2011→2023 **+40 377**, car somme IRIS fractionnaire pouvait différer de 1).
+- **Tests JavaScript** : V-03 a cinq nouveaux tests, première relance après correctifs **89/89 JS et 93/93 Python** (rejouer sur le HEAD final), plus tests du DOM et validation des années / des sources. Pas de données confidentielles dans Git.
+- **Documentation précise** : [V-03 protocole, géographies, classes et limites](vacance-arrond-comparison-20261017.md), puis [ROADMAP.md](../ROADMAP.md) et `docs/handoff.md`. La **PR #28** de géométries IGN reste un chantier parallèle en brouillon.
+- **GitHub/ordre des PR :** #29 = série 1968–2023 + distribution IRIS + backlog + cette passation, base `main`; branche empilée V-03 = `dev/vacancy-arrondissement-compare-20261017`, **PR #30 cible `dev/vacancy-timeline-and-roadmap-20261017`**, puis fusionner **#29 avant #30** lors de la promotion, sans écraser les travaux historiques #28. Vérifier les SHA HEAD et le statut des PR avant toute action.
+- **Production** : toujours l'ancienne release Git `8711f3071abd41b169c92dfe0daaa79708be9acf`, HTTPS 200, aucune nouvelle fonctionnalité V-01/V-02/V-03 déployée ; conservée sans redémarrage lors du travail. **Ne pas confondre une recette locale avec la publication**.
+- **À la prochaine reprise**, vérifier les PR et poursuivre **V-04 LOVAC agrégé**. Côté B : apparier spatialement les IDs différents du référentiel 2011/2018 et vérifier la source du millésime 2008 avant de représenter Paris « qui apparaît ». Les deux rails demeurent indépendants scientifiquement.
+
+---
+
 # VACANT — PASSATION DE REPRISE (17 octobre 2026)
 
 **Document de reprise prioritaire**, prévu pour un **nouveau chat** ; GitHub constitue la source de vérité. Ce document est mis à jour sur la **branche de PR #29**. Il fait foi pour les prochaines interventions sous réserve d'un contrôle frais de `main`, des PR et de la production.
@@ -47,8 +62,8 @@
 
 ## 6. Ce qui reste à faire à la prochaine reprise
 
-1. Vérifier **GitHub HEAD + PR #28/#29** et la présence d'une éventuelle **PR #30 V-03**, lire ce document et le dernier `docs/handoff.md`.
-2. Terminer/revoir **V-03 comparateur arrondissements**, valider les 20 features, actualiser les textes de carte et la documentation, recette Chromium, sans déploiement implicite.
+1. Vérifier **GitHub HEAD + PR #28/#29** et la présence d'une éventuelle **PR #30 V-03** (créée), lire ce document et le dernier `docs/handoff.md`.
+2. Relire la **PR #30 V-03** déjà recettée (20 arrondissements, taux/counts, Chromium), la fusionner seulement après la **PR #29** et ses propres contrôles, sans déploiement implicite.
 3. Préparer **V-04 LOVAC agrégé** en contrôlant le fichier public, le dictionnaire des colonnes et les ruptures de définition avant tout graphique.
 4. Sur B, poursuivre l'appariement spatial n:m et l'étude des géographies fiables ; penser à une animation historique **esthétique mais documentée**.
 5. Lorsque la PR vacance est prête et le périmètre validé, préparer la release depuis le SHA Git exact, préflight Nginx/Traefik et données brutes privées exclues, puis **demander/obtenir l'autorisation appropriée si le déploiement n'est pas explicitement autorisé**.
