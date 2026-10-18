@@ -1,3 +1,11 @@
+# Reprise immédiate — VACANT, PR #33 (17/10/2026)
+
+**Nouvelle lecture LOVAC longue durée en PR brouillon [#33](https://github.com/Kiwinokoto/vacant/pull/33), empilée sur #32, elle-même sur #31 → #30 → #29.** Voir [passation actualisée](PASSATION-LOVAC-2026-10-17.md) et [analyse scientifique](lovac-long-duration-20261017.md). Le rail B IGN reste en #28 séparée. Source de vérité GitHub. Aucune fusion, aucun déploiement : release publique `8711f307` préservée.
+
+Code vérifié au commit `717f5bd` : **98 tests JS, 99 Python**, Chromium desktop/mobile simulé, vrais contours IGN 2025, 20 polygones/rangs/lignes, ratio LOVAC 2026 **26 264 / 105 785 = 24,8 % parmi les vacants privés**, maximum de part dans le 8e et d'effectif dans le 18e. Ratio interdit pour 2023 (dates distinctes), aucune projection d'un taux au parc total, à l'IRIS ou à un bâtiment. Correctif de sélecteur pour écran 390 px validé. Prochain travail : revue/promotion dans l'ordre des PR seulement avec contrôles, puis approfondissements territoriaux à dénominateurs homologues. Sécurité : jamais LOVAC individuel.
+
+---
+
 # VACANT — passation prioritaire du 17 octobre 2026 : VACANCE D'ABORD, BÂTI EN PARALLÈLE
 
 **Lire en priorité [ROADMAP.md](../ROADMAP.md) et [le protocole temporel 1968–2023](vacance-evolution-1968-2023.md).**
