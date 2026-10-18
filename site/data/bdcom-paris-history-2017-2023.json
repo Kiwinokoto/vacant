@@ -30,7 +30,11 @@
       "vacant": 6954,
       "in_works": 899,
       "combined": 7853,
-      "publication_rounded": 7850
+      "publication_rounded": 7850,
+      "surveyed": 83720,
+      "surveyed_source": "https://www.apur.org/open_data/BDCOM_2017_OD.pdf",
+      "surveyed_basis": "Publication originale 2017; archive rétrospective distincte",
+      "publication_original_vacant": 7804
     },
     {
       "year": 2020,
@@ -38,20 +42,30 @@
       "in_works": 1517,
       "combined": 8764,
       "publication_rounded": 8760,
-      "publication_revised_2023": 8560
+      "publication_revised_2023": 8560,
+      "surveyed": 83399,
+      "surveyed_source": "https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2020_structure/MapServer/0",
+      "surveyed_basis": "Somme localrdc pour 20 arrondissements, édition 2020",
+      "publication_retro_2023_works": 1310
     },
     {
       "year": 2023,
       "vacant": 7495,
       "in_works": 1565,
       "combined": 9060,
-      "publication_rounded": 9059
+      "publication_rounded": 9059,
+      "surveyed": 83154,
+      "surveyed_source": "https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2023/MapServer/1",
+      "surveyed_basis": "Compte de la couche de locaux BDCOM 2023"
     }
   ],
   "cautions": [
     "no stock denominator for a harmonized rate across three surveys",
     "published 2020 counts conflict (8760 in 2021 first results, 8560 in 2023 retrospective)",
     "published 2023 9059 differs from 9060 in open ArcGIS",
-    "no addresses or individual premises; observations do not imply housing usability"
+    "no addresses or individual premises; observations do not imply housing usability",
+    "2017 original published vacancy 7804 versus retrospective ArcGIS 7853; denominator and numerator may not share a revision",
+    "2020 83399 summed localrdc, but 2023 retrospective works 1310 versus original 1517: classification unresolved",
+    "These are year-specific surveyed universe counts, not a harmonized longitudinal vacancy rate"
   ]
 }

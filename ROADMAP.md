@@ -1,5 +1,12 @@
 # VACANT — backlog priorisé, deux rails (17 octobre 2026)
 
+## Checkpoint de recette — 18 octobre 2026 (sans promotion)
+
+**Code de référence `599329f4` (PR #37)** : chaîne Git #29→#37 **strictement linéaire**, #28 IGN séparée. Revalidation indépendante : **111 tests JS + 99 tests Python réussis** en environnements temporaires. **Chromium 154** sur les quatre pages en 1440×900 et 390×844 : **49/50 vérifications strictes**, seule la demande navigateur de `/favicon.ico` renvoie 404 ; pas d'erreur applicative ni de débordement. Test des 20 arrondissements LOVAC/BDCOM, de la restriction de ratio LOVAC 2023, des 9 recensements Insee, de 992 IRIS, et de la présentation BDCOM 2026 **séparée**. Aucun ajout de données individuelles.
+
+**Gate avant intégration** : aucune CI sur HEAD échantillonnés (#29/#33/#37), aucun workflow versionné dans cette branche ; compléter la recette et les protections avant promotion. La simulation d'intégration de #28 sur #37 signale des conflits sur `docs/handoff.md` et `docs/sources.md` : traiter #28 dans un second temps, sans mêler les deux rails. **Ne pas squash-merger une pile de PR sans recréer les bases** ; conserver l'ascendance lors du retarget successif ou reconstituer une pile revue. Pas de merge `main`, pas de déploiement ni de relance Apur. Détails dans [la passation](docs/handoff.md).
+
+
 **Mission fondamentale : rendre visible et intelligible la vacance résidentielle à Paris — son niveau, sa répartition territoriale, son évolution et les limites de nos connaissances.** L'histoire du bâti est une seconde lecture graphique et scientifique, pas un substitut à la mesure de la vacance.
 
 **Source de vérité** : GitHub `Kiwinokoto/vacant`. App desktop prioritaire, petits écrans utilisables sans recette sur téléphone physique obligatoire. Une PR `dev/*` courte, tests et revue avant toute promotion ; produire les dérivés depuis des sources figées, sans données nominatives LOVAC.
@@ -14,6 +21,14 @@
 - **V-07 (P1 renforcée)** — Locaux tertiaires/commerciaux : Apur BDCOM 2023 = **9 059 locaux vacants parmi 83 154 locaux enquêtés en rez-de-chaussée**, soit 10,9 % ; cette mesure n'est **ni** la vacance de tous les bureaux de Paris **ni** le nombre de logements convertibles. Prochaine enquête : audit BDCOM ouvert (champs vacance/travaux, licences) puis source de **bureaux réellement inoccupés à Paris intra-muros** (m², date, champ).
 
 **Ordre de la pile avant revue : #29 → #30 → #31 → #32 → #33 → #34**. Rail B IGN #28 indépendant. Pas de fusion ni déploiement de ces travaux.
+
+## V-07 — Note Apur BDCOM 2026, sources et révisions (complément PR #37)
+
+**Premier résultat officiel octobre 2026 :** 83 115 locaux, 9 725 vacants travaux inclus, dont 1 402 travaux (8 323 hors travaux ; 11,7 % / 10,0 % selon Apur). La même publication **révise 2023** à 83 284 locaux / 9 104 vacants, versus 83 154 / 9 059 dans la publication initiale 2023, et 9 060 dans l'API 2023. Le texte de 2023 mentionne également **8 541** vacants 2020 là où le graphique indique **8 560**. **Ne pas harmoniser sans confirmation Apur.** Page `site/potentiel.html` avec photographie 2026 distincte du JSON historique 2017–2023. Interrogation méthodologique **envoyée le 17/10/2026** à `data@apur.org` via Gmail (message `1a149909decf1bfc`), distincte du courriel du 16/10/2026 sur les emprises bâties ; réponse non reçue ; demande de dictionnaires et tables de correspondance. Revue de la pile PR avant fusion ; GitHub combined statuses et check-runs vérifiés : aucun signal de CI associé aux HEAD contrôlés, ne pas assimiler « mergeable » à une certification de qualité.
+
+## V-07 — Dénominateurs historiques retrouvés, compatibilité ouverte (PR #37)
+
+La fiche Apur 2017 donne **83 720 locaux** ; le service Apur 2020 donne **83 399** (somme `localrdc`), et la couche 2023 **83 154**. Ce sont des **tailles de parcs par édition**, non une preuve que l'on peut comparer les taux. Le 2017 d'origine donne 7 804 vacants et la série rétrospective 7 853 vacants/travaux ; le désaccord 2020 (8 760 contre 8 560) se concentre en partie dans les **travaux : 1 517 contre 1 310**. La raison de ces révisions est inconnue. La page « Potentiel » affiche désormais la couverture des enquêtes, sans fabriquer de taux harmonisés. Détails : `docs/bdcom-historical-audit-20261017.md`. Prochaine action : demander métadonnées des éditions à Apur et valider les conventions des numérateurs avant une courbe de taux. Chaîne en brouillon #29 → #30 → #31 → #32 → #33 → #34 → #35 → #36 → #37 ; IGN #28 distincte.
 
 ## Mise à jour V-07 — Historique prudent des locaux BDCOM, PR #36
 

@@ -30,6 +30,6 @@ h2{margin:0 0 16px}
 .bdcom-history-line{display:grid;grid-template-columns:45px minmax(0,1fr) 80px;gap:10px;align-items:center;font-variant-numeric:tabular-nums}
 .bdcom-history-bar{display:flex;height:25px;min-width:0;background:#243f4a;border-radius:3px;overflow:hidden}
 .bdcom-history-bar span{display:block;height:100%}
-.bdcom-history-table{min-width:550px}
+.bdcom-history-table{min-width:730px}
 .bdcom-history-table th,.bdcom-history-table td{font-variant-numeric:tabular-nums}
 @media(max-width:550px){.bdcom-history-line{grid-template-columns:36px minmax(0,1fr) 66px;gap:7px}}
