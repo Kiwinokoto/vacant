@@ -1,5 +1,12 @@
 # VACANT — backlog priorisé, deux rails (17 octobre 2026)
 
+## Checkpoint de recette — 18 octobre 2026 (sans promotion)
+
+**Code de référence `599329f4` (PR #37)** : chaîne Git #29→#37 **strictement linéaire**, #28 IGN séparée. Revalidation indépendante : **111 tests JS + 99 tests Python réussis** en environnements temporaires. **Chromium 154** sur les quatre pages en 1440×900 et 390×844 : **49/50 vérifications strictes**, seule la demande navigateur de `/favicon.ico` renvoie 404 ; pas d'erreur applicative ni de débordement. Test des 20 arrondissements LOVAC/BDCOM, de la restriction de ratio LOVAC 2023, des 9 recensements Insee, de 992 IRIS, et de la présentation BDCOM 2026 **séparée**. Aucun ajout de données individuelles.
+
+**Gate avant intégration** : aucune CI sur HEAD échantillonnés (#29/#33/#37), aucun workflow versionné dans cette branche ; compléter la recette et les protections avant promotion. La simulation d'intégration de #28 sur #37 signale des conflits sur `docs/handoff.md` et `docs/sources.md` : traiter #28 dans un second temps, sans mêler les deux rails. **Ne pas squash-merger une pile de PR sans recréer les bases** ; conserver l'ascendance lors du retarget successif ou reconstituer une pile revue. Pas de merge `main`, pas de déploiement ni de relance Apur. Détails dans [la passation](docs/handoff.md).
+
+
 **Mission fondamentale : rendre visible et intelligible la vacance résidentielle à Paris — son niveau, sa répartition territoriale, son évolution et les limites de nos connaissances.** L'histoire du bâti est une seconde lecture graphique et scientifique, pas un substitut à la mesure de la vacance.
 
 **Source de vérité** : GitHub `Kiwinokoto/vacant`. App desktop prioritaire, petits écrans utilisables sans recette sur téléphone physique obligatoire. Une PR `dev/*` courte, tests et revue avant toute promotion ; produire les dérivés depuis des sources figées, sans données nominatives LOVAC.
