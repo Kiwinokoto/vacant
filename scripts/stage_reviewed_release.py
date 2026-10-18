@@ -20,6 +20,11 @@ import tarfile
 import tempfile
 
 ALLOWED_DATASETS = frozenset({"iris-2023.geojson", "arrond-history.geojson"})
+TRACKED_PUBLIC_AGGREGATES = frozenset({
+    "site/data/lovac-paris-open-2026.json",
+    "site/data/bdcom-paris-arrond-2023.json",
+    "site/data/bdcom-paris-history-2017-2023.json",
+})
 FORBIDDEN_PARTS = frozenset({"apur-grid", "_local", "raw", "processed", "private"})
 MAX_ARCHIVE = 20_000_000
 MAX_PUBLIC_DATASET = 40_000_000
@@ -57,11 +62,13 @@ def tracked_site(archive: bytes, site_dir: Path):
                 if len(p.parts) < 2:
                     raise ValueError("Unexpected top-level tracked file")
                 name = p.name
+                reviewed_aggregate = p.as_posix() in TRACKED_PUBLIC_AGGREGATES
                 if (name.endswith((".geojson", ".json")) and
-                        name not in ALLOWED_DATASETS):
+                        name not in ALLOWED_DATASETS and not reviewed_aggregate):
                     raise ValueError("Unreviewed tracked dataset in site/")
                 if (p.parts[1] == "data" and len(p.parts) > 2 and
-                        name not in ALLOWED_DATASETS and name != ".gitignore"):
+                        name not in ALLOWED_DATASETS and
+                        not reviewed_aggregate and name != ".gitignore"):
                     raise ValueError("Unexpected tracked data in site/data/")
         for m in members:
             p = PurePosixPath(m.name)
