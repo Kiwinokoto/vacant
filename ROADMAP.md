@@ -1,5 +1,15 @@
 # VACANT — backlog priorisé, deux rails (18 octobre 2026)
 
+## Axe prioritaire : distinguer vacance, sous-occupation et capacité (18 octobre 2026)
+
+1. **V-09 – Définitions auditables** : nouvelle note docs/vacance-definitions-et-capacite-20261018.md et bloc explicatif site/potentiel.html. Établir clairement Insee 2023 : 139 075 vacants et 138 426 résidences secondaires/occasionnelles, soit 19,8 % de logements non principaux **mais non 19,8 % de logements mobilisables**. LOVAC 2026 : 26 264 vacants privés fiscaux de longue durée en janvier 2025, groupe distinct de l'Insee et indicateur de durée, sans capacité mesurée.
+2. **V-10 – Surfaces, pièces, état et personnes** : exploiter d'abord Apur LOVAC 2020 comme *repère historique* (43,4 % T1 ; 44 % moins de 30 m² ; médiane 32 m²), puis **retrouver une ventilation anonymisée récente à Paris** par durée, taille et confort. Pas de multiplicateur de personnes par logement ; calcul seulement avec types de ménage et conditions d'habitabilité documentés.
+3. **V-11 – Espaces non résidentiels** : BDCOM 2026 : 8 323 vacants RDC hors travaux + 1 402 en travaux, parc 83 115 non harmonisé à 2017/2020/2023. Bureaux : 1 578 000 m² d'offre *immédiate* à Paris en septembre 2026, ni logement ni preuve de vacance physique durable ; chercher offres retirées/actifs réellement inutilisés, durée et état.
+4. **V-12 – Scénarios de réemploi** : différencier habitabilité, coûts, délais, droit et sécurité. Fourchette de capacité uniquement si les taux d'éligibilité sont observés et les hypothèses vérifiables, sinon **inconnu**. Maintenir rail B (IGN/3D) secondaire.
+
+Sources : https://www.insee.fr/fr/statistiques/2011101?geo=DEP-75 ; https://doc-datafoncier.cerema.fr/doc/guide/lovac/lobservation-de-la-vacance-des-logements ; https://www.apur.org/sites/default/files/logements_durablement_vacants_paris.pdf ; https://www.cushmanwakefield.com/fr-fr/france/news/2026/10/reactions-immostat-t3-2026.
+
+
 ## État de production du 18 octobre 2026
 
 **Site public à jour** : `https://vacant.kiwinokoto.fr` sert le code `bcc1a97f00c85eb7f2de74cb37d86fbb98520d03` (PR #39, gate d'agrégats corrigé). Vérifié : **111 tests JS, 102 tests Python, Chromium 8/8 parcours desktop/mobile simulé sur HTTPS réel**, nouvelles pages 200, les deux GeoJSON et trois JSON 200, distribution des **456 cellules Apur ODbL** et empreintes intactes, privé exclu. Ancienne release conservée pour rollback ; les leases ont été relâchés. Ne pas confondre des futurs commits **purement documentaires** sur `main` avec un nouveau code déployé.
