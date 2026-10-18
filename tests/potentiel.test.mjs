@@ -27,3 +27,31 @@ test("2026 preliminary Apur snapshot remains separate from the audited 2017–20
  const old=html.indexOf('id="bdcom-history-heading"');
  assert.ok(sep>0 && old>sep,"2026 editorial snapshot must precede and remain separate from historical API figures");
 });
+
+test("Definition separates Insee vacancy, secondary residences, fiscal long vacancy and mobilisable supply",()=>{
+ for(const term of [
+   'id="vacance-definition-title"',
+   'Vacant ne signifie ni habitable ni mobilisable',
+   'vacance de rotation (frictionnelle)',
+   '138 426 (9,9 %)',
+   '277 501 logements, soit 19,8 %',
+   'pas classés vacants',
+   '26 264 (situation au 01/01/2025)',
+   'Logements immédiatement mobilisables',
+   '<strong>Inconnu</strong>',
+   'Pas de multiplication automatique par deux ou trois',
+   '18 648 logements durablement vacants',
+   '43 % étaient des logements',
+   '44 % faisaient moins de 30 m²',
+   'surface médiane 32 m²',
+   'ne peut pas être appliquée mécaniquement à LOVAC 2026'
+ ]) assert.ok(html.includes(term),term);
+});
+test("Latest Paris office offer is not portrayed as dwelling or durable physical vacancy",()=>{
+ for(const term of [
+   '1 578 000 m²','fin septembre 2026',
+   'reactions-immostat-t3-2026',
+   'pas surface physiquement inoccupée depuis longtemps',
+   'sans évolution trimestrielle harmonisée établie'
+ ])assert.ok(html.includes(term),term);
+});
