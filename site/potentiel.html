@@ -15,13 +15,27 @@
 <h1>Quels espaces inoccupés pourraient servir à loger ou accueillir ?</h1>
 <p class="lead">Un appartement vacant, un logement en mauvais état et un bureau inoccupé ne sont pas équivalents. <strong>Mais aucun de ces espaces ne doit être écarté de l'étude simplement parce qu'il n'est pas déjà prêt à l'habitation.</strong> La question est de savoir ce qui pourrait être mobilisé, à quelles conditions, avec quel délai et pour quel usage.</p>
 <section aria-labelledby="numbers">
-<h2 id="numbers">Trois observations réelles, trois périmètres différents</h2>
+<h2 id="numbers">Quatre observations réelles, des périmètres non additionnables</h2>
 <div class="source-grid">
 <article><span class="source-kind">Habitation · Insee</span><strong class="source-number">139 075</strong><h3>Logements vacants, Paris</h3><p>Recensement 2023, parc résidentiel total ; 9,9 % des 1 402 024 logements. <strong>Habitabilité et disponibilité immédiate non mesurées.</strong></p><a href="https://www.insee.fr/fr/statistiques/2011101?geo=DEP-75">Insee · RP2023</a></article>
 <article><span class="source-kind">Habitation privée · LOVAC</span><strong class="source-number">105 785</strong><h3>Logements privés recensés vacants</h3><p>Millésime 2026, observation au <strong>1er janvier 2025</strong>, dont 26 264 depuis plus de deux ans. Méthode fiscale distincte du recensement.</p><a href="https://www.data.gouv.fr/datasets/61816c6e23197bb34835228e">DGALN / Cerema · agrégats ouverts</a></article>
-<article><span class="source-kind">Rez-de-chaussée commerciaux · Apur</span><strong class="source-number">9 059</strong><h3>Locaux de rez-de-chaussée vacants</h3><p>Enquête BDCOM d'avril 2023 : 9 059 sur <strong>83 154 locaux étudiés</strong>, soit 10,9 %. Ce n'est ni le parc des bureaux en étage ni une estimation de locaux transformables en logements.</p><a href="https://www.apur.org/sites/default/files/8p236_bdcom_2023.pdf">Apur · note n°236, p. 2</a></article>
+<article><span class="source-kind">Rez-de-chaussée · Apur BDCOM</span><strong class="source-number">9 060</strong><h3>Locaux vacants ou en travaux</h3><p>Audit de la <strong>base ouverte 2023</strong> : <strong>7 495 vacants hors travaux</strong> et <strong>1 565 en travaux</strong> sur 83 154 locaux (10,9 % ensemble). La note Apur annonce 9 059 : écart d'un local documenté, non corrigé artificiellement.</p><a href="https://carto2.apur.org/apur/rest/services/BDCOM/bdcom2023/MapServer/1">Apur · données BDCOM 2023</a></article>
+<article><span class="source-kind">Offre de bureaux · marché tertiaire</span><strong class="source-number">≈ 1,5 M m²</strong><h3>Bureaux immédiatement proposés</h3><p>Paris intra-muros, <strong>fin juin 2026</strong> : Colliers indique 1 542 000 m², Cushman &amp; Wakefield environ 1,5 million. <strong>Offre de marché en m², pas logements ou lieux d'hébergement</strong> ; comparaison T1 2026 encore à clarifier.</p><a href="https://www.colliers.com/fr-fr/etudes/2026-2t-etude-marche-bureaux">Colliers · S1 2026</a> · <a href="https://cw-prod-gblgws-a-cm.cushwake.com/fr-fr/france/news/2026/07/immostat-s1-2026">Cushman &amp; Wakefield</a></article>
 </div>
 <p class="boundary"><strong>Ces chiffres ne s'additionnent pas.</strong> Les unités, les sources, les dates et les catégories ne coïncident pas ; LOVAC et Insee recouvrent notamment une partie du même parc résidentiel. Aucun « nombre de logements récupérables » ne peut actuellement être calculé à partir d'eux.</p>
+</section>
+<section aria-labelledby="bdcom-heading">
+<h2 id="bdcom-heading">Locaux de rez-de-chaussée : vacants ou en travaux ?</h2>
+<p>Une classification plus fine est possible avec la BDCOM 2023. Le <strong>code d'activité AA101</strong> désigne les locaux vacants, tandis que <strong>AA102</strong> désigne les locaux en travaux. Le taux du rapport (10,9 %) regroupe les deux : <strong>7 495</strong> hors travaux + <strong>1 565</strong> en travaux = <strong>9 060</strong> dans la base ouverte. La <a href="https://www.apur.org/sites/default/files/8p236_bdcom_2023.pdf">note Apur n°236</a> indique 9 059 : nous affichons les deux références sans masquer l'écart.</p>
+<div class="bdcom-toolbar"><label for="bdcom-sort">Classer les arrondissements selon</label>
+<select id="bdcom-sort"><option value="share">Part de locaux vacants hors travaux (%)</option>
+<option value="vacant">Nombre de locaux vacants hors travaux</option>
+<option value="in_works">Nombre de locaux en travaux</option></select></div>
+<p id="bdcom-status" role="status" aria-live="polite">Chargement des agrégats des 20 arrondissements…</p>
+<div class="table-wrap"><table class="bdcom-table"><caption>BDCOM Apur 2023, agrégats non identifiants par arrondissement, hors logements et bureaux en étage</caption>
+<thead><tr><th scope="col">Arrondissement</th><th scope="col">Locaux étudiés</th><th scope="col">Vacants hors travaux</th><th scope="col">En travaux</th><th scope="col">Part vacants hors travaux</th></tr></thead>
+<tbody id="bdcom-rows"><tr><td colspan="5">Chargement…</td></tr></tbody></table></div>
+<p class="boundary">Chaque arrondissement utilise comme dénominateur <strong>les locaux étudiés dans son périmètre BDCOM</strong> ; il ne s'agit ni d'une proportion de logements, ni du taux de vacance de tous les bureaux. L'enquête ne vérifie pas l'habitabilité ni la possibilité de transformation. Source : <a href="https://opendata.apur.org/datasets/Apur::bdcom-2023/about">BDCOM Apur open data, ODbL</a> — extraction agrégée du 17 octobre 2026. Les vingt codes d'arrondissement sont les seules localisations conservées.</p>
 </section>
 <section class="method" aria-labelledby="method-title">
 <h2 id="method-title">Deux dimensions à ne jamais confondre</h2>
@@ -36,8 +50,8 @@
 <tbody>
 <tr><th scope="row">Logement déclaré vacant</th><td>Statistique de vacance résidentielle Insee ou LOVAC</td><td>État du logement, accès, travaux, disponibilité juridique et délai</td></tr>
 <tr><th scope="row">Logement dégradé</th><td>Peut être inclus dans les logements vacants ; état individuel non renseigné</td><td>Réparabilité, salubrité, coût et durée des travaux</td></tr>
-<tr><th scope="row">Bureau inoccupé</th><td>Pas encore de décompte parisien comparable validé dans VACANT</td><td>Vacance effective, surface utilisable, accès, sécurité, autorisations, adaptation</td></tr>
-<tr><th scope="row">Local commercial vacant</th><td>BDCOM 2023 : vacance observée dans les rez-de-chaussée de son champ</td><td>Eau, sanitaires, ventilation, éclairage, évacuation, droits et faisabilité d'accueil</td></tr>
+<tr><th scope="row">Bureau inoccupé</th><td>Offre immédiate de marché, environ 1,5 million de m² à Paris en juin 2026 ; pas de décompte en nombre de bureaux</td><td>Vacance physique confirmée, accès, sécurité, autorisations, adaptation et délais</td></tr>
+<tr><th scope="row">Local commercial vacant</th><td>BDCOM 2023 : 7 495 locaux vacants hors travaux, distincts des 1 565 en travaux</td><td>Eau, sanitaires, ventilation, éclairage, évacuation, droits et faisabilité d'accueil</td></tr>
 </tbody></table></div>
 </section>
 <section aria-labelledby="triage-title">
@@ -52,9 +66,9 @@
 </section>
 <section class="method" aria-labelledby="next-title">
 <h2 id="next-title">La prochaine enquête à conduire</h2>
-<p>Le premier jalon non résidentiel vérifié est <strong>BDCOM 2023</strong>, une enquête sur des locaux de rez-de-chaussée. Il faut maintenant chercher une source de <strong>vacance de bureaux</strong> à périmètre Paris explicite, avec surfaces et dates, et auditer les champs BDCOM permettant de distinguer locaux vacants, locaux en travaux, occupation et destination.</p>
+<p>Le premier jalon BDCOM 2023 est désormais <strong>audité par code d'activité, arrondissement et nombre de locaux</strong>. La prochaine étape sera de confirmer la différence d'une unité avec l'Apur, puis d'examiner les millésimes 2020 et 2017 à nomenclature comparable. Pour les bureaux, une première offre de marché est connue à Paris en <strong>m²</strong>, mais elle doit être distinguée de la vacance physique, de la vacance structurelle et de la capacité d'accueil. L'écart entre les chiffres Colliers du T1 et T2 2026 interdit encore toute courbe trimestrielle.</p>
 <p>Une source d'occupation ne suffit jamais à certifier l'habitabilité. Pour un usage résidentiel ou d'hébergement, il faudra une démarche complémentaire de faisabilité, sans publier d'identités, de propriétaires ou d'adresses sensibles.</p>
 <p>Références : <a href="https://www.insee.fr/fr/metadonnees/definition/c1059">Insee · logement vacant</a> · <a href="https://www.apur.org/fr/open-data-cartes/open-data/base-donnees-commerces-parisiens">Apur · BDCOM</a> · <a href="https://www.service-public.fr/particuliers/vosdroits/F2416">Service-Public · changement de destination</a> · <a href="https://www.service-public.fr/particuliers/vosdroits/F2042">Service-Public · décence du logement</a>.</p>
 </section>
 <footer><a href="./index.html">← Carte VACANT</a> · <a href="./lovac.html">Vacance longue LOVAC</a><p>Étude exploratoire : aucun calcul de logements « disponibles », aucune adresse, aucun croisement attribut de vacance / bâtiment.</p></footer>
-</main></body></html>
+</main><script type="module" src="./bdcom.mjs"></script></body></html>

@@ -1,5 +1,14 @@
 # VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
 
+## Nouveau jalon BDCOM — PR #35
+
+Étude du potentiel non résidentiel à partir de **données ouvertes BDCOM réellement interrogées** (17/10/2026) : **83 154** locaux de rez-de-chaussée Paris, `AA101`=**7 495 vacants hors travaux** ; `AA102`=**1 565 en travaux**, `type=V`=**9 060**, tandis que la note Apur indique **9 059**. L'écart **+1** reste à expliquer, aucune correction manuelle. Vingt arrondissements agrégés, aucune adresse, licence ODbL. Source et méthode `docs/bdcom-open-audit-20261017.md`.
+
+**Bureaux** : Paris intra-muros ≈ **1,5 million de m² d'offre immédiate** fin juin 2026 (Colliers et Cushman & Wakefield). L'observation Colliers de mars 2026 (795 000 m²) semble incompatible avec celle de juin (1,542 million), ne pas relier ces points comme évolution observée avant clarification. Aucune conversion automatique en nombre de logements.
+
+PR #35 brouillon empilée sur #34, chaîne **#29 → #30 → #31 → #32 → #33 → #34 → #35** ; IGN historique #28 autonome. Aucune modification de main ou prod. `docs/handoff.md` conserve la passation immédiate.
+
+
 ## Nouveau périmètre transverse (PR #34)
 
 **Décision utilisateur :** comparer séparément les logements habitables et non habitables, mais conserver **bureaux vacants, commerces vacants et logements dégradés** dans la recherche sur les espaces sous-utilisés, afin d'étudier un éventuel accueil temporaire ou pérenne des personnes sans logement. Un local sans eau, lumière ni équipements peut être un **potentiel à étudier**, mais jamais un logement immédiatement habitable ou une solution de nuit sûre sans diagnostic de sécurité, hygiène, accès, évacuation et droit d'usage. Inconnu par défaut : les bases de vacance disponibles ne permettent pas de distinguer les logements effectivement prêts à habiter.
@@ -40,3 +49,6 @@ Branche empilée sur #32 : `dev/lovac-long-duration-analysis-20261017`. Carte de
 
 ### Recette de la PR #34 et état GitHub (17/10/2026)
 Code `5d4cde688476c207fb1cd3a5a2aeb118a4e0e60e` : **102/102 tests JavaScript**, **99/99 tests Python** depuis le venv du VPS, `git diff --check` sans anomalie, clone éphémère sans changements locaux. **Chromium réel** (serveur statique local) : 3 indicateurs indépendants, 4 scénarios qualitatifs, navigation depuis index / évolution / LOVAC validée ; desktop 1440×900 sans débordement, mobile simulé 390×844 sans débordement (tableau défilant à l'intérieur), aucune erreur JavaScript applicative de la nouvelle page. Aucune source brute confidentielle. PR #34 reste en brouillon ; **aucune fusion ni déploiement**. Avant reprise : vérifier les HEAD et les locks, puis auditer la donnée BDCOM et les sources de vacance de bureaux Paris.
+
+## Recette PR #35 (17 octobre 2026)
+**Code `041c3bd43764553b074dad78f03600185e313f7a` : 105/105 tests JavaScript et 99/99 Python (venv VPS).** `node --check` et `git diff --check` valides. Chromium sur serveur temporaire : bureau 1440×900 (**4 familles, 20 lignes BDCOM, zéro débordement**), modalité « vacants hors travaux » classant le 18e en tête, modalité « travaux » classant le 8e en tête ; mobile émulé 390×844 sans débordement (tableau défilant dans son conteneur). Correction du lien vers la note n°236 testée. **Aucun fichier de points, adresse ou enseigne dans GitHub.** PR en brouillon, ni fusion ni déploiement. Écart de la note 9 059 vs source 9 060 non résolu.
