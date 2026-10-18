@@ -1,5 +1,18 @@
 # VACANT — backlog priorisé, deux rails (18 octobre 2026)
 
+## État de production du 18 octobre 2026
+
+**Site public à jour** : `https://vacant.kiwinokoto.fr` sert le code `bcc1a97f00c85eb7f2de74cb37d86fbb98520d03` (PR #39, gate d'agrégats corrigé). Vérifié : **111 tests JS, 102 tests Python, Chromium 8/8 parcours desktop/mobile simulé sur HTTPS réel**, nouvelles pages 200, les deux GeoJSON et trois JSON 200, distribution des **456 cellules Apur ODbL** et empreintes intactes, privé exclu. Ancienne release conservée pour rollback ; les leases ont été relâchés. Ne pas confondre des futurs commits **purement documentaires** sur `main` avec un nouveau code déployé.
+
+**Prochaine passe scientifique — précision des estimations plutôt que 3D :**
+- **Résidentiel** : fournir par arrondissement nombre / taux / dénominateur Insee 2023 ; LOVAC 2026 séparé, observation 01/01/2025, logement privé fiscalement vacant et longue durée (26 264 / 105 785 = 24,8 % *parmi les vacants*). Ruptures de séries fiscal GMBI explicites, aucune interprétation bâtiment ou état de salubrité.
+- **Locaux de RDC** : édition Apur 2026 `8 323` vacants hors travaux et `1 402` en travaux, sur `83 115` locaux enquêtés ; édition non harmonisée avec les archives 2017/2020/2023 ; attendre la méthode Apur avant courbe de taux.
+- **Bureaux** : mesure publique la plus récente repérée pour **Paris** : `1 578 000 m²` d'**offre immédiate fin septembre 2026** (Cushman & Wakefield / ImmoStat 6/10), **pas** du nombre de bureaux physiquement déserts, ni du nombre de logements possibles. Colliers donne >`1 200 000 m²` vacants depuis >2 ans pour **toute l'Île-de-France**, interdit de reporter sur Paris. Chercher une mesure parisienne ventilée par durée / surface, bâtiments réellement désoccupés et travaux ; ne pas produire de « places » à partir des m². Source : https://www.cushmanwakefield.com/fr-fr/france/news/2026/10/reactions-immostat-t3-2026.
+- **Mobilisable** : distinguer stock vacant constaté, état matériel, droits, délai/coût de transformation, et possibilité d'accueil après diagnostic. Fourchette seulement si chaque facteur est documenté, sinon **inconnu**.
+
+**Rail B** historique IGN #28 toujours hors priorité et hors `main`. Voir `docs/handoff.md` pour la recette et la mise en production.
+
+
 ## Blocage de publication levé en branche — 18 octobre 2026
 
 La nouvelle release doit intégrer **exactement trois JSON agrégés suivis par Git** (LOVAC 2026, BDCOM par arrondissement 2023, BDCOM historique 2017–2023). Correction ciblée dans `scripts/stage_reviewed_release.py` + trois tests, sans relâcher l'interdiction des jeux arbitraires ou privés. **Tests : 111/111 JS, 102/102 Python.** Le site public reste à mettre à jour par release immuable, **en conservant la distribution Apur ODbL** avec option `--publish-apur` et empreintes déjà consignées. Pas de déploiement sans vérifier AgentCTL, les montages, le rollback et les URL publiques.
