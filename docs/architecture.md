@@ -19,6 +19,19 @@
 
 **Statuts de preuve** : OBSERVATION_ADMINISTRATIVE, STATISTIQUE_AGREGEE, ESTIMATION, RECONSTRUCTION_DOCUMENTEE, INDISPONIBLE. Les deux dates (date de l'objet et date du document / référentiel) restent distinctes. Ne jamais créer une observation ancienne d'un bâtiment à partir de sa seule année de construction.
 
+## Contrat conceptuel « potentiel de réemploi » (non mesuré à ce stade)
+
+Chaque observation doit garder son **champ et unité**, distincts entre (1) logement résidentiel vacant Insee, (2) logement privé fiscal LOVAC, (3) local en rez-de-chaussée vacant BDCOM, (4) bureaux vacants en surface m² *si une source future est auditée*, (5) géométrie contemporaine de bâtiment. **Ne jamais agréger des nombres non sommables.**
+
+Pour tout éventuel dossier de faisabilité, distinguer indépendamment et de manière **probatoire** :
+- `destination` : habitation / bureaux / commerce / autre / mixte / inconnu ;
+- `occupation` : vacant / occupé / inconnu, avec source/date/territoire/unité ;
+- `etat_usage` : adapté confirmé / travaux à expertiser / transformation à expertiser / incompatibilité établie / inconnu ;
+- `risques_sante_securite`, `droits_usage`, `delais`, `cout` : évaluation attestée ou **inconnue** ;
+- `usage_envisage` : habitation durable, hébergement temporaire ou autre, sans présumer d'une autorisation commune à ces scénarios.
+
+**Inconnu est la valeur par défaut.** La vacance, sa durée, la présence d'un bureau ou d'une surface ne démontrent ni l'habitabilité ni la non-habitabilité. Aucun calcul automatique de capacité d'accueil, ni join au bâtiment des statistiques IRIS/LOVAC. Aucune donnée personnelle ou adresse de logement vacant. Voir `docs/potentialite-locaux-20261017.md`.
+
 ## Chronologie statistique indépendante de la carte
 
 - `site/timeline.mjs` intègre **quatre lignes agrégées pour Paris entier**, transcrites depuis les tableaux officiels INSEE RP2022 (2006/2011/2016) et RP2023 (2023). Le code n'effectue **aucune** attribution statistique à un immeuble ou IRIS.

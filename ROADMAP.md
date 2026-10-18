@@ -6,6 +6,15 @@
 
 **Point de reprise PR #33 (17/10/2026) :** la PR #31 donne les agrégats LOVAC ouverts ; #32 ajoute leur carte par arrondissement ; **#33** étudie la vacance longue par **effectif et part parmi les vacants privés**, en interdisant le ratio 2023 (dates non alignées) et en exposant les ruptures 2024–2025. 98 JS et 99 Python, Chromium desktop et 390 px validés sur code `717f5bd`. Tout reste **en brouillon hors production** ; ordre #29 → #30 → #31 → #32 → #33, #28 en parallèle. Prochaine priorité scientifique : contextes/contrastes territoriaux sans comparer des taux incompatibles ni des immeubles.
 
+## Périmètre transversal — espaces vacants et potentiel d'accueil (PR #34)
+
+**Décision utilisateur du 17/10/2026 :** ne pas compter au même titre logements habitables, logements dégradés et bureaux ou commerces inoccupés, **sans exclure les espaces non habitables de l'étude**. Les garder comme potentiel de remise en état, transformation ou accueil temporaire éventuel, à **expertiser** : sécurité, hygiène, eau, ventilation, lumière, évacuation, accès, droits d'usage et délais. **Inconnu par défaut**, jamais « habitable » ou « mobilisable » par déduction statistique.
+
+- **V-08 (P1)** — Protocole de potentiel d'accueil, distinguant destination, occupation, état d'usage, possibilités et contraintes. Première page `site/potentiel.html` en PR #34, note `docs/potentialite-locaux-20261017.md`. Ne pas produire de capacité d'accueil fictive.
+- **V-07 (P1 renforcée)** — Locaux tertiaires/commerciaux : Apur BDCOM 2023 = **9 059 locaux vacants parmi 83 154 locaux enquêtés en rez-de-chaussée**, soit 10,9 % ; cette mesure n'est **ni** la vacance de tous les bureaux de Paris **ni** le nombre de logements convertibles. Prochaine enquête : audit BDCOM ouvert (champs vacance/travaux, licences) puis source de **bureaux réellement inoccupés à Paris intra-muros** (m², date, champ).
+
+**Ordre de la pile avant revue : #29 → #30 → #31 → #32 → #33 → #34**. Rail B IGN #28 indépendant. Pas de fusion ni déploiement de ces travaux.
+
 ## Rail V — Vacance résidentielle (prioritaire, environ 70 % de l'effort)
 
 | ID | Priorité | Livrable et critère de validation | État au 17/10 |
@@ -16,7 +25,7 @@
 | **V-04** | P1 | **LOVAC public agrégé 2020–2026** à l'échelle Paris commune seulement : télécharger **uniquement** le CSV agrégé (aucun détail privé), figer source/schema/SHA, distinguer parc privé, vacance de plus de deux ans, suppression statistique. **Ruptures 2024 (GMBI) et 2025 (chaîne d'extraction)** représentées comme ruptures explicites ; ne jamais raccorder la courbe aux taux du RP | **V-04 première tranche prête sur PR #31** : 3 CSV ouverts LOVAC figés et vérifiés SHA, 20 arrondissements Paris/ligne département concordants, dates du dictionnaire respectées, page distincte (7 millésimes, 2 mesures), rupture GMBI 2024/2025. Suite : carte des 20 arrondissements et comparabilité méthodologique. |
 | **V-05** | P1 | IRIS historique comparables : 2006/2011/2016, contours IGN millésimés corrects, licences, matching 992 géométries, ambiguïtés d'IRIS explicitement non comparables. **Ne pas dessiner 2011 sur les contours 2025 sans avertissement ni table de passage** | Sources et candidats privés audités, droits à confirmer |
 | **V-06** | P1 | Finesse maximale **sans réidentification** : indicateurs de disponibilité des données, petits effectifs grisés, quantiles et distributions pondérées, localisation indirecte impossible. Corrélation avec bâti uniquement **à la maille territoriale** et avec contrôle des variables confondantes | Politique de sécurité déjà établie ; analyses à créer |
-| **V-07** | P2 | Étudier commerces et bureaux **dans un chapitre distinct** de la vacance résidentielle ; seulement s'il existe une source statistique adéquate, millésimée et légalement diffusable | Recherche préliminaire seulement |
+| **V-07** | P1 | Étudier commerces et bureaux **dans un chapitre distinct** de la vacance résidentielle ; seulement s'il existe une source statistique adéquate, millésimée et légalement diffusable | Recherche préliminaire seulement |
 
 ## Rail B — Évolution du bâti / reconstitution (parallèle, environ 30 %)
 

@@ -1,5 +1,14 @@
 # VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
 
+## Nouveau périmètre transverse (PR #34)
+
+**Décision utilisateur :** comparer séparément les logements habitables et non habitables, mais conserver **bureaux vacants, commerces vacants et logements dégradés** dans la recherche sur les espaces sous-utilisés, afin d'étudier un éventuel accueil temporaire ou pérenne des personnes sans logement. Un local sans eau, lumière ni équipements peut être un **potentiel à étudier**, mais jamais un logement immédiatement habitable ou une solution de nuit sûre sans diagnostic de sécurité, hygiène, accès, évacuation et droit d'usage. Inconnu par défaut : les bases de vacance disponibles ne permettent pas de distinguer les logements effectivement prêts à habiter.
+
+Première mesure non résidentielle : **Apur BDCOM 2023, 9 059 locaux de RDC vacants sur 83 154 recensés**, 10,9 %, champ distinct des logements RP/LOVAC et des bureaux en étage. **Ne pas additionner les trois mesures.** Source et protocole dans `docs/potentialite-locaux-20261017.md`, nouvelle page `site/potentiel.html`. Chercher ensuite des données de vacance de bureaux Paris intra-muros avec surfaces et dates, puis diagnostiquer la transformabilité. Pas de fiches individuelles.
+
+PR #34 empilée sur #33 ; ordre de revue #29 → #30 → #31 → #32 → #33 → #34, #28 historique indépendante. Production toujours inchangée.
+
+
 ## Dernier état — PR #33, vacance de longue durée par arrondissement
 **PR [#33](https://github.com/Kiwinokoto/vacant/pull/33)** en brouillon, branche `dev/lovac-long-duration-analysis-20261017`, empilée sur **#32**. Commit fonctionnel testé `717f5bdc55f5dc7f72b02fb65cf95de28fa31a0d`. Nouvelle carte/classement 20 arrondissements pour la proportion longue parmi les seuls logements privés fiscalement **déjà vacants**, ou les deux effectifs séparés. 2026 observé au **01/01/2025** : Paris **26 264 / 105 785 = 24,8 %**, 8e **41,2 %** parmi les vacants, 18e **2 449** vacants longue durée. **Jamais un taux sur tout le parc privé**. Ratio 2023 interdit (dates incompatibles). Ruptures GMBI 2024 et 2025. Aucun fichier individuel, aucune adresse.
 
@@ -28,3 +37,6 @@ Nouvelle branche empilée sur #31 : `dev/lovac-arrond-map-20261017`. Une carte d
 
 ## Étape suivante — analyse de la vacance longue (PR #33)
 Branche empilée sur #32 : `dev/lovac-long-duration-analysis-20261017`. Carte des 20 arrondissements : **part des vacants privés depuis >2 ans parmi l'ensemble des vacants privés**, nombre de longue durée, nombre total ; classement, dates, légendes, info-bulles et tests. Attention : ce ratio ne représente **pas** un taux rapporté au parc privé. Le 2023 est interdit pour ce calcul (variables datées du 01/01/2022 et du 01/01/2023). Paris 2026 : 26 264 / 105 785 = 24,8 %, 8e maximum en proportion 41,2 %, 18e maximum en effectif 2 449. Voir `docs/lovac-long-duration-20261017.md` et ses tests. Corrections incidentes : séquences littérales « \\n » dans CSS et passation de #32. Ne pas promouvoir sans recette navigateur complète. Chaîne désormais #29 → #30 → #31 → #32 → #33, #28 parallèle. Production inchangée.
+
+### Recette de la PR #34 et état GitHub (17/10/2026)
+Code `5d4cde688476c207fb1cd3a5a2aeb118a4e0e60e` : **102/102 tests JavaScript**, **99/99 tests Python** depuis le venv du VPS, `git diff --check` sans anomalie, clone éphémère sans changements locaux. **Chromium réel** (serveur statique local) : 3 indicateurs indépendants, 4 scénarios qualitatifs, navigation depuis index / évolution / LOVAC validée ; desktop 1440×900 sans débordement, mobile simulé 390×844 sans débordement (tableau défilant à l'intérieur), aucune erreur JavaScript applicative de la nouvelle page. Aucune source brute confidentielle. PR #34 reste en brouillon ; **aucune fusion ni déploiement**. Avant reprise : vérifier les HEAD et les locks, puis auditer la donnée BDCOM et les sources de vacance de bureaux Paris.

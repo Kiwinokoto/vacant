@@ -1,3 +1,15 @@
+**Recette #34 vérifiée** : 102 JS, 99 Python, Chromium desktop 1440 et mobile simulé 390 sans débordement, liens 3/3 OK, aucune erreur JS de la nouvelle page. Branche `dev/vacancy-reuse-potential-20261017` initialement à `5d4cde6`, PR en brouillon. Prochaine vérification : audit des données BDCOM originales et bureaux. Aucun déploiement.
+
+# Dernière passation — PR #34, réemploi des espaces vacants (17/10/2026)
+
+Nouvelle demande prioritaire : **distinguer logements habitables, logements dégradés, bureaux et commerces sans exclure les locaux aujourd'hui non habitables** du potentiel d'accueil étudié. Les espaces non résidentiels nécessitent expertise technique/juridique préalable (sécurité, santé, accès, eau, évacuation, autorisations) : aucune disponibilité immédiate affirmée. Destinations / état / occupation / transformation sont des dimensions indépendantes ; **inconnu par défaut**.
+
+**PR #34** `dev/vacancy-reuse-potential-20261017` est empilée sur **#33**. Page `site/potentiel.html` : Insee RP2023 139 075 vacants du parc total ; LOVAC 2026 105 785 privés vacants (observation 01/01/2025) ; Apur BDCOM 2023 **9 059 locaux vacants sur 83 154 locaux en rez-de-chaussée**. Ces mesures **ne s'additionnent pas** et ne prouvent aucune possibilité d'accueil. Les bureaux en étage ne sont pas recensés dans BDCOM. Documentation `docs/potentialite-locaux-20261017.md`.
+
+Chaîne des PR : #29 → #30 → #31 → #32 → #33 → #34, #28 indépendante. GitHub autorité ; aucune modification prod. Revoir HEAD/tests/navigateur et AgentCTL avant mutation/fusion/déploiement. Suite : audit schéma et licences BDCOM, puis source spécifique bureaux vacants Paris ; ne jamais extrapoler des mètres carrés en places d'hébergement.
+
+---
+
 # Reprise immédiate — VACANT, PR #33 (17/10/2026)
 
 **Nouvelle lecture LOVAC longue durée en PR brouillon [#33](https://github.com/Kiwinokoto/vacant/pull/33), empilée sur #32, elle-même sur #31 → #30 → #29.** Voir [passation actualisée](PASSATION-LOVAC-2026-10-17.md) et [analyse scientifique](lovac-long-duration-20261017.md). Le rail B IGN reste en #28 séparée. Source de vérité GitHub. Aucune fusion, aucun déploiement : release publique `8711f307` préservée.
