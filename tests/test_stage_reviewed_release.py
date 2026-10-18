@@ -102,6 +102,40 @@ class ReleaseGateTests(unittest.TestCase):
             gate.stage_public_release(self.repo, head, self.destroot/head, self.datasets)
         self.assertFalse((self.destroot/head).exists())
 
+    def test_only_three_reviewed_tracked_aggregates_are_staged(self):
+        for relative in gate.TRACKED_PUBLIC_AGGREGATES:
+            file = self.repo / relative
+            file.write_text('{"kind":"reviewed_synthetic_fixture"}', encoding="utf-8")
+        git(self.repo, "add", "site/data")
+        git(self.repo, "commit", "-qm", "three reviewed public aggregates")
+        head = git(self.repo, "rev-parse", "HEAD")
+        result = gate.stage_public_release(
+            self.repo, head, self.destroot / head, self.datasets)
+        for relative in gate.TRACKED_PUBLIC_AGGREGATES:
+            self.assertEqual((result / relative).read_text(),
+                             '{"kind":"reviewed_synthetic_fixture"}')
+        self.assertFalse((result / "site/data/apur-grid").exists())
+
+    def test_arbitrary_tracked_json_still_refused(self):
+        file = self.repo / "site/data/other-data.json"
+        file.write_text('{"address":"private test value"}', encoding="utf-8")
+        git(self.repo, "add", "site/data/other-data.json")
+        git(self.repo, "commit", "-qm", "unreviewed json test")
+        head = git(self.repo, "rev-parse", "HEAD")
+        with self.assertRaisesRegex(ValueError, "Unreviewed"):
+            gate.stage_public_release(
+                self.repo, head, self.destroot / head, self.datasets)
+
+    def test_allowlisted_name_outside_data_directory_is_rejected(self):
+        file = self.repo / "site/lovac-paris-open-2026.json"
+        file.write_text('{"kind":"wrong_location"}', encoding="utf-8")
+        git(self.repo, "add", "site/lovac-paris-open-2026.json")
+        git(self.repo, "commit", "-qm", "misplaced public aggregate")
+        head = git(self.repo, "rev-parse", "HEAD")
+        with self.assertRaisesRegex(ValueError, "Unreviewed"):
+            gate.stage_public_release(
+                self.repo, head, self.destroot / head, self.datasets)
+
     def test_tracked_unreviewed_dataset_blocks_stage(self):
         bad = self.repo/"site/footprints.geojson"
         bad.write_text("PRIVATE")
