@@ -1,4 +1,18 @@
-# VACANT — backlog priorisé, deux rails (17 octobre 2026)
+# VACANT — backlog priorisé, deux rails (18 octobre 2026)
+
+## Statut et priorité actualisés — 18 octobre 2026
+
+**Livré sur GitHub `main`** : PR #29→#37 fusionnées dans l'ordre, arbre final du code identique à #37 `93a9ef78` ; référence d'intégration `16ce23487e80`. **Site public non redéployé** lors de cette passe. Contre-recette pré-merge : 111 JS, 99 Python, Chromium 49/50 contrôles stricts (404 de favicon uniquement). Pas de CI GitHub versionnée. La PR **#28 IGN** reste indépendante et non fusionnée.
+
+**Priorités prochaines, rail V avant toute 3D :**
+1. **Logements résidentiels** : tableau clair par année / arrondissement des effectifs, taux et dénominateurs Insee, avec LOVAC **séparé** pour le parc privé fiscalement vacant et la part de vacance de plus de deux ans. Afficher ruptures de méthode, couverture et incertitude ; aucune attribution à un immeuble.
+2. **Espaces non résidentiels** : suivre BDCOM commerces/locaux de RDC **vacants hors travaux vs en travaux**, réconcilier si possible les versions 2017/2020/2023/2026 avant de tracer des évolutions harmonisées ; bureaux dans un univers distinct avec surfaces en m², dates, durée d'inoccupation et définition de l'offre.
+3. **Potentiel de réemploi** : indiquer une **fourchette uniquement si les données et hypothèses peuvent la justifier** ; sinon conserver « inconnu ». Ventiler sécurité/habitabilité, état physique, transformation, disponibilité juridique et coûts/délais à instruire. Ne pas convertir mécaniquement surfaces ou locaux vides en logements ou places d'hébergement.
+
+Rail B : recherches historiques IGN/Apur en parallèle, sans priorité d'affichage 3D et sans interpréter des mutations du référentiel comme de la construction/démolition.
+
+*Les checkpoints « pas encore fusionné » plus bas sont conservés comme historique daté, et non comme état courant.*
+
 
 ## Checkpoint de recette — 18 octobre 2026 (sans promotion)
 
