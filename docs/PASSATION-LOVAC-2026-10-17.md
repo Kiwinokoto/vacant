@@ -1,5 +1,10 @@
 # VACANT — passation actualisée du 17 octobre 2026 (LOVAC)
 
+## Complément BDCOM historique — PR #36
+
+Comparaison **en effectifs seulement**, jamais taux harmonisés : 2017 vacants hors travaux 6 954 + travaux 899 ; 2020 7 247 + 1 517 ; 2023 7 495 + 1 565 (sources API Apur). **Écart important** : la note 2020 (publiée 2021) indique 8 760 regroupés tandis que la rétrospective 2023 indique 8 560 en 2020 ; API 2020 = 8 764. Aucune interprétation causale ou migration de dénominateur autorisée. Provenance, requêtes, licence et prochaines vérifications : `docs/bdcom-historical-audit-20261017.md`. PR #36 empilée sur #35 ; aucune fusion ni production.
+
+
 ## Nouveau jalon BDCOM — PR #35
 
 Étude du potentiel non résidentiel à partir de **données ouvertes BDCOM réellement interrogées** (17/10/2026) : **83 154** locaux de rez-de-chaussée Paris, `AA101`=**7 495 vacants hors travaux** ; `AA102`=**1 565 en travaux**, `type=V`=**9 060**, tandis que la note Apur indique **9 059**. L'écart **+1** reste à expliquer, aucune correction manuelle. Vingt arrondissements agrégés, aucune adresse, licence ODbL. Source et méthode `docs/bdcom-open-audit-20261017.md`.
@@ -52,3 +57,7 @@ Code `5d4cde688476c207fb1cd3a5a2aeb118a4e0e60e` : **102/102 tests JavaScript**, 
 
 ## Recette PR #35 (17 octobre 2026)
 **Code `041c3bd43764553b074dad78f03600185e313f7a` : 105/105 tests JavaScript et 99/99 Python (venv VPS).** `node --check` et `git diff --check` valides. Chromium sur serveur temporaire : bureau 1440×900 (**4 familles, 20 lignes BDCOM, zéro débordement**), modalité « vacants hors travaux » classant le 18e en tête, modalité « travaux » classant le 8e en tête ; mobile émulé 390×844 sans débordement (tableau défilant dans son conteneur). Correction du lien vers la note n°236 testée. **Aucun fichier de points, adresse ou enseigne dans GitHub.** PR en brouillon, ni fusion ni déploiement. Écart de la note 9 059 vs source 9 060 non résolu.
+
+## Validation PR #36 (séries de locaux commerciaux, rail V)
+
+Code `6868825` recetté : **109/109 tests JS, 99/99 Python**, Chromium desktop/mobile simulé 390 px sans débordement ni erreur JS, 3 éditions BDCOM et vingt arrondissements 2023. Statistiques distinctes des logements LOVAC et des m² de bureaux. PR [#36](https://github.com/Kiwinokoto/vacant/pull/36) reste en brouillon ; aucune fusion ni mise en prod. Audit complet dans `docs/bdcom-historical-audit-20261017.md`.

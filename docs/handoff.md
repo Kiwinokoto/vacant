@@ -1,3 +1,23 @@
+# Validation finale PR #36 — 17 octobre 2026
+
+**PR [#36](https://github.com/Kiwinokoto/vacant/pull/36)** brouillon sur `dev/bdcom-historical-comparison-20261017` empilée sur #35. **Code recetté `6868825d5fb5e03a82971a072cf4bdb98e331004`** : **109/109 tests JavaScript et 99/99 Python**, `node --check`, `git diff --check`, clone propre. **Chromium réel** serveur local desktop 1440×900 et mobile simulé 390×844 : trois lignes 2017/2020/2023, trois barres, vingt lignes BDCOM 2023 présentes, années rendues sans espaces, aucun débordement et zéro erreur JavaScript.
+
+**Résultats historiques en effectifs, aucun taux harmonisé** : 2017 (6954 vacants +899 travaux =7853), 2020 (7247 +1517 =8764), 2023 (7495 +1565 =9060). Écarts Apur réels : 2020 publication de 2021 **8760**, rétrospective 2023 **8560**, API **8764**. Ne pas interpoler, attribuer des causes ou appliquer des taux aux adresses/bâtiments. Sources, requêtes, licence et limites : [audit BDCOM historique](bdcom-historical-audit-20261017.md).
+
+**Prochaines actions** : clarifier l'écart de 200 locaux 2020 avec l'Apur ; vérifier les dénominateurs par édition avant tout taux ; qualifier séparément la vacance réelle des bureaux et son potentiel de transformation. Site public non modifié. Avant reprise : HEAD, locks, CI et chaîne #29 → #30 → #31 → #32 → #33 → #34 → #35 → #36, #28 séparée. Ne pas fusionner sans revue.
+
+---
+
+# Passation prioritaire — VACANT / comparaison BDCOM 2017–2023, PR #36
+
+Au 17/10/2026 : PR **#36** brouillon, branche `dev/bdcom-historical-comparison-20261017` empilée sur PR #35 (`8945896`). **GitHub est la vérité**. Série en **effectifs uniquement**, indépendamment du parc de logements : 2017 **6 954 AA101 + 899 AA102**, 2020 **7 247 AA101 (dont 3 minuscules) + 1 517 AA102**, 2023 **7 495 AA101 + 1 565 AA102**. Les données publiques ArcGIS Apur sont agrégées : pas de fichiers d'adresses ou points. Audit `docs/bdcom-historical-audit-20261017.md`, affichage dans `site/potentiel.html`.
+
+**Divergence bloquante pour un taux harmonisé :** Apur 2020 annonce **8 760** dans les premiers résultats de 2021, mais **8 560** dans la rétrospective de 2023, contre 8 764 dans la couche 2020 ; 2023 contient 9 060 dans l'API mais la note annonce 9 059. Ne pas fabriquer d'explication ni un taux 2017/2020 en utilisant le stock BDCOM 2023. Bureaux : offre de marché ~1,5 M m² juin 2026 distincte du potentiel d'accueil. Aucune possibilité d'hébergement sans expertise, aucun taux à l'adresse/bâtiment.
+
+**Tâches restantes :** confirmer tests complets JS + Python, recette Chromium desktop et mobile simulé, statut AGENTCTL, mettre à jour commit final recetté, attendre clarification Apur. Chaîne #29 → #30 → #31 → #32 → #33 → #34 → #35 → #36, #28 IGN parallèle. Ni fusion ni déploiement automatique. Release prod historique `8711f307` inchangée.
+
+---
+
 # Validation finale PR #35 — 17 octobre 2026
 Branche `dev/bdcom-groundfloor-snapshot-20261017` sur PR #35 en brouillon, empilée sur #34. Code contrôlé `041c3bd` : **105 tests JS, 99 Python**, Chromium desktop 1440×900 et mobile simulé 390×844, 20 arrondissements, classement modifiable, zéro débordement. L'audit Apur des 83 154 locaux distingue **7 495 hors travaux**, **1 565 en travaux**, contre un **regroupement de 9 060** (+1 sur les 9 059 de la note). **Bureaux Paris** : ≈1,5 M m² d'offre disponible fin juin 2026, non convertis en « logements ». Sources et limites : [audit](bdcom-open-audit-20261017.md).
 

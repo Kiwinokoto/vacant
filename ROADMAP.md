@@ -15,6 +15,12 @@
 
 **Ordre de la pile avant revue : #29 → #30 → #31 → #32 → #33 → #34**. Rail B IGN #28 indépendant. Pas de fusion ni déploiement de ces travaux.
 
+## Mise à jour V-07 — Historique prudent des locaux BDCOM, PR #36
+
+Éditions publiques 2017/2020/2023 auditées sur ArcGIS Apur. **7 853 / 8 764 / 9 060** locaux classés vacants **ou en travaux**, respectivement, séparés par codes AA101/AA102 : **6 954/899**, **7 247/1 517** (dont trois `aa101` en minuscule), **7 495/1 565**. Divergences avec les notes : 2020 **8 760** dans la note 2021 mais **8 560** dans la rétrospective 2023, écart de **200**. À ne **pas** transformer en taux ou courbe annuelle de vacance « réelle » avant expertise de la comparabilité, des corrections et des dénominateurs d'époque. Livrables : JSON de trois agrégats, contrat JS, graphique et tableau, tests, [audit détaillé](docs/bdcom-historical-audit-20261017.md). Prochaine priorité : résoudre les écarts en demandant les métadonnées Apur et reconstruire si possible les dénominateurs 2017/2020 ; garder rail bureaux en m² séparé.
+
+Chaîne PR à revoir : **#29 → #30 → #31 → #32 → #33 → #34 → #35 → #36**, #28 IGN indépendante. **Aucune promotion automatique**.
+
 ## Mise à jour V-07 — Audit sources effectives, PR #35 (17/10/2026)
 
 - **BDCOM 2023 Apur :** vingt arrondissements agrégés depuis l'API des **83 154 locaux en RDC**. Identification des codes `AA101` = **7 495 locaux vacants hors travaux** et `AA102` = **1 565 locaux en travaux**, soit **9 060** contre 9 059 indiqués dans la note publiée. **Ne plus présenter 9 059 comme tous « vacants hors travaux ».** Enrichissement de `site/potentiel.html` avec classement local, validation du contrat, test et provenance ODbL. Aucun point/adresse.

@@ -26,6 +26,10 @@ Ce n'est **ni** l'ensemble des bureaux de Paris (notamment étages absents), **n
 
 **À auditer avant toute couche non résidentielle :** schémas exacts de BDCOM 2017/2020/2023 et valeurs « vacant », « en travaux », granularité, couverture et licence ; puis une source distincte de bureaux vacants **Paris intra-muros** (surfaces en m², disponibilité vs vacance effective, dates, licence). Pas de taux attribué à un immeuble depuis une géographie agrégée. Voir [cadrage potentiel](potentialite-locaux-20261017.md).
 
+## Comparabilité des éditions BDCOM 2017–2023 (PR #36)
+
+Les **vrais services ArcGIS historiques Apur** fournissent des effectifs séparés par statut (vacants AA101, travaux AA102). Les sommes sont 7 853 en 2017, 8 764 en 2020 et 9 060 en 2023, sans dénominateur harmonisé 2017–2020 pour des **taux**. En 2020, `AA101` apparaît aussi sous la forme minuscule `aa101` (3 occurrences) ; correction explicite du groupement, sans toucher aux données brutes. Les notes Apur divergent : 8 760 en 2020 selon premiers résultats 2021, 8 560 selon rétrospective 2023. Le graphique rétrospectif indique des nombres **arrondis** ; aucune raison vérifiée de l'écart de 200. Ne pas confondre ces séries avec les logements Insee/LOVAC ou les m² de bureaux. Provenance, requêtes, limites et tests : [audit temporel BDCOM](bdcom-historical-audit-20261017.md).
+
 ## Audit complémentaire BDCOM et bureaux (17/10/2026)
 
 **Source BDCOM ouverte interrogée directement** : ArcGIS Apur `BDCOM/bdcom2023/MapServer/1`, 83 154 locaux, vingt arrondissements ; champ `codact` **AA101 = 7 495 locaux vacants hors travaux**, **AA102 = 1 565 locaux en travaux**. `type=V` les regroupe, soit **9 060** contre **9 059** dans la note n°236 Apur : divergence **+1** conservée, pas de correction inventée. **6 898** objets classés `type=B` « bureau en boutique », **pas** des bureaux vacants. Source ODbL, dérivé agrégé uniquement, relevé le 17 octobre 2026. Détail technique, requêtes, droits et dates : [audit BDCOM 2023](bdcom-open-audit-20261017.md).
