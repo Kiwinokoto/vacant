@@ -1,5 +1,12 @@
 # VACANT — backlog priorisé, deux rails (18 octobre 2026)
 
+## Blocage de publication levé en branche — 18 octobre 2026
+
+La nouvelle release doit intégrer **exactement trois JSON agrégés suivis par Git** (LOVAC 2026, BDCOM par arrondissement 2023, BDCOM historique 2017–2023). Correction ciblée dans `scripts/stage_reviewed_release.py` + trois tests, sans relâcher l'interdiction des jeux arbitraires ou privés. **Tests : 111/111 JS, 102/102 Python.** Le site public reste à mettre à jour par release immuable, **en conservant la distribution Apur ODbL** avec option `--publish-apur` et empreintes déjà consignées. Pas de déploiement sans vérifier AgentCTL, les montages, le rollback et les URL publiques.
+
+**Piste scientifique étayée mais non additive** : Colliers mesure ~1,542 million de m² disponibles **à Paris** fin juin 2026 ; l'indicateur de **plus de 1,2 million de m² vacants depuis plus de 2 ans** de son analyse de conversion porte sur **l'Île-de-France**, donc n'est PAS une estimation de la vacance durable parisienne ni une capacité d'hébergement. Pas de série T1→T2 exploitable sans clarification. Il faut rechercher des données parisiennes par durée, surface réellement inoccupée, destination, état et contraintes juridiques avant toute estimation de réemploi. Sources : https://www.colliers.com/fr-fr/etudes/2026-2t-etude-marche-bureaux ; https://www.colliers.com/fr-fr/etudes/2026-transformation-des-bureaux-obsoletes-en-logements.
+
+
 ## Statut et priorité actualisés — 18 octobre 2026
 
 **Livré sur GitHub `main`** : PR #29→#37 fusionnées dans l'ordre, arbre final du code identique à #37 `93a9ef78` ; référence d'intégration `16ce23487e80`. **Site public non redéployé** lors de cette passe. Contre-recette pré-merge : 111 JS, 99 Python, Chromium 49/50 contrôles stricts (404 de favicon uniquement). Pas de CI GitHub versionnée. La PR **#28 IGN** reste indépendante et non fusionnée.
