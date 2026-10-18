@@ -1,5 +1,16 @@
 # VACANT — passation active (18 octobre 2026)
 
+## Priorité scientifique — vocabulaire et capacité (18 octobre 2026)
+
+- **Définition officielle Insee** : 139 075 logements vacants en 2023 parmi 1 402 024 à Paris (9,9 %), comprenant les rotations courtes, successions, logements offerts à la vente/location et logements très vétustes. **138 426 résidences secondaires / occasionnelles** sont **une catégorie Insee différente**, soit 277 501 logements **non principaux** (19,8 %) mais **pas 277 501 logements vides ni mobilisables**.
+- **LOVAC 2026** : 105 785 logements privés fiscalement vacants début 2025, dont **26 264 depuis plus de deux ans** (24,8 % des vacants fiscaux privés) ; autre date, unité et mode de collecte que l'Insee. Le seuil de deux ans est un **proxy opérationnel**, pas une preuve de vacance structurelle ou d'habitabilité.
+- **Nouvelle lecture de la taille** : Apur (étude 2022, LOVAC 2020) identifie 18 648 logements durablement vacants : **8 102 T1 (43,4 %), 8 211 de moins de 30 m² (44 %) et une surface médiane de 32 m²**. Ne pas appliquer ces proportions au stock 2025/2026 sans actualisation, ni calculer « nombre de personnes = logements × 2 ou 3 ». Insee 2021 qualifiait une grande partie de la vacance parisienne de frictionnelle ; son chiffre de 84 % n'est **pas** une nouvelle estimation pour 2023.
+- **Bureaux Paris** : 1 578 000 m² d'offre de marché immédiate au T3 2026, pas une mesure du stock physiquement inoccupé durable. Source Cushman & Wakefield / ImmoStat du 6 octobre 2026.
+- Livrables de branche : site/potentiel.html, tests/potentiel.test.mjs, docs/vacance-definitions-et-capacite-20261018.md. Contrôles locaux **113 JS / 102 Python**, navigateur Chromium desktop/mobile simulé. Aucune microdonnée ni adresse.
+- **Suite** : rechercher une ventilation publique LOVAC récente par superficie, pièces, confort, durée ; vérifier la comparabilité GMBI 2023–2026 ; puis distinguer observé, réparable, transformable, inconnu. Si la ventilation récente est impossible en open data, documenter une demande d'agrégat à l'Apur/Cerema après consultation des emails existants. Ne pas publier de capacité en personnes non sourcée.
+- **Production** : version bcc1a97f active et testée ; cette nouvelle étude n'est pas déployée. La PR IGN #28 reste indépendante.
+
+
 ## Production et nouvelle enquête — 18 octobre 2026, état actuel
 
 - **Release LIVE** : commit applicatif `bcc1a97f00c85eb7f2de74cb37d86fbb98520d03` (PR #39). Docker `vacant-vacant-web-1` sert **`/srv/vacant/releases/bcc1a97f00c85eb7f2de74cb37d86fbb98520d03/site`** depuis le VPS personnel ; la release précédente `8711f3071abd41b169c92dfe0daaa79708be9acf` et sa configuration restent conservées pour rollback. Aucun changement de domaine, DNS, base de données ou du service AgentCTL.
