@@ -1,4 +1,16 @@
-# VACANT — passation immédiate (17 octobre 2026)
+# VACANT — passation active (18 octobre 2026)
+
+## Promotion GitHub confirmée — 18 octobre 2026
+
+- **État de référence** : PR **#29 à #37 toutes fusionnées** successivement sur `main`, en merge commits classiques, bases retargetées vers `main`. Dernier merge applicatif : **`16ce23487e8038b5139f3f6afa3e714b0c8f449e`**. L'arbre Git de ce commit est **identique** à celui du dernier HEAD #37 `93a9ef789db39e09e5b2eaf5e93b14579f4ecd27`. Aucune divergence fonctionnelle introduite par la chaîne de merges.
+- **#28 IGN historique** : PR toujours indépendante, ouverte en brouillon et **non fusionnée**. Son rapprochement ultérieur avec le rail V requiert résolution explicite de conflits dans `docs/handoff.md` et `docs/sources.md`. Ne pas traiter la 3D ni les animations comme priorité scientifique de la vacance.
+- **Contre-recette avant promotion** : 111/111 tests JS, 99/99 Python, 49/50 assertions Chromium desktop/mobile sur 4 pages ; l'unique échec de l'assertion stricte était un `/favicon.ico` 404 sans impact applicatif. Absence de CI GitHub versionnée ; pas de vérification automatique à présenter comme réussite. Les commits suivants au dernier HEAD #37 portaient seulement sur la documentation.
+- **Production distincte** : cette passe n'a **pas** déclenché le déploiement sur `vacant.kiwinokoto.fr`. La mise en ligne nécessite une release Git-only contrôlée, les GeoJSON publics avec empreintes attendues vérifiées, les leases de déploiement/service/Docker et une recette HTTP/navigation selon `deploy/README.md`. Ne pas présumer que `main` = version déployée.
+- **Nouvelle priorité demandée par Kevin** : évaluer **les logements réellement vacants** et, à part, **les espaces non résidentiels inutilisés susceptibles d'être réemployés** (commerces, bureaux, locaux dégradés), avec périodes, périmètres, unités, sources et dénominateurs. Ne jamais additionner Insee/LOVAC/BDCOM/offre de bureaux, ni appeler « habitables » ou « mobilisables » des espaces dont l'état, le droit d'usage et la sécurité sont inconnus. Distinguer les stocks statistiques mesurés, le potentiel à instruire, et la capacité mobilisable **non établie**.
+- **Suite** : confirmer la version réellement servie avant d'envisager un déploiement, puis approfondir l'écart Apur BDCOM 2017–2026 et identifier des sources publiques de bureaux/surfaces structurellement inutilisés à Paris intra-muros. Les deux courriels Apur du 16–17 octobre ont déjà été envoyés : vérifier Gmail avant toute relance. Aucun événement de construction/démolition ni vacance à l'adresse ne doit être inféré.
+
+*Les mentions « non fusionné » des anciennes sections ci-dessous décrivent l'état historique **avant** cette promotion ; la section présente est prioritaire.*
+
 
 ## Revue d'intégration indépendante — 18 octobre 2026
 
